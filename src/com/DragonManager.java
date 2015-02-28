@@ -10,12 +10,13 @@ public interface DragonManager {
 
     Dragon getDragonByID(Long ID);
 
-
     Collection<Dragon> getAllDragon();
 
-    Collection<Dragon> getAllDragonByName(String name);
+    Collection<Dragon> getDragonsByName(String name);
 
-    Collection<Dragon> getAllDragonByRace(String race);
+    Collection<Dragon> getDragonsByRace(String race);
+
+    Collection<Dragon> getDragonsByNumberOfHeads(int number);
 
     void updateDragon(Dragon dragon);
 

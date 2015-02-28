@@ -22,16 +22,21 @@ public class DragonManagerImpl implements DragonManager {
     }
 
     @Override
-    public Collection<Dragon> getAllDragonByName(String name) {
+    public Collection<Dragon> getDragonsByName(String name) {
         return null;
     }
 
     @Override
-    public Collection<Dragon> getAllDragonByRace(String race) {
+    public Collection<Dragon> getDragonsByRace(String race) {
         return null;
     }
 
     @Override
+    public Collection<Dragon> getDragonsByNumberOfHeads(int number) {
+        return null;
+    }
+
+   @Override
     public void updateDragon(Dragon dragon) {
 
     }

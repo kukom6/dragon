@@ -10,6 +10,8 @@ public class Dragon {
     private Long id;
     private Date born;
     private String race;
+    private int numberOfHeads;
+    private int weight;
 
     public Dragon() {
     }
@@ -45,4 +47,21 @@ public class Dragon {
     public void setRace(String race) {
         this.race = race;
     }
+
+    public int getNumberOfHeads() {
+        return numberOfHeads;
+    }
+
+    public void setNumberOfHeads(int numberOfHeads) {
+        this.numberOfHeads = numberOfHeads;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
 }
