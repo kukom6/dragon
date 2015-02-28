@@ -35,7 +35,7 @@ public class Dragon {
     }
 
     public void setBorn(Date born) {
-        born = born;
+        this.born = born;
     }
 
     public String getRace() {
