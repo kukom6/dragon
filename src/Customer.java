@@ -7,7 +7,7 @@ public class Customer {
     private Long id;
     private String address;
     private String identityCard;
-    private int numberPhone;
+    private String numberPhone;
 
     public Customer() {
     }
@@ -44,11 +44,11 @@ public class Customer {
         this.address = address;
     }
 
-    public int getNumberPhone() {
+    public String getNumberPhone() {
         return numberPhone;
     }
 
-    public void setNumberPhone(int numberPhone) {
+    public void setNumberPhone(String numberPhone) {
         this.numberPhone = numberPhone;
     }
 

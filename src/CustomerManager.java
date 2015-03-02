@@ -16,7 +16,5 @@ public interface CustomerManager {
 
     public void updateCustomer(Customer customer);
 
-
     public void deleteCustomer(Customer customer);
-
 }
