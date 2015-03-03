@@ -7,46 +7,46 @@ import java.util.Date;
 public class LeaseManagerImpl implements LeaseManager {
     @Override
     public void createLease(Lease lease) {
-
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public Lease getLeaseByID(Long ID) {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public Collection<Customer> getAllLeases() {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public Collection<Customer> getAllCustomersByEndLease(Date endLease) {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public Collection<Customer> getAllCustomersByStartLease(Date startLease) {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public Collection<Customer> findLeasesForCustomer(Customer customer) {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public Collection<Customer> findLeasesForDragon(Dragon dragon) {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public void updateLease(Lease lease) {
-
+        throw new UnsupportedOperationException("not implemented");
     }
     
     @Override
     public void deleteLease(Lease lease) {
-
+        throw new UnsupportedOperationException("not implemented");
     }
 }

@@ -8,33 +8,33 @@ public class CustomerManagerImpl implements CustomerManager {
 
     @Override
     public void createCustomer(Customer customer) {
-
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public Customer getCustomerByID(Long ID) {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
 
     @Override
     public Collection<Customer> getAllCustomers() {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public Collection<Customer> getAllCustomersByName(String name) {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public void updateCustomer(Customer customer) {
-
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public void deleteCustomer(Customer customer) {
-
+        throw new UnsupportedOperationException("not implemented");
     }
 }
 

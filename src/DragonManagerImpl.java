@@ -11,36 +11,36 @@ public class DragonManagerImpl implements DragonManager {
 
     @Override
     public Dragon getDragonByID(Long ID) {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public Collection<Dragon> getAllDragon() {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public Collection<Dragon> getDragonsByName(String name) {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public Collection<Dragon> getDragonsByRace(String race) {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public Collection<Dragon> getDragonsByNumberOfHeads(int number) {
-        return null;
+        throw new UnsupportedOperationException("not implemented");
     }
 
    @Override
     public void updateDragon(Dragon dragon) {
-
+       throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
     public void deleteCustomer(Dragon dragon) {
-
+        throw new UnsupportedOperationException("not implemented");
     }
 }
