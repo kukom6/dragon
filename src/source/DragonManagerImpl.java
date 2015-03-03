@@ -1,40 +1,48 @@
+package source;
+
 import java.util.Collection;
 
 /**
  * Created by Matej on 23. 2. 2015.
  */
-public class CustomerManagerImpl implements CustomerManager {
+public class DragonManagerImpl implements DragonManager {
+    @Override
+    public void createDragon(Dragon dragon) {
 
+    }
 
     @Override
-    public void createCustomer(Customer customer) {
+    public Dragon getDragonByID(Long ID) {
         throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
-    public Customer getCustomerByID(Long ID) {
-        throw new UnsupportedOperationException("not implemented");
-    }
-
-
-    @Override
-    public Collection<Customer> getAllCustomers() {
+    public Collection<Dragon> getAllDragon() {
         throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
-    public Collection<Customer> getAllCustomersByName(String name) {
+    public Collection<Dragon> getDragonsByName(String name) {
         throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
+    public Collection<Dragon> getDragonsByRace(String race) {
         throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
-    public void deleteCustomer(Customer customer) {
+    public Collection<Dragon> getDragonsByNumberOfHeads(int number) {
+        throw new UnsupportedOperationException("not implemented");
+    }
+
+   @Override
+    public void updateDragon(Dragon dragon) {
+       throw new UnsupportedOperationException("not implemented");
+    }
+
+    @Override
+    public void deleteCustomer(Dragon dragon) {
         throw new UnsupportedOperationException("not implemented");
     }
 }
-
