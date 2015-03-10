@@ -83,7 +83,23 @@ public class CustomerManagerImplTest {
             //true
         }
 
+        customer=newCustomer("","Oravec","Brezno 123","SK321","+421 944 222 222"); //name empty string
+        try {
+            manager.createCustomer(customer);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
         customer=newCustomer("Tomas",null,"Brezno 123","SK321","+421 944 222 222"); //surname missing
+        try {
+            manager.createCustomer(customer);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        customer=newCustomer("Tomas","","Brezno 123","SK321","+421 944 222 222"); //surname empty string
         try {
             manager.createCustomer(customer);
             fail();
@@ -99,7 +115,23 @@ public class CustomerManagerImplTest {
             //true
         }
 
+        customer = newCustomer("Tomas","Oravec","Brezno 123","","+421 944 222 222");  // ID empty string
+        try {
+            manager.createCustomer(customer);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
         customer=newCustomer("Tomas","Oravec",null,"SK321",null); //wrong argument, must by one contact
+        try {
+            manager.createCustomer(customer);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        customer=newCustomer("Tomas","Oravec","","SK321",""); // both contact argument are empty string
         try {
             manager.createCustomer(customer);
             fail();
@@ -316,6 +348,15 @@ public class CustomerManagerImplTest {
             //true
         }
 
+        modifyCustomer=manager.getCustomerByID(customer1Id);  // change address to empty string (phone was null)
+        modifyCustomer.setAddress("");
+        try {
+            manager.updateCustomer(modifyCustomer);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
         modifyCustomer=manager.getCustomerByID(customer1Id);  // set phone and delete address
         modifyCustomer.setPhoneNumber("+421 944 222 222");
         modifyCustomer.setAddress(null);
@@ -323,6 +364,15 @@ public class CustomerManagerImplTest {
 
         modifyCustomer=manager.getCustomerByID(customer1Id);  // change phone to null (address was null)
         modifyCustomer.setPhoneNumber(null);
+        try {
+            manager.updateCustomer(modifyCustomer);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyCustomer=manager.getCustomerByID(customer1Id);  // change phone to empty string (address was null)
+        modifyCustomer.setPhoneNumber("");
         try {
             manager.updateCustomer(modifyCustomer);
             fail();
@@ -339,6 +389,15 @@ public class CustomerManagerImplTest {
             //true
         }
 
+        modifyCustomer=manager.getCustomerByID(customer1Id);  // change name to empty string
+        modifyCustomer.setName("");
+        try {
+            manager.updateCustomer(modifyCustomer);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
         modifyCustomer=manager.getCustomerByID(customer1Id);  // change surname to null
         modifyCustomer.setSurname(null);
         try {
@@ -348,8 +407,26 @@ public class CustomerManagerImplTest {
             //true
         }
 
+        modifyCustomer=manager.getCustomerByID(customer1Id);  // change surname to empty list
+        modifyCustomer.setSurname("");
+        try {
+            manager.updateCustomer(modifyCustomer);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
         modifyCustomer=manager.getCustomerByID(customer1Id);  // change id card to null
         modifyCustomer.setIdentityCard(null);
+        try {
+            manager.updateCustomer(modifyCustomer);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyCustomer=manager.getCustomerByID(customer1Id);  // change id card to empty list
+        modifyCustomer.setIdentityCard("");
         try {
             manager.updateCustomer(modifyCustomer);
             fail();
