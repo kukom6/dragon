@@ -7,6 +7,8 @@ import java.util.Date;
  * Created by Matej on 23. 2. 2015.
  */
 public class Lease {
+
+    private Long id;
     private BigDecimal price;
     private Date endLease;
     private Date startLease;

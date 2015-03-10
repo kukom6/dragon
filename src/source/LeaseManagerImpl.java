@@ -18,27 +18,27 @@ public class LeaseManagerImpl implements LeaseManager {
     }
 
     @Override
-    public Collection<Customer> getAllLeases() {
+    public Collection<Lease> getAllLeases() {
         throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
-    public Collection<Customer> getAllCustomersByEndLease(Date endLease) {
+    public Collection<Lease> getAllLeasesByEndDate(Date endLease) {
         throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
-    public Collection<Customer> getAllCustomersByStartLease(Date startLease) {
+    public Collection<Lease> getAllLeasesByStartDate(Date startLease) {
         throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
-    public Collection<Customer> findLeasesForCustomer(Customer customer) {
+    public Collection<Lease> findLeasesForCustomer(Customer customer) {
         throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
-    public Collection<Customer> findLeasesForDragon(Dragon dragon) {
+    public Collection<Lease> findLeasesForDragon(Dragon dragon) {
         throw new UnsupportedOperationException("not implemented");
     }
 

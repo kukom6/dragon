@@ -4,12 +4,12 @@ package source;
  * Created by Matej on 23. 2. 2015.
  */
 public class Customer {
+    private Long id;
     private String name;
     private String surname;
-    private Long id;
     private String address;
     private String identityCard;
-    private String numberPhone;
+    private String phoneNumber;
 
     public Customer() {
     }
@@ -46,12 +46,12 @@ public class Customer {
         this.address = address;
     }
 
-    public String getNumberPhone() {
-        return numberPhone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setNumberPhone(String numberPhone) {
-        this.numberPhone = numberPhone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getIdentityCard() {
@@ -60,5 +60,31 @@ public class Customer {
 
     public void setIdentityCard(String identityCard) {
         this.identityCard = identityCard;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Customer customer = (Customer) o;
+
+        if (address != null ? !address.equals(customer.address) : customer.address != null) return false;
+        if (!id.equals(customer.id)) return false;
+        if (!identityCard.equals(customer.identityCard)) return false;
+        if (!name.equals(customer.name)) return false;
+        if (!surname.equals(customer.surname)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + surname.hashCode();
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + identityCard.hashCode();
+        return result;
     }
 }

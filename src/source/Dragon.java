@@ -6,8 +6,8 @@ import java.util.Date;
  * Created by Matej on 23. 2. 2015.
  */
 public class Dragon {
-    private String name;
     private Long id;
+    private String name;
     private Date born;
     private String race;
     private int numberOfHeads;
@@ -62,6 +62,34 @@ public class Dragon {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Dragon dragon = (Dragon) o;
+
+        if (numberOfHeads != dragon.numberOfHeads) return false;
+        if (weight != dragon.weight) return false;
+        if (!born.equals(dragon.born)) return false;
+        if (!id.equals(dragon.id)) return false;
+        if (!name.equals(dragon.name)) return false;
+        if (!race.equals(dragon.race)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + born.hashCode();
+        result = 31 * result + race.hashCode();
+        result = 31 * result + numberOfHeads;
+        result = 31 * result + weight;
+        return result;
     }
 
 }

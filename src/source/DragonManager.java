@@ -8,9 +8,9 @@ import java.util.Collection;
 public interface DragonManager {
     void createDragon(Dragon dragon);
 
-    Dragon getDragonByID(Long ID);
+    Dragon getDragonById(Long ID);
 
-    Collection<Dragon> getAllDragon();
+    Collection<Dragon> getAllDragons();
 
     Collection<Dragon> getDragonsByName(String name);
 
@@ -20,5 +20,5 @@ public interface DragonManager {
 
     void updateDragon(Dragon dragon);
 
-    void deleteCustomer(Dragon dragon);
+    void deleteDragon(Dragon dragon);
 }

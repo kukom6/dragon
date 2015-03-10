@@ -1,6 +1,7 @@
 package source;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Matej on 23. 2. 2015.
@@ -12,12 +13,12 @@ public class DragonManagerImpl implements DragonManager {
     }
 
     @Override
-    public Dragon getDragonByID(Long ID) {
+    public Dragon getDragonById(Long ID) {
         throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
-    public Collection<Dragon> getAllDragon() {
+    public Collection<Dragon> getAllDragons() {
         throw new UnsupportedOperationException("not implemented");
     }
 
@@ -42,7 +43,7 @@ public class DragonManagerImpl implements DragonManager {
     }
 
     @Override
-    public void deleteCustomer(Dragon dragon) {
+    public void deleteDragon(Dragon dragon) {
         throw new UnsupportedOperationException("not implemented");
     }
 }

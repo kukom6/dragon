@@ -1,6 +1,7 @@
 package source;
 
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * Created by Matej on 23. 2. 2015.
@@ -11,15 +12,15 @@ public interface LeaseManager {
 
     public Lease getLeaseByID(Long ID);
 
-    public Collection<Customer> getAllLeases();
+    public Collection<Lease> getAllLeases();
 
-    public Collection<Customer> getAllCustomersByEndLease(java.util.Date endLease);
+    public Collection<Lease> getAllLeasesByStartDate(Date endLease);
 
-    public Collection<Customer> getAllCustomersByStartLease(java.util.Date startLease);
+    public Collection<Lease> getAllLeasesByEndDate(Date startLease);
 
-    public Collection<Customer> findLeasesForCustomer(Customer customer);
+    public Collection<Lease> findLeasesForCustomer(Customer customer);
 
-    public Collection<Customer> findLeasesForDragon(Dragon dragon);
+    public Collection<Lease> findLeasesForDragon(Dragon dragon);
 
     public void updateLease(Lease lease);
 
