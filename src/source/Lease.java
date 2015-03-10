@@ -17,7 +17,7 @@ public class Lease {
     private Date returnDate;
 
     public Lease(){
-
+        throw new UnsupportedOperationException("not implemented");
     }
 
     public BigDecimal getPrice() {

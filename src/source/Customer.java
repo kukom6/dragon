@@ -12,6 +12,7 @@ public class Customer {
     private String phoneNumber;
 
     public Customer() {
+        throw new UnsupportedOperationException("not implemented");
     }
 
     public String getName() {
@@ -34,9 +35,7 @@ public class Customer {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setId(Long id) {this.id = id;}
 
     public String getAddress() {
         return address;

@@ -14,6 +14,7 @@ public class Dragon {
     private int weight;
 
     public Dragon() {
+        throw new UnsupportedOperationException("not implemented");
     }
 
     public String getName() {
