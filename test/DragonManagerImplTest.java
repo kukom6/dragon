@@ -160,7 +160,7 @@ public class DragonManagerImplTest {
     }
 
     @Test
-    public void testGetAllDragon() throws Exception {
+    public void testGetAllDragons() throws Exception {
         assertTrue(manager.getAllDragons().isEmpty());
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
@@ -246,6 +246,7 @@ public class DragonManagerImplTest {
         assertDeepEquals(dragon3, list.get(1));
     }
 
+    //TODO: compare with list
     @Test
     public void testGetDragonsByNumberOfHeads() throws Exception {
         assertTrue(manager.getDragonsByNumberOfHeads(2).isEmpty());
@@ -279,6 +280,7 @@ public class DragonManagerImplTest {
         assertDeepEquals(dragon3, list.get(1));
     }
 
+    //TODO: get after update
     @Test
     public void testUpdateDragon() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
