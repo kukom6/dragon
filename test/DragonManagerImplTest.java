@@ -257,27 +257,26 @@ public class DragonManagerImplTest {
         manager.createDragon(dragon3);
 
         List<Dragon> list = new ArrayList<Dragon>(manager.getDragonsByNumberOfHeads(2));
+        List<Dragon> expectedList = Arrays.asList(dragon2);
         assertEquals(1, list.size());
-        assertEquals(dragon2, list.get(0));
-        assertDeepEquals(dragon2, list.get(0));
+        assertEquals(expectedList, list);
+        assertDeepEquals(expectedList, list);
 
         list = new ArrayList<Dragon>(manager.getDragonsByNumberOfHeads(5));
+        expectedList = Arrays.asList(dragon1, dragon3);
         assertEquals(2, list.size());
 
         assertNotEquals(list.get(0), list.get(1));
         assertDeepNotEquals(list.get(0), list.get(1));
 
+        Collections.sort(expectedList, idComparator);
         Collections.sort(list, idComparator);
 
-        assertEquals(dragon1, list.get(0));
-        assertDeepEquals(dragon1, list.get(0));
-
-        assertEquals(dragon3, list.get(1));
-        assertDeepEquals(dragon3, list.get(1));
+        assertEquals(expectedList, list);
+        assertDeepEquals(expectedList, list);
     }
 
-    //TODO: get after update
-    @Test
+   @Test
     public void testUpdateDragon() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Dragon dragon = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "burster", 5, 150);
@@ -290,42 +289,43 @@ public class DragonManagerImplTest {
         dragon = manager.getDragonById(dragonId);
         dragon.setName("Bad dragon");
         manager.updateDragon(dragon);
+       dragon = manager.getDragonById(dragonId);
         assertEquals("Bad dragon", dragon.getName());
         assertEquals(sdf.parse("15-03-1994 12:00:00"), dragon.getBorn());
         assertEquals("burster", dragon.getRace());
         assertEquals(5, dragon.getNumberOfHeads());
         assertEquals(150, dragon.getWeight());
 
-        dragon = manager.getDragonById(dragonId);
         dragon.setBorn(sdf.parse("15-03-1994 12:30:00"));
         manager.updateDragon(dragon);
+        dragon = manager.getDragonById(dragonId);
         assertEquals("Bad dragon", dragon.getName());
         assertEquals(sdf.parse("15-03-1994 12:30:00"), dragon.getBorn());
         assertEquals("burster", dragon.getRace());
         assertEquals(5, dragon.getNumberOfHeads());
         assertEquals(150, dragon.getWeight());
 
-        dragon = manager.getDragonById(dragonId);
         dragon.setRace("damager");
         manager.updateDragon(dragon);
+        dragon = manager.getDragonById(dragonId);
         assertEquals("Bad dragon", dragon.getName());
         assertEquals(sdf.parse("15-03-1994 12:30:00"), dragon.getBorn());
         assertEquals("damager", dragon.getRace());
         assertEquals(5, dragon.getNumberOfHeads());
         assertEquals(150, dragon.getWeight());
 
-        dragon = manager.getDragonById(dragonId);
         dragon.setNumberOfHeads(4);
         manager.updateDragon(dragon);
+        dragon = manager.getDragonById(dragonId);
         assertEquals("Bad dragon", dragon.getName());
         assertEquals(sdf.parse("15-03-1994 12:30:00"), dragon.getBorn());
         assertEquals("damager", dragon.getRace());
         assertEquals(4, dragon.getNumberOfHeads());
         assertEquals(150, dragon.getWeight());
 
-        dragon = manager.getDragonById(dragonId);
         dragon.setWeight(120);
         manager.updateDragon(dragon);
+        dragon = manager.getDragonById(dragonId);
         assertEquals("Bad dragon", dragon.getName());
         assertEquals(sdf.parse("15-03-1994 12:30:00"), dragon.getBorn());
         assertEquals("damager", dragon.getRace());
