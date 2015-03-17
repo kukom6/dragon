@@ -6,6 +6,7 @@ import java.util.*;
 /**
  * Created by Matej on 23. 2. 2015.
  */
+
 public class CustomerManagerImplTest {
 
 
@@ -46,7 +47,9 @@ public class CustomerManagerImplTest {
 
         Customer getCustomer1 = manager.getCustomerByID(customer1Id);
         assertEquals(customer1, getCustomer1);
+        assertDeepEquals(customer1,getCustomer1);
         assertNotSame(customer1, getCustomer1);
+
         assertNotEquals(customer2, getCustomer1);
         assertNotSame(customer2, getCustomer1);
 
@@ -147,10 +150,12 @@ public class CustomerManagerImplTest {
 
         Customer getCustomer1 = manager.getCustomerByID(customer1.getId());
         assertEquals(customer1, getCustomer1);
+        assertDeepEquals(customer1,getCustomer1);
         assertNotSame(customer1, getCustomer1);
 
         Customer getCustomer2 = manager.getCustomerByID(customer2.getId());
         assertEquals(customer2, getCustomer2);
+        assertDeepEquals(customer2,getCustomer2);
         assertNotSame(customer2, getCustomer2);
 
         Customer getCustomer3=manager.getCustomerByID(11l);
@@ -188,7 +193,7 @@ public class CustomerManagerImplTest {
         actual.addAll(allCustomers);
 
         Collections.sort(sample,idComparator);
-        Collections.sort(actual,idComparator);
+        Collections.sort(actual, idComparator);
 
         assertEquals(sample,actual);
 
@@ -314,7 +319,8 @@ public class CustomerManagerImplTest {
         assertEquals("SK66", modifyCustomer.getIdentityCard());
         assertNull(modifyCustomer.getPhoneNumber());
 
-        assertEquals(customer2,manager.getCustomerByID(customer2Id)); //consistency
+
+        assertDeepEquals(customer2,manager.getCustomerByID(customer2Id)); //consistency
 
     }
 
@@ -454,7 +460,7 @@ public class CustomerManagerImplTest {
 
         assertNull(manager.getCustomerByID(customer1.getId()));
         assertNotNull(manager.getCustomerByID(customer2.getId()));
-        assertEquals(customer2,manager.getCustomerByID(customer2.getId()));    //consistency
+        assertDeepEquals(customer2, manager.getCustomerByID(customer2.getId())); //consistency
 
     }
 
@@ -492,7 +498,7 @@ public class CustomerManagerImplTest {
             //OK
         }
 
-        assertEquals(customer1,manager.getCustomerByID(customer1Id));  //consistency
+        assertDeepEquals(customer1,manager.getCustomerByID(customer1Id)); //consistency
 
     }
 
@@ -514,4 +520,12 @@ public class CustomerManagerImplTest {
         }
     };
 
+    private void assertDeepEquals(Customer first,Customer second){
+        assertEquals(first.getId(), second.getId());
+        assertEquals(first.getName(), second.getName());
+        assertEquals(first.getSurname(), second.getSurname());
+        assertEquals(first.getIdentityCard(), second.getIdentityCard());
+        assertEquals(first.getAddress(), second.getAddress());
+        assertEquals(first.getPhoneNumber(), second.getPhoneNumber());
+    }
 }
