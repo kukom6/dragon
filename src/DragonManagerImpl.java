@@ -1,7 +1,4 @@
-package source;
-
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by Matej on 23. 2. 2015.

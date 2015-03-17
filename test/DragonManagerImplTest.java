@@ -2,8 +2,8 @@ package test;
 
 import org.junit.Before;
 import org.junit.Test;
-import source.Dragon;
-import source.DragonManagerImpl;
+import Dragon;
+import DragonManagerImpl;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

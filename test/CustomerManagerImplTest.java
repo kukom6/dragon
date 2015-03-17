@@ -3,8 +3,8 @@ package test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import source.Customer;
-import source.CustomerManagerImpl;
+import Customer;
+import CustomerManagerImpl;
 import java.util.*;
 
 /**
