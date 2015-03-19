@@ -242,7 +242,6 @@ public class DragonManagerImplTest {
         assertDeepEquals(dragon3, list.get(1));
     }
 
-    //TODO: compare with list
     @Test
     public void testGetDragonsByNumberOfHeads() throws Exception {
         assertTrue(manager.getDragonsByNumberOfHeads(2).isEmpty());
@@ -503,7 +502,7 @@ public class DragonManagerImplTest {
 
         @Override
         public int compare(Dragon o1, Dragon o2) {
-            return Long.valueOf(o1.getId()).compareTo(Long.valueOf(o2.getId()));
+            return o1.getId().compareTo(o2.getId());
         }
     };
 
