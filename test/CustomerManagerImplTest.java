@@ -196,6 +196,7 @@ public class CustomerManagerImplTest {
         Collections.sort(actual, idComparator);
 
         assertEquals(sample,actual);
+        assertDeepEquals(sample,actual);
 
     }
 
@@ -227,6 +228,7 @@ public class CustomerManagerImplTest {
         Collections.sort(actual,idComparator);
 
         assertEquals(sample,actual);
+        assertDeepEquals(sample,actual);
 
         allCustomersByName=manager.getAllCustomersByName("Jozef"); // empty list
         assertTrue(allCustomersByName.isEmpty());
@@ -516,7 +518,8 @@ public class CustomerManagerImplTest {
 
         @Override
         public int compare(Customer o1, Customer o2) {
-            return Long.valueOf(o1.getId()).compareTo(Long.valueOf(o2.getId()));
+            return o1.getId().compareTo(o2.getId());
+
         }
     };
 
@@ -527,5 +530,13 @@ public class CustomerManagerImplTest {
         assertEquals(first.getIdentityCard(), second.getIdentityCard());
         assertEquals(first.getAddress(), second.getAddress());
         assertEquals(first.getPhoneNumber(), second.getPhoneNumber());
+    }
+
+    private void assertDeepEquals(List<Customer> first, List<Customer> second){
+        for (int i = 0; i < first.size(); i++) {
+            Customer firstSample=first.get(i);
+            Customer secondSample=second.get(i);
+            assertDeepEquals(firstSample,secondSample);
+        }
     }
 }
