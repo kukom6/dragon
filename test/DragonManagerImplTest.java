@@ -1,18 +1,45 @@
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 import static org.junit.Assert.*;
 
 public class DragonManagerImplTest {
 
     private DragonManagerImpl manager;
 
+    @Resource(name="jdbc/my")
+    private DataSource dataSource;
+
     @Before
     public void setUp() throws Exception{
-        manager = new DragonManagerImpl();
+        BasicDataSource bds = new BasicDataSource();
+        bds.setUrl("jdbc:derby:memory:GraveManagerTest;create=true");
+        this.dataSource = bds;
+        //create new empty table before every test
+        try (Connection conn = bds.getConnection()) {
+            conn.prepareStatement("CREATE TABLE DRAGONS ("
+                    + "ID BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,"
+                    + "\"NAME\" VARCHAR(50),"
+                    + "BORN TIMESTAMP,"
+                    + "RACE VARCHAR(50),"
+                    + "HEADS INTEGER,"
+                    + "WEIGHT INTEGER)").executeUpdate();
+        }
+        manager = new DragonManagerImpl(bds);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        try (Connection con = dataSource.getConnection()) {
+            con.prepareStatement("DROP TABLE DRAGONS").executeUpdate();
+        }
     }
 
     @Test
@@ -167,7 +194,7 @@ public class DragonManagerImplTest {
         manager.createDragon(dragon2);
 
         List<Dragon> expected = Arrays.asList(dragon1, dragon2);
-        List<Dragon> actual = new ArrayList<Dragon>(manager.getAllDragons());
+        List<Dragon> actual = new ArrayList<>(manager.getAllDragons());
 
         Collections.sort(expected, idComparator);
         Collections.sort(actual, idComparator);
@@ -189,24 +216,22 @@ public class DragonManagerImplTest {
         manager.createDragon(dragon2);
         manager.createDragon(dragon3);
 
-        List<Dragon> list = new ArrayList<Dragon>(manager.getDragonsByName("Nice dragon"));
-        assertEquals(1, list.size());
-        assertEquals(dragon1, list.get(0));
-        assertDeepEquals(dragon1, list.get(0));
+        List<Dragon> actual = new ArrayList<>(manager.getDragonsByName("Nice dragon"));
+        assertEquals(1, actual.size());
+        assertEquals(dragon1, actual.get(0));
+        assertDeepEquals(dragon1, actual.get(0));
 
-        list = new ArrayList<Dragon>(manager.getDragonsByName("Ugly Dragon"));
-        assertEquals(2, list.size());
+        List<Dragon> expected = Arrays.asList(dragon2, dragon3);
+        actual = new ArrayList<>(manager.getDragonsByName("Ugly dragon"));
+        assertEquals(2, actual.size());
 
-        assertNotEquals(list.get(0), list.get(1));
-        assertDeepNotEquals(list.get(0), list.get(1));
+        assertNotEquals(actual.get(0), actual.get(1));
 
-        Collections.sort(list, idComparator);
+        Collections.sort(actual, idComparator);
+        Collections.sort(expected, idComparator);
 
-        assertEquals(dragon2, list.get(0));
-        assertDeepEquals(dragon2, list.get(0));
-
-        assertEquals(dragon3, list.get(1));
-        assertDeepEquals(dragon3, list.get(1));
+        assertEquals(expected, actual);
+        assertDeepEquals(expected, actual);
     }
 
     @Test
@@ -215,31 +240,30 @@ public class DragonManagerImplTest {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Dragon dragon1 = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "burster", 5, 150);
-        Dragon dragon2 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "scrathcer", 2, 100);
+        Dragon dragon2 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "scratcher", 2, 100);
         Dragon dragon3 = newDragon("Ugly dragon", sdf.parse("17-03-1994 12:00:00"), "burster", 5, 120);
 
         manager.createDragon(dragon1);
         manager.createDragon(dragon2);
         manager.createDragon(dragon3);
 
-        List<Dragon> list = new ArrayList<Dragon>(manager.getDragonsByRace("scratcher"));
-        assertEquals(1, list.size());
-        assertEquals(dragon2, list.get(0));
-        assertDeepEquals(dragon2, list.get(0));
+        List<Dragon> actual = new ArrayList<>(manager.getDragonsByRace("scratcher"));
+        assertEquals(1, actual.size());
+        assertEquals(dragon2, actual.get(0));
+        assertDeepEquals(dragon2, actual.get(0));
 
-        list = new ArrayList<Dragon>(manager.getDragonsByName("Ugly Dragon"));
-        assertEquals(2, list.size());
+        List<Dragon> expected = Arrays.asList(dragon1, dragon3);
+        actual = new ArrayList<>(manager.getDragonsByRace("burster"));
+        assertEquals(2, actual.size());
 
-        assertNotEquals(list.get(0), list.get(1));
-        assertDeepNotEquals(list.get(0), list.get(1));
+        assertNotEquals(actual.get(0), actual.get(1));
 
-        Collections.sort(list, idComparator);
 
-        assertEquals(dragon1, list.get(0));
-        assertDeepEquals(dragon1, list.get(0));
+        Collections.sort(actual, idComparator);
+        Collections.sort(expected, idComparator);
 
-        assertEquals(dragon3, list.get(1));
-        assertDeepEquals(dragon3, list.get(1));
+        assertEquals(expected, actual);
+        assertDeepEquals(expected, actual);
     }
 
     @Test
@@ -255,27 +279,26 @@ public class DragonManagerImplTest {
         manager.createDragon(dragon2);
         manager.createDragon(dragon3);
 
-        List<Dragon> list = new ArrayList<Dragon>(manager.getDragonsByNumberOfHeads(2));
+        List<Dragon> actual = new ArrayList<>(manager.getDragonsByNumberOfHeads(2));
         List<Dragon> expectedList = Arrays.asList(dragon2);
-        assertEquals(1, list.size());
-        assertEquals(expectedList, list);
-        assertDeepEquals(expectedList, list);
+        assertEquals(1, actual.size());
+        assertEquals(expectedList, actual);
+        assertDeepEquals(expectedList, actual);
 
-        list = new ArrayList<Dragon>(manager.getDragonsByNumberOfHeads(5));
         expectedList = Arrays.asList(dragon1, dragon3);
-        assertEquals(2, list.size());
+        actual = new ArrayList<>(manager.getDragonsByNumberOfHeads(5));
+        assertEquals(2, actual.size());
 
-        assertNotEquals(list.get(0), list.get(1));
-        assertDeepNotEquals(list.get(0), list.get(1));
+        assertNotEquals(actual.get(0), actual.get(1));
 
         Collections.sort(expectedList, idComparator);
-        Collections.sort(list, idComparator);
+        Collections.sort(actual, idComparator);
 
-        assertEquals(expectedList, list);
-        assertDeepEquals(expectedList, list);
+        assertEquals(expectedList, actual);
+        assertDeepEquals(expectedList, actual);
     }
 
-   @Test
+    @Test
     public void testUpdateDragon() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Dragon dragon = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "burster", 5, 150);
@@ -288,7 +311,7 @@ public class DragonManagerImplTest {
         dragon = manager.getDragonById(dragonId);
         dragon.setName("Bad dragon");
         manager.updateDragon(dragon);
-       dragon = manager.getDragonById(dragonId);
+        dragon = manager.getDragonById(dragonId);
         assertEquals("Bad dragon", dragon.getName());
         assertEquals(sdf.parse("15-03-1994 12:00:00"), dragon.getBorn());
         assertEquals("burster", dragon.getRace());

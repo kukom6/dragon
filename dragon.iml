@@ -24,5 +24,6 @@
     <orderEntry type="library" name="commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" name="org.apache.commons:commons-dbcp2:2.1" level="project" />
     <orderEntry type="library" name="org.apache.commons:commons-pool2:2.3" level="project" />
+    <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.10" level="project" />
   </component>
 </module>

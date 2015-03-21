@@ -1,3 +1,5 @@
+import java.sql.*;
+
 /**
  * Created by Matej on 23. 2. 2015.
  */
@@ -9,9 +11,9 @@ public class Customer {
     private String identityCard;
     private String phoneNumber;
 
-    public Customer() {
+    /*public Customer() {
         throw new UnsupportedOperationException("not implemented");
-    }
+    }*/
 
     public String getName() {
         return name;
@@ -83,5 +85,22 @@ public class Customer {
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + identityCard.hashCode();
         return result;
+    }
+
+    public static void main(String[] args) throws Exception{
+        String url="jdbc:derby://localhost:1527/dragonDB";
+
+        try (Connection conn = DriverManager.getConnection(url, "mitko", "123456789")) {
+            try (PreparedStatement st = conn.prepareStatement("SELECT usr FROM DRAGONDB.persons")) {
+                st.execute();
+                ResultSet rs = st.getResultSet();
+
+                while (rs.next()) {
+                    String a = rs.getString(1);
+                    System.out.println(a);
+                }
+
+            }
+        }
     }
 }
