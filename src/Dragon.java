@@ -1,8 +1,5 @@
 import java.util.Date;
 
-/**
- * Created by Matej on 23. 2. 2015.
- */
 public class Dragon {
     private Long id;
     private String name;
@@ -11,9 +8,9 @@ public class Dragon {
     private int numberOfHeads;
     private int weight;
 
-    public Dragon() {
+    /*public Dragon() {
         throw new UnsupportedOperationException("not implemented");
-    }
+    }*/
 
     public String getName() {
         return name;

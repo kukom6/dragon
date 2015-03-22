@@ -1,5 +1,7 @@
 /**
- * Created by Matej on 21. 3. 2015.
+ * This exception indicates service failure.
+ *
+ * @author Petr Adamek
  */
 public class ServiceFailureException extends RuntimeException {
 

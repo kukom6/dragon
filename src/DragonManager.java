@@ -6,7 +6,7 @@ import java.util.Collection;
 public interface DragonManager {
     void createDragon(Dragon dragon);
 
-    Dragon getDragonById(Long ID);
+    Dragon getDragonById(Long id);
 
     Collection<Dragon> getAllDragons();
 
