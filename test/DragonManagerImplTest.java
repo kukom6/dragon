@@ -57,15 +57,15 @@ public class DragonManagerImplTest {
         assertNotSame(dragon, result);
         assertDeepEquals(dragon, result);
 
-
         Dragon anotherDragon = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
 
         manager.createDragon(anotherDragon);
 
         Long anotherDragonId = anotherDragon.getId();
-        assertNotNull(anotherDragonId);
 
         Dragon anotherResult = manager.getDragonById(anotherDragonId);
+        result = manager.getDragonById(dragonId);
+
         assertNotEquals(result, anotherResult);
         assertDeepNotEquals(result, anotherResult);
     }
@@ -171,6 +171,13 @@ public class DragonManagerImplTest {
     public void testGetDragonByID() throws Exception {
         assertNull(manager.getDragonById(1l));
 
+        try {
+            manager.getDragonById(null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Dragon dragon = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "trhac", 5, 150);
 
@@ -207,25 +214,41 @@ public class DragonManagerImplTest {
     public void testGetDragonsByName() throws Exception {
         assertTrue(manager.getDragonsByName("Matej").isEmpty());
 
+        try {
+            manager.getDragonsByName(null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+
+        try {
+            manager.getDragonsByName("");
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Dragon dragon1 = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "burster", 5, 150);
-        Dragon dragon2 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "scrathcer", 2, 100);
+        Dragon dragon2 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "scratcher", 2, 100);
         Dragon dragon3 = newDragon("Ugly dragon", sdf.parse("17-03-1994 12:00:00"), "burster", 5, 120);
 
         manager.createDragon(dragon1);
         manager.createDragon(dragon2);
         manager.createDragon(dragon3);
 
+        List<Dragon> expected = Arrays.asList(dragon1);
         List<Dragon> actual = new ArrayList<>(manager.getDragonsByName("Nice dragon"));
         assertEquals(1, actual.size());
-        assertEquals(dragon1, actual.get(0));
-        assertDeepEquals(dragon1, actual.get(0));
+        assertEquals(expected, actual);
+        assertDeepEquals(expected, actual);
 
-        List<Dragon> expected = Arrays.asList(dragon2, dragon3);
+        expected = Arrays.asList(dragon2, dragon3);
         actual = new ArrayList<>(manager.getDragonsByName("Ugly dragon"));
         assertEquals(2, actual.size());
 
         assertNotEquals(actual.get(0), actual.get(1));
+        assertDeepNotEquals(actual.get(0), actual.get(1));
 
         Collections.sort(actual, idComparator);
         Collections.sort(expected, idComparator);
@@ -238,6 +261,20 @@ public class DragonManagerImplTest {
     public void testGetDragonsByRace() throws Exception {
         assertTrue(manager.getDragonsByRace("Matej").isEmpty());
 
+        try {
+            manager.getDragonsByRace(null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+
+        try {
+            manager.getDragonsByRace("");
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Dragon dragon1 = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "burster", 5, 150);
         Dragon dragon2 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "scratcher", 2, 100);
@@ -247,17 +284,18 @@ public class DragonManagerImplTest {
         manager.createDragon(dragon2);
         manager.createDragon(dragon3);
 
+        List<Dragon> expected = Arrays.asList(dragon2);
         List<Dragon> actual = new ArrayList<>(manager.getDragonsByRace("scratcher"));
         assertEquals(1, actual.size());
-        assertEquals(dragon2, actual.get(0));
-        assertDeepEquals(dragon2, actual.get(0));
+        assertEquals(expected, actual);
+        assertDeepEquals(expected, actual);
 
-        List<Dragon> expected = Arrays.asList(dragon1, dragon3);
+        expected = Arrays.asList(dragon1, dragon3);
         actual = new ArrayList<>(manager.getDragonsByRace("burster"));
         assertEquals(2, actual.size());
 
         assertNotEquals(actual.get(0), actual.get(1));
-
+        assertDeepNotEquals(actual.get(0), actual.get(1));
 
         Collections.sort(actual, idComparator);
         Collections.sort(expected, idComparator);
@@ -269,6 +307,13 @@ public class DragonManagerImplTest {
     @Test
     public void testGetDragonsByNumberOfHeads() throws Exception {
         assertTrue(manager.getDragonsByNumberOfHeads(2).isEmpty());
+
+        try {
+            manager.getDragonsByNumberOfHeads(-1);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Dragon dragon1 = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "burster", 5, 150);
@@ -290,6 +335,7 @@ public class DragonManagerImplTest {
         assertEquals(2, actual.size());
 
         assertNotEquals(actual.get(0), actual.get(1));
+        assertDeepNotEquals(actual.get(0), actual.get(1));
 
         Collections.sort(expectedList, idComparator);
         Collections.sort(actual, idComparator);
@@ -557,11 +603,15 @@ public class DragonManagerImplTest {
     }
 
     private void assertDeepNotEquals(Dragon expected, Dragon actual){
-        assertNotEquals(expected.getId(), actual.getId());
-        assertNotEquals(expected.getBorn(), actual.getBorn());
-        assertNotEquals(expected.getName(), actual.getName());
-        assertNotEquals(expected.getNumberOfHeads(), actual.getNumberOfHeads());
-        assertNotEquals(expected.getRace(), actual.getRace());
-        assertNotEquals(expected.getWeight(), actual.getWeight());
+        boolean res = true;
+
+        if (expected.getNumberOfHeads() != actual.getNumberOfHeads()) res = false;
+        if (expected.getWeight() != actual.getWeight()) res = false;
+        if (!expected.getBorn().equals(actual.getBorn()))res = false;
+        if (!expected.getId().equals(actual.getId())) res = false;
+        if (!expected.getName().equals(actual.getName())) res = false;
+        if (!expected.getRace().equals(actual.getRace())) res = false;
+
+        assertFalse(res);
     }
 }

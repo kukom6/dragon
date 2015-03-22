@@ -23,31 +23,9 @@ public class DragonManagerImpl implements DragonManager {
 
     @Override
     public void createDragon(Dragon dragon) throws ServiceFailureException {
-        if (dragon == null) {
-            throw new IllegalArgumentException("dragon is null");
-        }
+        checkDragon(dragon);
         if (dragon.getId() != null) {
-            throw new IllegalArgumentException("dragon id is already set");
-        }
-        if (dragon.getName() == "" || dragon.getName() == null) {
-            throw new IllegalArgumentException("dragon name is emptystring or null");
-        }
-
-        Date dateNow = new Date();
-        if(dragon.getBorn().compareTo(dateNow) > 0){
-            throw new IllegalArgumentException("born date is in future");
-        }
-
-        if (dragon.getRace() == "" || dragon.getRace() == null) {
-            throw new IllegalArgumentException("dragon race is emptystring or null");
-        }
-
-        if(dragon.getNumberOfHeads() <= 0){
-            throw new IllegalArgumentException("dragon number of heads is negative or zero");
-        }
-
-        if(dragon.getWeight() <= 0){
-            throw new IllegalArgumentException("dragon weight is negative or zero");
+            throw new IllegalArgumentException("dragon id is already created");
         }
 
         try (Connection conn = dataSource.getConnection()) {
@@ -61,7 +39,7 @@ public class DragonManagerImpl implements DragonManager {
 
                 int addedRows = st.executeUpdate();
                 if (addedRows != 1) {
-                    throw new ServiceFailureException("Internal Error: More rows inserted when trying to insert grave " + dragon);
+                    throw new ServiceFailureException("Internal Error: More rows inserted when trying to insert dragon " + dragon);
                 }
 
                 ResultSet keyRS = st.getGeneratedKeys();
@@ -70,6 +48,32 @@ public class DragonManagerImpl implements DragonManager {
         } catch (SQLException ex) {
             log.error("db connection problem", ex);
             throw new ServiceFailureException("Error when creating dragons", ex);
+        }
+    }
+
+    private void checkDragon(Dragon dragon){
+        if (dragon == null) {
+            throw new IllegalArgumentException("dragon is null");
+        }
+        if (dragon.getName() == null || dragon.getName().equals("")) {
+            throw new IllegalArgumentException("dragon name is emptystring or null");
+        }
+
+        Date dateNow = new Date();
+        if(dragon.getBorn().compareTo(dateNow) > 0){
+            throw new IllegalArgumentException("born date is in future");
+        }
+
+        if (dragon.getRace() == null || dragon.getRace().equals("")) {
+            throw new IllegalArgumentException("dragon race is emptystring or null");
+        }
+
+        if(dragon.getNumberOfHeads() <= 0){
+            throw new IllegalArgumentException("dragon number of heads is negative or zero");
+        }
+
+        if(dragon.getWeight() <= 0){
+            throw new IllegalArgumentException("dragon weight is negative or zero");
         }
     }
 
@@ -153,6 +157,10 @@ public class DragonManagerImpl implements DragonManager {
 
     @Override
     public Collection<Dragon> getDragonsByName(String name) throws ServiceFailureException {
+        if(name == null || name.equals("")){
+            throw new IllegalArgumentException("name is null or empty string");
+        }
+
         try(Connection conn = dataSource.getConnection()){
             try(PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE \"NAME\"=?")){
                 st.setString(1,name);
@@ -171,6 +179,10 @@ public class DragonManagerImpl implements DragonManager {
 
     @Override
     public Collection<Dragon> getDragonsByRace(String race) throws ServiceFailureException {
+        if(race == null || race.equals("")){
+            throw new IllegalArgumentException("race is null or empty string");
+        }
+
         try(Connection conn = dataSource.getConnection()){
             try(PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE RACE=?")){
                 st.setString(1,race);
@@ -189,6 +201,9 @@ public class DragonManagerImpl implements DragonManager {
 
     @Override
     public Collection<Dragon> getDragonsByNumberOfHeads(int number) throws ServiceFailureException {
+        if(number <= 0){
+            throw new IllegalArgumentException("Number of heads is negative or zero");
+        }
         try(Connection conn = dataSource.getConnection()){
             try(PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE HEADS=?")){
                 st.setInt(1,number);
@@ -207,31 +222,9 @@ public class DragonManagerImpl implements DragonManager {
 
    @Override
     public void updateDragon(Dragon dragon) throws ServiceFailureException {
-       if (dragon == null) {
-           throw new IllegalArgumentException("dragon is null");
-       }
+       checkDragon(dragon);
        if (dragon.getId() == null) {
-           throw new IllegalArgumentException("dragon id is already set");
-       }
-       if (dragon.getName() == "" || dragon.getName() == null) {
-           throw new IllegalArgumentException("dragon name is emptystring or null");
-       }
-
-       Date dateNow = new Date();
-       if(dragon.getBorn().compareTo(dateNow) > 0){
-           throw new IllegalArgumentException("born date is in future");
-       }
-
-       if (dragon.getRace() == "" || dragon.getRace() == null) {
-           throw new IllegalArgumentException("dragon race is emptystring or null");
-       }
-
-       if(dragon.getNumberOfHeads() <= 0){
-           throw new IllegalArgumentException("dragon number of heads is negative or zero");
-       }
-
-       if(dragon.getWeight() <= 0){
-           throw new IllegalArgumentException("dragon weight is negative or zero");
+           throw new IllegalArgumentException("dragon id is null");
        }
 
        try(Connection conn = dataSource.getConnection()){
@@ -273,4 +266,6 @@ public class DragonManagerImpl implements DragonManager {
             throw new ServiceFailureException("Error when deleting dragon", ex);
         }
     }
+
+
 }
