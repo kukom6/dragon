@@ -1,3 +1,4 @@
+
 import java.util.Collection;
 
 /**
@@ -7,12 +8,13 @@ public interface CustomerManager {
 
     public void createCustomer(Customer customer);
 
-    public Customer getCustomerByID(Long ID);
+    public Customer getCustomerByID(Long id);
 
+    public Customer getCustomerByIDCard(String idCard);
 
     public Collection<Customer> getAllCustomers();
 
-    public Collection<Customer> getAllCustomersByName(String name);
+    public Collection<Customer> getAllCustomersByName(String name,String surname);
 
     public void updateCustomer(Customer customer);
 

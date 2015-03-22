@@ -10,7 +10,6 @@ public class Customer {
     private String phoneNumber;
 
     public Customer() {
-        throw new UnsupportedOperationException("not implemented");
     }
 
     public String getName() {

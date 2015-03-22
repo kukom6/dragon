@@ -1,23 +1,52 @@
 import static org.junit.Assert.*;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
- * Created by Matej on 23. 2. 2015.
+ * Created by Matej on 22. 3. 2015.
  */
 
 public class CustomerManagerImplTest {
 
 
     private CustomerManagerImpl manager;
+    private DataSource dataSource;
 
     @Before
-    public void setUp() {
-        manager = new CustomerManagerImpl();
+    public void setUp() throws SQLException{
+        BasicDataSource bds = new BasicDataSource();
+        bds.setUrl("jdbc:derby://localhost:1527/dragonDB");
+        this.dataSource = bds;
+        //create new empty table before every test
+        try (Connection conn = bds.getConnection()) {
+            conn.prepareStatement("CREATE TABLE CUSTOMERS ("
+                    + "ID BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,"
+                    + "NAME  VARCHAR(50),"
+                    + "SURNAME  VARCHAR(50),"
+                    + "ADDRESS  VARCHAR(100),"
+                    + "IDENTITYCARD VARCHAR(20) UNIQUE,"
+                    + "PHONENUMBER VARCHAR(20))").executeUpdate();
+
+            manager = new CustomerManagerImpl(bds);
+        }
     }
 
-    @org.junit.Test
+    @After
+    public void tearDown() throws SQLException {
+        try (Connection con = dataSource.getConnection()) {
+            con.prepareStatement("DROP TABLE CUSTOMERS").executeUpdate();
+        }
+    }
+
+    @Test
     public void testCreateCustomer() throws Exception {
 
         Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
@@ -56,7 +85,7 @@ public class CustomerManagerImplTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testCreateCustomerWithWrongArgument() throws Exception {
         try {
             manager.createCustomer(null); //null
@@ -137,9 +166,35 @@ public class CustomerManagerImplTest {
         } catch (IllegalArgumentException ex) {
             //true
         }
+
+        customer=newCustomer("Tomas","Oravec",null,"SK321",""); // both contact argument are empty string or null
+        try {
+            manager.createCustomer(customer);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        customer=newCustomer("Tomas","Oravec","","SK321",null); // both contact argument are empty string or null
+        try {
+            manager.createCustomer(customer);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+        customer=newCustomer("Tomas","Oravec","Bratislava 8","SK321","+420586985");
+        Customer customer2;
+        customer2=newCustomer("Juraj","Blahovec","Brno 20","SK321","+421568955");
+       try { //create customer with two same IDCard
+            manager.createCustomer(customer);
+            manager.createCustomer(customer2);
+            fail();
+        } catch (ServiceFailureException ex) {
+            //true
+        }
     }
 
-    @org.junit.Test
+    @Test
     public void testGetCustomerByID() throws Exception {
 
         Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
@@ -161,6 +216,13 @@ public class CustomerManagerImplTest {
         Customer getCustomer3=manager.getCustomerByID(11l);
         assertNull(getCustomer3);
 
+    }
+
+    @Test
+    public void testGetCustomerByIDWithWrongArgument() throws Exception{
+        Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
+        manager.createCustomer(customer1);
+
         try {
             manager.getCustomerByID(-4l); // wrong argument
             fail();
@@ -170,7 +232,44 @@ public class CustomerManagerImplTest {
 
     }
 
-    @org.junit.Test
+    @Test
+    public void testGetCustomerByIDCard() throws Exception {
+
+        Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
+
+        manager.createCustomer(customer1);
+
+        Customer customer=manager.getCustomerByIDCard("SK321");
+        assertNotNull(customer);
+        assertEquals(customer1,customer);
+        assertDeepEquals(customer1,customer);
+
+        customer=manager.getCustomerByIDCard("SK25");
+        assertNull(customer);
+    }
+
+    @Test
+    public void testGetCustomerByIDCardWithWrongArgument() throws Exception {
+        Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
+
+        manager.createCustomer(customer1);
+
+        try {
+            manager.getCustomerByIDCard("");
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        try {
+            manager.getCustomerByIDCard(null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+    }
+
+    @Test
     public void testGetAllCustomers() throws Exception {
 
         Collection<Customer> allCustomers=manager.getAllCustomers();
@@ -200,7 +299,7 @@ public class CustomerManagerImplTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testGetAllCustomersByName() throws Exception {
 
         Collection<Customer> allCustomersByName=manager.getAllCustomers();
@@ -209,11 +308,13 @@ public class CustomerManagerImplTest {
 
         Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
         Customer customer2 = newCustomer("Ondrej","Brezovec","Zilina 1020","SK56","+421 922 222 222");
-        Customer customer3 = newCustomer("Tomas","Majernik","Bardejov 123","SK48","+421 933 222 222");
+        Customer customer3 = newCustomer("Tomas","Oravec","Bardejov 125","SK48","+421 933 222 222");
+        Customer customer4 = newCustomer("Tomas","Zajac","Kosice 89","SK3556","+421 955 222 222");
 
         manager.createCustomer(customer1);
         manager.createCustomer(customer2);
         manager.createCustomer(customer3);
+        manager.createCustomer(customer4);
 
         List<Customer> sample= new ArrayList<Customer>();
         List<Customer> actual= new ArrayList<Customer>();
@@ -221,7 +322,7 @@ public class CustomerManagerImplTest {
         sample.add(customer1);
         sample.add(customer3);
 
-        allCustomersByName=manager.getAllCustomersByName("Tomas");
+        allCustomersByName=manager.getAllCustomersByName("Tomas","Oravec");
         actual.addAll(allCustomersByName);
 
         Collections.sort(sample,idComparator);
@@ -230,9 +331,61 @@ public class CustomerManagerImplTest {
         assertEquals(sample,actual);
         assertDeepEquals(sample,actual);
 
-        allCustomersByName=manager.getAllCustomersByName("Jozef"); // empty list
+        allCustomersByName=manager.getAllCustomersByName("Tomas","Brezovec"); // empty list
         assertTrue(allCustomersByName.isEmpty());
+    }
 
+    @Test
+    public void testGetAllCustomersByNameWithWrongArgument() throws Exception {
+        Collection<Customer> customers =new ArrayList<>();
+        try {
+            customers=manager.getAllCustomersByName("","");
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+        try {
+            customers=manager.getAllCustomersByName(null,null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+        try {
+            customers=manager.getAllCustomersByName(null,"");
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+        try {
+            customers=manager.getAllCustomersByName("",null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+        try {
+            customers=manager.getAllCustomersByName("Tomas","");
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+        try {
+            customers=manager.getAllCustomersByName("","Mician");
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+        try {
+            customers=manager.getAllCustomersByName("Tomas",null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+        try {
+            customers=manager.getAllCustomersByName(null,"Mician");
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
     }
 
     @Test
@@ -326,7 +479,7 @@ public class CustomerManagerImplTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testUpdateCustomerWithWrongArgument() throws Exception {
         Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321",null);
         manager.createCustomer(customer1);
@@ -339,7 +492,7 @@ public class CustomerManagerImplTest {
         try {
             manager.updateCustomer(modifyCustomer);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (ServiceFailureException ex) {
             //true
         }
 
@@ -450,14 +603,13 @@ public class CustomerManagerImplTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testDeleteCustomer() throws Exception {
         Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
         Customer customer2 = newCustomer("Ondrej","Brezovec","Zilina 1020","SK56","+421 922 222 222");
 
         manager.createCustomer(customer1);
         manager.createCustomer(customer2);
-
         manager.deleteCustomer(customer1);
 
         assertNull(manager.getCustomerByID(customer1.getId()));
@@ -466,13 +618,12 @@ public class CustomerManagerImplTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testDeleteCustomerWithWrongArgument() throws Exception {
         Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
 
-        Long customer1Id=customer1.getId();
-
         manager.createCustomer(customer1);
+        Long customer1Id=customer1.getId();
 
         try {
             manager.deleteCustomer(null);
@@ -481,6 +632,7 @@ public class CustomerManagerImplTest {
             //OK
         }
 
+        //manager.createCustomer(customer1);
         Customer modifyCustomer;
         modifyCustomer=manager.getCustomerByID(customer1Id);  //delete where ID is null
         modifyCustomer.setId(null);
@@ -496,7 +648,7 @@ public class CustomerManagerImplTest {
         try {
             manager.deleteCustomer(modifyCustomer);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (ServiceFailureException ex) {
             //OK
         }
 
