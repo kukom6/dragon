@@ -10,12 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
-/**
- * Created by Matej on 22. 3. 2015.
- */
-
 public class CustomerManagerImplTest {
-
 
     private CustomerManagerImpl manager;
     private DataSource dataSource;

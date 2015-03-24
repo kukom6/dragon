@@ -5,10 +5,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.*;
 
-
-/**
- * Created by Matej on 22. 3. 2015.
- */
 public class CustomerManagerImpl implements CustomerManager {
     private final DataSource source;
     final static Logger log = LoggerFactory.getLogger(CustomerManager.class);

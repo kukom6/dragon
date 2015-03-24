@@ -20,7 +20,7 @@ public class DragonManagerImplTest {
     @Before
     public void setUp() throws Exception{
         BasicDataSource bds = new BasicDataSource();
-        bds.setUrl("jdbc:derby:memory:GraveManagerTest;create=true");
+        bds.setUrl("jdbc:derby://localhost:1527/dragonDB");
         this.dataSource = bds;
         //create new empty table before every test
         try (Connection conn = bds.getConnection()) {

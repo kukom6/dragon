@@ -83,4 +83,16 @@ public class Customer {
         result = 31 * result + identityCard.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", surname='" + surname + '\'' +
+                ", identityCard='" + identityCard + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

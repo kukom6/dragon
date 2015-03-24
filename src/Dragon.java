@@ -68,9 +68,7 @@ public class Dragon {
         if (!born.equals(dragon.born)) return false;
         if (!id.equals(dragon.id)) return false;
         if (!name.equals(dragon.name)) return false;
-        if (!race.equals(dragon.race)) return false;
-
-        return true;
+        return race.equals(dragon.race);
     }
 
     @Override
@@ -82,6 +80,18 @@ public class Dragon {
         result = 31 * result + numberOfHeads;
         result = 31 * result + weight;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Dragon{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", born=" + born +
+                ", race='" + race + '\'' +
+                ", numberOfHeads=" + numberOfHeads +
+                ", weight=" + weight +
+                '}';
     }
 
 }

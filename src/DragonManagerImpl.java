@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class DragonManagerImpl implements DragonManager {
 
-    final static Logger log = LoggerFactory.getLogger(DragonManagerImpl.class);
+    private final static Logger log = LoggerFactory.getLogger(DragonManagerImpl.class);
 
     @Resource(name="jdbc/my")
     private DataSource dataSource;
@@ -121,7 +121,7 @@ public class DragonManagerImpl implements DragonManager {
                 }
             }
         }catch(SQLException ex){
-            log.error("db connection problem", ex);
+            log.error("db connection problem ", ex);
             throw new ServiceFailureException("Error when retrieving dragon", ex);
         }
     }
