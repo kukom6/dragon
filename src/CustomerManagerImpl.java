@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.*;
 
+
 public class CustomerManagerImpl implements CustomerManager {
     private final DataSource source;
     final static Logger log = LoggerFactory.getLogger(CustomerManager.class);
@@ -230,7 +231,7 @@ public class CustomerManagerImpl implements CustomerManager {
         }
     }
 
-    private Long getKey(ResultSet keyRS, Customer customer) throws SQLException { //TODO spravit podla seba
+    private Long getKey(ResultSet keyRS, Customer customer) throws SQLException {
         if (keyRS.next()) {
             if (keyRS.getMetaData().getColumnCount() != 1) {
                 throw new ServiceFailureException("Internal Error: Generated key"

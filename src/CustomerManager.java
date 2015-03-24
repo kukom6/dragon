@@ -1,9 +1,7 @@
 
 import java.util.Collection;
 
-/**
- * Created by Matej on 23. 2. 2015.
- */
+
 public interface CustomerManager {
 
     public void createCustomer(Customer customer);
