@@ -14,8 +14,9 @@ public class DragonManagerImpl implements DragonManager {
 
     private final static Logger log = LoggerFactory.getLogger(DragonManagerImpl.class);
 
-    @Resource(name="jdbc/my")
-    private DataSource dataSource;
+    private final DataSource dataSource;
+
+    private TimeService timeService;
 
     public DragonManagerImpl(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -55,12 +56,12 @@ public class DragonManagerImpl implements DragonManager {
         if (dragon == null) {
             throw new IllegalArgumentException("dragon is null");
         }
-        if (dragon.getName() == null || dragon.getName().equals("")) {
+        if (dragon.getName() == null || dragon.getName().isEmpty()) {
             throw new IllegalArgumentException("dragon name is emptystring or null");
         }
 
         Date dateNow = new Date();
-        if(dragon.getBorn().compareTo(dateNow) > 0){
+        if(dragon.getBorn().after(dateNow)){
             throw new IllegalArgumentException("born date is in future");
         }
 
