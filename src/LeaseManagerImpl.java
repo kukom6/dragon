@@ -16,16 +16,22 @@ public class LeaseManagerImpl implements LeaseManager {
 
     private final TimeService timeService;
 
+    private DragonManagerImpl dragonManager;
+    private CustomerManagerImpl customerManager;
+
+
 
     public LeaseManagerImpl(DataSource dataSource, TimeService timeService) {
         this.dataSource = dataSource;
         this.timeService = timeService;
+        dragonManager = new DragonManagerImpl(dataSource, timeService);
+        customerManager = new CustomerManagerImpl(dataSource);
     }
 
     @Override
     public void createLease(Lease lease) {
-        if(lease.getId() == null){
-            throw new IllegalArgumentException("id is null");
+        if(lease.getId() != null){
+            throw new IllegalArgumentException("id is not null");
         }
 
         checkLease(lease);
@@ -87,7 +93,7 @@ public class LeaseManagerImpl implements LeaseManager {
             throw new IllegalArgumentException("lease price is null");
         }
 
-        if(lease.getPrice().compareTo(new BigDecimal(0)) > 0){
+        if(lease.getPrice().compareTo(new BigDecimal(0)) < 0){
             throw new IllegalArgumentException("lease price is negative");
         }
 
@@ -121,8 +127,45 @@ public class LeaseManagerImpl implements LeaseManager {
     }
 
     @Override
-    public Lease getLeaseByID(Long ID) {
-        throw new UnsupportedOperationException("not implemented");
+    public Lease getLeaseByID(Long id) {
+        if(id == null){
+            throw new IllegalArgumentException("id is null");
+        }
+
+        if(id < 0){
+            throw new IllegalArgumentException("id is negative or zero");
+        }
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement st = conn.prepareStatement("SELECT ID, IDCUSTOMER, IDDRAGON, STARTDATE, ENDDATE, RETURNDATE, PRICE FROM LEASES WHERE ID=?")) {
+            st.setLong(1, id);
+            ResultSet rs = st.executeQuery();
+            if(rs.next()){
+                Lease lease = resultSetToLease(rs);
+                if (rs.next()) {
+                    throw new ServiceFailureException(
+                            "Internal error: More entities with the same id found "
+                                    + "(source id: " + id + ", found " + lease + " and " + resultSetToLease(rs));
+                }
+                return lease;
+            }else{
+                return null;
+            }
+        } catch (SQLException ex) {
+            log.error("db connection problem while retrieving lease by id.", ex);
+            throw new ServiceFailureException("Error when retrieving lease by id", ex);
+        }
+    }
+
+    private Lease resultSetToLease(ResultSet rs) throws SQLException{
+        Lease lease=new Lease();
+        lease.setCustomer(customerManager.getCustomerByID(rs.getLong("IDCUSTOMER")));
+        lease.setDragon(dragonManager.getDragonById(rs.getLong("IDDRAGON")));
+        lease.setStartDate(rs.getTimestamp("STARTDATE"));
+        lease.setEndDate(rs.getTimestamp("ENDDATE"));
+        lease.setReturnDate(rs.getTimestamp("RETURNDATE"));
+        lease.setPrice(rs.getBigDecimal("PRICE"));
+        return lease;
     }
 
     @Override

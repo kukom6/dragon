@@ -65,11 +65,11 @@ public class LeaseManagerImplTest {
                     + "STARTDATE TIMESTAMP,"
                     + "ENDDATE TIMESTAMP,"
                     + "RETURNDATE TIMESTAMP,"
-                    + "PRICE DECIMAL(20,2))"
+                    + "PRICE DECIMAL(20,2),"
                     + "CONSTRAINT customer_fk FOREIGN KEY (IDCUSTOMER) "
-                    + "REFERENCES CUSTOMERS(ID) "
+                    + "REFERENCES CUSTOMERS(ID), "
                     + "CONSTRAINT dragon_fk FOREIGN KEY (IDDRAGON) "
-                    + "REFERENCES DRAGONS(ID)").executeUpdate(); //TODO big decimal
+                    + "REFERENCES DRAGONS(ID))").executeUpdate(); //TODO big decimal
         }
         managerLease = new LeaseManagerImpl(bds,timeService);
         managerDragon = new DragonManagerImpl(bds,timeService);
@@ -79,9 +79,9 @@ public class LeaseManagerImplTest {
     @After
     public void tearDown() throws SQLException {
         try (Connection con = dataSource.getConnection()) {
+            con.prepareStatement("DROP TABLE LEASES").executeUpdate();
             con.prepareStatement("DROP TABLE CUSTOMERS").executeUpdate();
             con.prepareStatement("DROP TABLE DRAGONS").executeUpdate();
-            con.prepareStatement("DROP TABLE LEASES").executeUpdate();
         }
     }
 
@@ -515,12 +515,12 @@ public class LeaseManagerImplTest {
         fail();
     }
 
-    private static Lease newLease(Customer customer,Dragon dragon,Date startLease,Date endLease,BigDecimal price){
+    private static Lease newLease(Customer customer,Dragon dragon,Date startDate,Date endDate,BigDecimal price){
         Lease lease=new Lease();
         lease.setCustomer(customer);
         lease.setDragon(dragon);
-        lease.setStartDate(startLease);
-        lease.setEndDate(endLease);
+        lease.setStartDate(startDate);
+        lease.setEndDate(endDate);
         lease.setPrice(price);
         lease.setReturnDate(null);
         return lease;

@@ -51,8 +51,8 @@ public class DragonManagerImplTest {
 
     @After
     public void tearDown() throws Exception {
-        try (Connection con = dataSource.getConnection()) {
-            con.prepareStatement("DROP TABLE DRAGONS").executeUpdate();
+        try (Connection conn = dataSource.getConnection()) {
+            conn.prepareStatement("DROP TABLE DRAGONS").executeUpdate();
         }
     }
 
@@ -168,9 +168,9 @@ public class DragonManagerImplTest {
             //OK
         }
 
-        Date plusHour = new Date(timeService.getCurrentDate().getTime() + TimeUnit.HOURS.toMillis(1));
 
-        dragon = newDragon("Ugly dragon", plusHour, "lung", 1, 100);
+
+        dragon = newDragon("Ugly dragon", sdf.parse("16-03-2014 12:00:00"), "lung", 1, 100);
         try {
             manager.createDragon(dragon);
             fail();
