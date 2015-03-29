@@ -8,7 +8,7 @@ import java.util.*;
 
 public class CustomerManagerImpl implements CustomerManager {
     private final DataSource source;
-    final static Logger log = LoggerFactory.getLogger(CustomerManager.class);
+    private final static Logger log = LoggerFactory.getLogger(CustomerManager.class);
 
     public CustomerManagerImpl(DataSource dataSource) {
         this.source = dataSource;
@@ -24,7 +24,7 @@ public class CustomerManagerImpl implements CustomerManager {
 
         try(Connection conn = source.getConnection()){
             try (PreparedStatement st = conn.prepareStatement("INSERT INTO CUSTOMERS " +
-                            "(NAME,SURNAME,ADDRESS,IDENTITYCARD,PHONENUMBER) VALUES (?,?,?,?,?)",
+                            "(\"NAME\",SURNAME,ADDRESS,IDENTITYCARD,PHONENUMBER) VALUES (?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS)){
                 st.setString(1,customer.getName());
                 st.setString(2,customer.getSurname());
@@ -52,7 +52,7 @@ public class CustomerManagerImpl implements CustomerManager {
         }
         Customer customer;
         try(Connection conn = source.getConnection()) {
-            try (PreparedStatement st = conn.prepareStatement("SELECT ID,NAME,SURNAME,ADDRESS,IDENTITYCARD,PHONENUMBER " +
+            try (PreparedStatement st = conn.prepareStatement("SELECT ID,\"NAME\",SURNAME,ADDRESS,IDENTITYCARD,PHONENUMBER " +
                     "FROM CUSTOMERS WHERE ID=?")){
                 st.setLong(1,id);
                 ResultSet rs = st.executeQuery();
@@ -81,7 +81,7 @@ public class CustomerManagerImpl implements CustomerManager {
         }
         Customer customer;
         try(Connection conn = source.getConnection()) {
-            try (PreparedStatement st = conn.prepareStatement("SELECT ID,NAME,SURNAME,ADDRESS,IDENTITYCARD,PHONENUMBER " +
+            try (PreparedStatement st = conn.prepareStatement("SELECT ID,\"NAME\",SURNAME,ADDRESS,IDENTITYCARD,PHONENUMBER " +
                     "FROM CUSTOMERS WHERE IDENTITYCARD=?")){
                 st.setString(1,idCard);
                 ResultSet rs = st.executeQuery();
@@ -131,7 +131,7 @@ public class CustomerManagerImpl implements CustomerManager {
 
         List<Customer> customers = new ArrayList<>();
         try(Connection conn = source.getConnection()){
-            try (PreparedStatement st = conn.prepareStatement("SELECT * FROM CUSTOMERS WHERE NAME=? AND SURNAME=?")) {
+            try (PreparedStatement st = conn.prepareStatement("SELECT * FROM CUSTOMERS WHERE \"NAME\"=? AND SURNAME=?")) {
                 st.setString(1,name);
                 st.setString(2,surname);
                 ResultSet rs = st.executeQuery();
@@ -160,7 +160,7 @@ public class CustomerManagerImpl implements CustomerManager {
 
         try (Connection conn = source.getConnection()) {
             try (PreparedStatement st = conn.prepareStatement("UPDATE CUSTOMERS " +
-                    "SET NAME=?, SURNAME=?, ADDRESS=?, IDENTITYCARD=?, PHONENUMBER=? WHERE ID=?")) {
+                    "SET \"NAME\"=?, SURNAME=?, ADDRESS=?, IDENTITYCARD=?, PHONENUMBER=? WHERE ID=?")) {
                 st.setString(1, customer.getName());
                 st.setString(2, customer.getSurname());
                 st.setString(3, customer.getAddress());

@@ -14,8 +14,13 @@ public class Lease {
     private Customer customer;
     private Date returnDate;
 
-    public Lease(){
-        throw new UnsupportedOperationException("not implemented");
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public BigDecimal getPrice() {

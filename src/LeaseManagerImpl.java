@@ -1,3 +1,4 @@
+import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.Date;
 
@@ -5,6 +6,14 @@ import java.util.Date;
  * Created by Matej on 23. 2. 2015.
  */
 public class LeaseManagerImpl implements LeaseManager {
+
+
+    private final DataSource dataSource;
+
+    public LeaseManagerImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Override
     public void createLease(Lease lease) {
         throw new UnsupportedOperationException("not implemented");

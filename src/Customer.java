@@ -9,9 +9,6 @@ public class Customer {
     private String identityCard;
     private String phoneNumber;
 
-    public Customer() {
-    }
-
     public String getName() {
         return name;
     }
