@@ -47,8 +47,8 @@ public class CustomerManagerImpl implements CustomerManager {
     @Override
     public Customer getCustomerByID(Long id) {
         log.debug("get customer by ID from DB");
-        if(id<1){
-            throw new IllegalArgumentException("argument must by >0");
+        if(id==null){
+            throw new IllegalArgumentException("argumentis null");
         }
         Customer customer;
         try(Connection conn = source.getConnection()) {

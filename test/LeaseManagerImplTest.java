@@ -313,7 +313,59 @@ public class LeaseManagerImplTest {
 
     @Test
     public void testGetLeaseByID() throws Exception {
-        fail();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+
+        Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
+        managerCustomer.createCustomer(customer1);
+        Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon1);
+
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal(50000.00));
+        managerLease.createLease(lease1);
+
+        Customer customer2 = newCustomer("Ondrej","Brezovec","Zilina 1020","SK56","+421 922 222 222");
+        managerCustomer.createCustomer(customer2);
+        Dragon dragon2 = newDragon("Nice dragon", sdf.parse("16-04-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon2);
+
+        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-09-1995 12:00:00"),new BigDecimal(30000.00));
+        managerLease.createLease(lease2);
+
+        Lease getLease1 = managerLease.getLeaseByID(lease1.getId());
+        assertEquals(lease1, getLease1);
+        assertDeepEquals(lease1, getLease1);
+        assertNotSame(lease1, getLease1);
+
+        Lease getLease2 = managerLease.getLeaseByID(lease2.getId());
+        assertEquals(lease2, getLease2);
+        assertDeepEquals(lease2, getLease2);
+        assertNotSame(lease2, getLease2);
+
+        Lease getLease3 = managerLease.getLeaseByID(11l);
+        assertNull(getLease3);
+        getLease3=managerLease.getLeaseByID(-41l);
+        assertNull(getLease3);
+    }
+
+
+    @Test
+    public void testGetLeaseByIDWithWrongArgument() throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+
+        Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
+        managerCustomer.createCustomer(customer1);
+        Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon1);
+
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal(50000.00));
+        managerLease.createLease(lease1);
+
+        try {
+            managerLease.getLeaseByID(null); // wrong argument
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
     }
 
     @Test
