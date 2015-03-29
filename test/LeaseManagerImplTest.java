@@ -118,7 +118,7 @@ public class LeaseManagerImplTest {
         assertNotEquals(customer2, getLease1);
         assertNotSame(customer2, getLease1);
 
-        Customer customer3 = newCustomer("Ondrej","Zivic","Bytca 1020","SK56","+421 922 222 222");
+        Customer customer3 = newCustomer("Ondrej","Zivic","Bytca 1020","SK561","+421 922 222 222");
         managerCustomer.createCustomer(customer3);
 
         Lease lease3 = newLease(customer3,dragon2,sdf.parse("16-09-2015 12:00:01"),sdf.parse("16-11-2015 12:00:00"),new BigDecimal("30000.00"));
@@ -318,7 +318,7 @@ public class LeaseManagerImplTest {
 
         lease1 = newLease(customer1,dragon1,sdf.parse("16-03-2015 12:00:00"),sdf.parse("16-05-2015 12:00:00"),new BigDecimal("50000.01"));
         managerLease.createLease(lease1);
-        Customer customer2 = newCustomer("Lukas","Lipa","Kosice 123","SK321","+421 944 222 222");
+        Customer customer2 = newCustomer("Lukas","Lipa","Kosice 123","SK35521","+421 944 222 222");
         managerCustomer.createCustomer(customer2);
         Lease lease2 = newLease(customer2,dragon1,sdf.parse("16-04-2015 12:00:00"),sdf.parse("17-05-2015 12:00:00"),new BigDecimal("50000.01"));
         try { // lease 2 have dragon where is borowed in this time
@@ -485,7 +485,6 @@ public class LeaseManagerImplTest {
 
     @Test
     public void testGetAllLeasesByEndDateWithWrongArgument() throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Collection<Lease> allLeasesByEndDate =new ArrayList<>();
 
         try{
