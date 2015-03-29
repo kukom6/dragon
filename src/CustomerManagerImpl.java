@@ -49,6 +49,9 @@ public class CustomerManagerImpl implements CustomerManager {
         if(id==null){
             throw new IllegalArgumentException("argumentis null");
         }
+        if(id < 0){
+            throw new IllegalArgumentException("id is negative or zero");
+        }
         Customer customer;
         try(Connection conn = source.getConnection()) {
             try (PreparedStatement st = conn.prepareStatement("SELECT ID,\"NAME\",SURNAME,ADDRESS,IDENTITYCARD,PHONENUMBER " +

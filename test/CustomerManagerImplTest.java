@@ -213,8 +213,7 @@ public class CustomerManagerImplTest {
 
         Customer getCustomer3=manager.getCustomerByID(11l);
         assertNull(getCustomer3);
-        getCustomer3=manager.getCustomerByID(-41l);
-        assertNull(getCustomer3);
+
 
     }
 
@@ -228,6 +227,13 @@ public class CustomerManagerImplTest {
             fail();
         } catch (IllegalArgumentException ex) {
             //true
+        }
+
+        try {
+            manager.getCustomerByID(-1l);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
         }
 
     }

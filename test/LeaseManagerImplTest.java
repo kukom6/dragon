@@ -263,7 +263,7 @@ public class LeaseManagerImplTest {
         try { //create lease when dragon isn't in DB
             managerLease.createLease(lease1);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (ServiceFailureException ex) {
             //true
         }
         dragon1.setId(13l);
@@ -281,7 +281,7 @@ public class LeaseManagerImplTest {
         try { //create lease when customer aren't in DB
             managerLease.createLease(lease1);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (ServiceFailureException ex) {
             //true
         }
 
@@ -375,6 +375,7 @@ public class LeaseManagerImplTest {
         assertNull(getLease3);
        
         Lease lease3 = newLease(customer2,dragon2,sdf.parse("16-03-2016 12:00:00"),sdf.parse("16-09-2016 12:00:00"),new BigDecimal("30000.1"));
+        managerLease.createLease(lease3);
         getLease3 = managerLease.getLeaseByID(lease3.getId());
         assertEquals(getLease3.getPrice(),new BigDecimal("30000.10"));
     }
