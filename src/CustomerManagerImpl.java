@@ -98,7 +98,7 @@ public class CustomerManagerImpl implements CustomerManager {
                 }
             }
         }catch(SQLException ex){
-            log.error("db connection problem or two customer have same IDCard", ex);
+            log.error("db connection problem", ex);
             throw new ServiceFailureException("Error with DB", ex);
         }
     }

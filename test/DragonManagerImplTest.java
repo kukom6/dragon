@@ -6,16 +6,30 @@ import org.junit.Test;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.*;
 
 public class DragonManagerImplTest {
 
     private DragonManagerImpl manager;
 
-    @Resource(name="jdbc/my")
     private DataSource dataSource;
+
+    private TimeServiceImpl timeService = new TimeServiceImpl(){
+        @Override
+        public Date getCurrentDate(){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+            try {
+                return sdf.parse("15-03-1994 12:00:00");
+            }catch(ParseException ex){
+                throw new NullPointerException("Can't parse date.");
+            }
+        }
+    };
 
     @Before
     public void setUp() throws Exception{
@@ -32,7 +46,7 @@ public class DragonManagerImplTest {
                     + "HEADS INTEGER,"
                     + "WEIGHT INTEGER)").executeUpdate();
         }
-        manager = new DragonManagerImpl(bds);
+        manager = new DragonManagerImpl(bds, timeService);
     }
 
     @After
@@ -154,9 +168,7 @@ public class DragonManagerImplTest {
             //OK
         }
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.HOUR, 1);
-        Date plusHour = cal.getTime();
+        Date plusHour = new Date(timeService.getCurrentDate().getTime() + TimeUnit.HOURS.toMillis(1));
 
         dragon = newDragon("Ugly dragon", plusHour, "lung", 1, 100);
         try {
@@ -455,9 +467,7 @@ public class DragonManagerImplTest {
 
         try{
             dragon = manager.getDragonById(dragonId);
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.HOUR, 1);
-            Date plusHour = cal.getTime();
+            Date plusHour = new Date(timeService.getCurrentDate().getTime() + TimeUnit.HOURS.toMillis(1));
             dragon.setBorn(plusHour);
             manager.updateDragon(dragon);
             fail();

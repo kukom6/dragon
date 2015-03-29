@@ -1,4 +1,3 @@
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -18,8 +17,9 @@ public class DragonManagerImpl implements DragonManager {
 
     private TimeService timeService;
 
-    public DragonManagerImpl(DataSource dataSource) {
+    public DragonManagerImpl(DataSource dataSource, TimeService timeService) {
         this.dataSource = dataSource;
+        this.timeService = timeService;
     }
 
     @Override
@@ -29,9 +29,10 @@ public class DragonManagerImpl implements DragonManager {
             throw new IllegalArgumentException("dragon id is already created");
         }
 
-        try (Connection conn = dataSource.getConnection()) {
-            try (PreparedStatement st = conn.prepareStatement("INSERT INTO DRAGONS (\"NAME\", BORN, RACE, HEADS, WEIGHT) VALUES (?,?,?,?,?)",
-                    Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement st = conn.prepareStatement("INSERT INTO DRAGONS (\"NAME\", BORN, RACE, HEADS, WEIGHT) VALUES (?,?,?,?,?)",
+             Statement.RETURN_GENERATED_KEYS)) {
+
                 st.setString(1, dragon.getName());
                 st.setTimestamp(2, new Timestamp(dragon.getBorn().getTime()));
                 st.setString(3, dragon.getRace());
@@ -45,9 +46,8 @@ public class DragonManagerImpl implements DragonManager {
 
                 ResultSet keyRS = st.getGeneratedKeys();
                 dragon.setId(getKey(keyRS, dragon));
-            }
         } catch (SQLException ex) {
-            log.error("db connection problem", ex);
+            log.error("db connection problem in createDragon()", ex);
             throw new ServiceFailureException("Error when creating dragons", ex);
         }
     }
@@ -60,12 +60,12 @@ public class DragonManagerImpl implements DragonManager {
             throw new IllegalArgumentException("dragon name is emptystring or null");
         }
 
-        Date dateNow = new Date();
+        Date dateNow = timeService.getCurrentDate();
         if(dragon.getBorn().after(dateNow)){
             throw new IllegalArgumentException("born date is in future");
         }
 
-        if (dragon.getRace() == null || dragon.getRace().equals("")) {
+        if (dragon.getRace() == null || dragon.getRace().isEmpty()) {
             throw new IllegalArgumentException("dragon race is emptystring or null");
         }
 
@@ -105,8 +105,8 @@ public class DragonManagerImpl implements DragonManager {
             throw new IllegalArgumentException("id is null");
         }
 
-        try(Connection conn = dataSource.getConnection()){
-            try(PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE ID=?")){
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE ID=?")){
                 st.setLong(1, id);
                 ResultSet rs = st.executeQuery();
                 if(rs.next()){
@@ -120,16 +120,14 @@ public class DragonManagerImpl implements DragonManager {
                 }else{
                     return null;
                 }
-            }
         }catch(SQLException ex){
-            log.error("db connection problem ", ex);
-            throw new ServiceFailureException("Error when retrieving dragon", ex);
+            log.error("db connection problem while retrieving dragon by id.", ex);
+            throw new ServiceFailureException("Error when retrieving dragon by id", ex);
         }
     }
 
     private Dragon resultSetToDragon(ResultSet rs) throws SQLException{
         Dragon dragon = new Dragon();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         dragon.setId(rs.getLong("ID"));
         dragon.setName(rs.getString("NAME"));
         dragon.setBorn(rs.getTimestamp("BORN"));
@@ -151,14 +149,14 @@ public class DragonManagerImpl implements DragonManager {
                 return dragons;
             }
         }catch(SQLException ex){
-            log.error("db connection problem", ex);
-            throw new ServiceFailureException("Error when retrieving dragons", ex);
+            log.error("db connection problem when retrieving all dragons", ex);
+            throw new ServiceFailureException("Error when retrieving all dragons", ex);
         }
     }
 
     @Override
     public Collection<Dragon> getDragonsByName(String name) throws ServiceFailureException {
-        if(name == null || name.equals("")){
+        if(name == null || name.isEmpty()){
             throw new IllegalArgumentException("name is null or empty string");
         }
 
@@ -173,14 +171,14 @@ public class DragonManagerImpl implements DragonManager {
                 return dragons;
             }
         }catch(SQLException ex){
-            log.error("db connection problem", ex);
-            throw new ServiceFailureException("Error when retrieving dragons", ex);
+            log.error("db connection problem when retrieving dragon by name.", ex);
+            throw new ServiceFailureException("Error when retrieving dragons by name", ex);
         }
     }
 
     @Override
     public Collection<Dragon> getDragonsByRace(String race) throws ServiceFailureException {
-        if(race == null || race.equals("")){
+        if(race == null || race.isEmpty()){
             throw new IllegalArgumentException("race is null or empty string");
         }
 
@@ -195,8 +193,8 @@ public class DragonManagerImpl implements DragonManager {
                 return dragons;
             }
         }catch(SQLException ex){
-            log.error("db connection problem", ex);
-            throw new ServiceFailureException("Error when retrieving dragons", ex);
+            log.error("db connection problem when retrieving dragons by race.", ex);
+            throw new ServiceFailureException("Error when retrieving dragons by race", ex);
         }
     }
 
@@ -216,8 +214,8 @@ public class DragonManagerImpl implements DragonManager {
                 return dragons;
             }
         }catch(SQLException ex){
-            log.error("db connection problem", ex);
-            throw new ServiceFailureException("Error when retrieving dragons", ex);
+            log.error("db connection problem when retrieving dragons by number of heads", ex);
+            throw new ServiceFailureException("Error when retrieving dragons by number of heads", ex);
         }
     }
 
@@ -241,7 +239,7 @@ public class DragonManagerImpl implements DragonManager {
                }
            }
        }catch(SQLException ex){
-           log.error("db connection problem", ex);
+           log.error("db connection problem when updating dragon.", ex);
            throw new ServiceFailureException("Error when updating dragon", ex);
        }
     }
