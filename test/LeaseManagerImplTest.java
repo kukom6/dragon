@@ -260,7 +260,7 @@ public class LeaseManagerImplTest {
 
         managerCustomer.createCustomer(customer1); //customer is correct
 
-        try { //create lease when dragon aren't in DB
+        try { //create lease when dragon isn't in DB
             managerLease.createLease(lease1);
             fail();
         } catch (IllegalArgumentException ex) {
@@ -373,9 +373,7 @@ public class LeaseManagerImplTest {
 
         Lease getLease3 = managerLease.getLeaseByID(11l);
         assertNull(getLease3);
-        getLease3=managerLease.getLeaseByID(-41l);
-        assertNull(getLease3);
-
+       
         Lease lease3 = newLease(customer2,dragon2,sdf.parse("16-03-2016 12:00:00"),sdf.parse("16-09-2016 12:00:00"),new BigDecimal("30000.1"));
         getLease3 = managerLease.getLeaseByID(lease3.getId());
         assertEquals(getLease3.getPrice(),new BigDecimal("30000.10"));
@@ -395,6 +393,13 @@ public class LeaseManagerImplTest {
 
         try {
             managerLease.getLeaseByID(null); // wrong argument
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        try {
+            managerLease.getLeaseByID(-41l);
             fail();
         } catch (IllegalArgumentException ex) {
             //true

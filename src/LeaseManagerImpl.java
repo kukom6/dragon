@@ -36,8 +36,8 @@ public class LeaseManagerImpl implements LeaseManager {
 
         checkLease(lease);
 
-        if(lease.getReturnDate().after(timeService.getCurrentDate())){
-            throw new IllegalArgumentException("return date is in future.");
+        if(lease.getEndDate().before(timeService.getCurrentDate())){
+            throw new IllegalArgumentException("end lease is not in future.");
         }
 
         try (Connection conn = dataSource.getConnection();
@@ -48,8 +48,11 @@ public class LeaseManagerImpl implements LeaseManager {
             st.setLong(2, lease.getDragon().getId());
             st.setTimestamp(3, new Timestamp(lease.getStartDate().getTime()));
             st.setTimestamp(4, new Timestamp(lease.getEndDate().getTime()));
-            st.setBigDecimal(5, lease.getPrice());
-
+            try {
+                st.setBigDecimal(5, lease.getPrice().setScale(2));
+            } catch (ArithmeticException ex){
+                throw new ServiceFailureException("bad BigDecimal value");
+            }
             int addedRows = st.executeUpdate();
             if (addedRows != 1) {
                 throw new ServiceFailureException("Internal Error: More rows inserted when trying to insert lease " + lease);
@@ -101,10 +104,6 @@ public class LeaseManagerImpl implements LeaseManager {
             throw new IllegalArgumentException("start date is null");
         }
 
-        if(lease.getEndDate().before(timeService.getCurrentDate())){
-            throw new IllegalArgumentException("end lease is not in future.");
-        }
-
         if(lease.getEndDate() == null){
             throw new IllegalArgumentException("end date is null");
         }
@@ -113,8 +112,12 @@ public class LeaseManagerImpl implements LeaseManager {
             throw new IllegalArgumentException("dragon is null");
         }
 
-        if(lease.getDragon().getId() == null || lease.getDragon().getId() < 0){
-            throw new IllegalArgumentException("dragon id is null or negative");
+        if(lease.getDragon().getId() == null){
+            throw new IllegalArgumentException("dragon id is null");
+        }
+
+        if(lease.getDragon().getId() < 0){
+            throw new IllegalArgumentException("dragon id is negative");
         }
 
         if(lease.getCustomer() == null){
@@ -133,7 +136,7 @@ public class LeaseManagerImpl implements LeaseManager {
         }
 
         if(id < 0){
-            throw new IllegalArgumentException("id is negative or zero");
+            throw new IllegalArgumentException("id is negative");
         }
 
         try (Connection conn = dataSource.getConnection();
@@ -159,12 +162,17 @@ public class LeaseManagerImpl implements LeaseManager {
 
     private Lease resultSetToLease(ResultSet rs) throws SQLException{
         Lease lease=new Lease();
+        lease.setId(rs.getLong("ID"));
         lease.setCustomer(customerManager.getCustomerByID(rs.getLong("IDCUSTOMER")));
         lease.setDragon(dragonManager.getDragonById(rs.getLong("IDDRAGON")));
         lease.setStartDate(rs.getTimestamp("STARTDATE"));
         lease.setEndDate(rs.getTimestamp("ENDDATE"));
         lease.setReturnDate(rs.getTimestamp("RETURNDATE"));
-        lease.setPrice(rs.getBigDecimal("PRICE"));
+        try {
+            lease.setPrice(rs.getBigDecimal("PRICE").setScale(2));
+        } catch (ArithmeticException ex) {
+            throw new ServiceFailureException("bad BigDecimal value");
+        }
         return lease;
     }
 
