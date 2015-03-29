@@ -60,12 +60,16 @@ public class LeaseManagerImplTest {
 
             conn.prepareStatement("CREATE TABLE LEASES ("
                     + "ID BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,"
-                    + "CUSTOMER BIGINT,"
-                    + "DRAGON BIGINT,"
+                    + "IDCUSTOMER BIGINT,"
+                    + "IDDRAGON BIGINT,"
                     + "STARTDATE TIMESTAMP,"
                     + "ENDDATE TIMESTAMP,"
                     + "RETURNDATE TIMESTAMP,"
-                    + "PRICE INTEGER)").executeUpdate(); //TODO big decimal
+                    + "PRICE DECIMAL(20,2))"
+                    + "CONSTRAINT customer_fk FOREIGN KEY (IDCUSTOMER) "
+                    + "REFERENCES CUSTOMERS(ID) "
+                    + "CONSTRAINT dragon_fk FOREIGN KEY (IDDRAGON) "
+                    + "REFERENCES DRAGONS(ID)").executeUpdate(); //TODO big decimal
         }
         managerLease = new LeaseManagerImpl(bds,timeService);
         managerDragon = new DragonManagerImpl(bds,timeService);
@@ -90,7 +94,7 @@ public class LeaseManagerImplTest {
         Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
         managerDragon.createDragon(dragon1);
 
-        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal(50000.00));
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal("50000.00"));
         managerLease.createLease(lease1);
         assertNotNull(lease1.getId());
 
@@ -99,7 +103,7 @@ public class LeaseManagerImplTest {
         Dragon dragon2 = newDragon("Nice dragon", sdf.parse("16-04-1994 12:00:00"), "lung", 1, 100);
         managerDragon.createDragon(dragon2);
 
-        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-09-1995 12:00:00"),new BigDecimal(30000.00));
+        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-09-1995 12:00:00"),new BigDecimal("30000.00"));
         managerLease.createLease(lease2);
         assertNotNull(lease2.getId());
 
@@ -117,7 +121,7 @@ public class LeaseManagerImplTest {
         Customer customer3 = newCustomer("Ondrej","Zivic","Bytca 1020","SK56","+421 922 222 222");
         managerCustomer.createCustomer(customer3);
 
-        Lease lease3 = newLease(customer3,dragon2,sdf.parse("16-09-1995 12:00:01"),sdf.parse("16-09-1996 12:00:00"),new BigDecimal(30000.00));
+        Lease lease3 = newLease(customer3,dragon2,sdf.parse("16-09-1995 12:00:01"),sdf.parse("16-09-1996 12:00:00"),new BigDecimal("30000.00"));
         managerLease.createLease(lease3); // dragon 2 is free this time
     }
 
@@ -175,7 +179,7 @@ public class LeaseManagerImplTest {
             //true
         }
 
-        lease1 = newLease(null,null,null,null,new BigDecimal(50000.00));
+        lease1 = newLease(null,null,null,null,new BigDecimal("50000.00"));
         try { //all (except price)is null
             managerLease.createLease(lease1);
             fail();
@@ -186,7 +190,7 @@ public class LeaseManagerImplTest {
         managerCustomer.createCustomer(customer1);
         managerDragon.createDragon(dragon1);
 
-        lease1 = newLease(null,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal(50000.00));
+        lease1 = newLease(null,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal("50000.00"));
         try { // customer is null
             managerLease.createLease(lease1);
             fail();
@@ -194,7 +198,7 @@ public class LeaseManagerImplTest {
             //true
         }
 
-        lease1 = newLease(customer1,null,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal(50000.00));
+        lease1 = newLease(customer1,null,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal("50000.00"));
         try { // dragon is null
             managerLease.createLease(lease1);
             fail();
@@ -202,7 +206,7 @@ public class LeaseManagerImplTest {
             //true
         }
 
-        lease1 = newLease(customer1,dragon1,null,sdf.parse("16-05-1995 12:00:00"),new BigDecimal(50000.00));
+        lease1 = newLease(customer1,dragon1,null,sdf.parse("16-05-1995 12:00:00"),new BigDecimal("50000.00"));
         try { // start day is null
             managerLease.createLease(lease1);
             fail();
@@ -210,7 +214,7 @@ public class LeaseManagerImplTest {
             //true
         }
 
-        lease1 = newLease(customer1,dragon1,sdf.parse("16-05-1995 12:00:00"),null,new BigDecimal(50000.00));
+        lease1 = newLease(customer1,dragon1,sdf.parse("16-05-1995 12:00:00"),null,new BigDecimal("50000.00"));
         try { // end day is null
             managerLease.createLease(lease1);
             fail();
@@ -287,7 +291,7 @@ public class LeaseManagerImplTest {
         }
         customer1.setId(null);
 
-        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1992 12:00:00"),new BigDecimal(50000.00));
+        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1992 12:00:00"),new BigDecimal("50000.00"));
         try { //end day is before start day
             managerLease.createLease(lease1);
             fail();
@@ -296,7 +300,7 @@ public class LeaseManagerImplTest {
         }
 
 
-        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1996 12:00:00"),new BigDecimal(-50000.00));
+        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1996 12:00:00"),new BigDecimal("-50000.00"));
         try { //price is negativ
             managerLease.createLease(lease1);
             fail();
@@ -304,7 +308,7 @@ public class LeaseManagerImplTest {
             //true
         }
 
-        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1996 12:00:00"),new BigDecimal(50000.001));
+        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1996 12:00:00"),new BigDecimal("50000.001"));
         try { //price is three numbers after dot
             managerLease.createLease(lease1);
             fail();
@@ -312,11 +316,11 @@ public class LeaseManagerImplTest {
             //true
         }
 
-        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1996 12:00:00"),new BigDecimal(50000.01));
+        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1996 12:00:00"),new BigDecimal("50000.01"));
         managerLease.createLease(lease1);
         Customer customer2 = newCustomer("Lukas","Lipa","Kosice 123","SK321","+421 944 222 222");
         managerCustomer.createCustomer(customer2);
-        Lease lease2 = newLease(customer2,dragon1,sdf.parse("16-04-1995 12:00:00"),sdf.parse("17-05-1996 12:00:00"),new BigDecimal(50000.01));
+        Lease lease2 = newLease(customer2,dragon1,sdf.parse("16-04-1995 12:00:00"),sdf.parse("17-05-1996 12:00:00"),new BigDecimal("50000.01"));
         try { // lease 2 have dragon where is borowed in this time
             managerLease.createLease(lease2);
             fail();
@@ -343,7 +347,7 @@ public class LeaseManagerImplTest {
         Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
         managerDragon.createDragon(dragon1);
 
-        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal(50000.00));
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal("50000.00"));
         managerLease.createLease(lease1);
 
         Customer customer2 = newCustomer("Ondrej","Brezovec","Zilina 1020","SK56","+421 922 222 222");
@@ -351,7 +355,7 @@ public class LeaseManagerImplTest {
         Dragon dragon2 = newDragon("Nice dragon", sdf.parse("16-04-1994 12:00:00"), "lung", 1, 100);
         managerDragon.createDragon(dragon2);
 
-        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-09-1995 12:00:00"),new BigDecimal(30000.00));
+        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-09-1995 12:00:00"),new BigDecimal("30000.00"));
         managerLease.createLease(lease2);
 
         Lease getLease1 = managerLease.getLeaseByID(lease1.getId());
@@ -380,7 +384,7 @@ public class LeaseManagerImplTest {
         Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
         managerDragon.createDragon(dragon1);
 
-        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal(50000.00));
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal("50000.00"));
         managerLease.createLease(lease1);
 
         try {
@@ -404,7 +408,7 @@ public class LeaseManagerImplTest {
         Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
         managerDragon.createDragon(dragon1);
 
-        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal(50000.00));
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal("50000.00"));
         managerLease.createLease(lease1);
 
         Customer customer2 = newCustomer("Ondrej","Brezovec","Zilina 1020","SK56","+421 922 222 222");
@@ -412,7 +416,7 @@ public class LeaseManagerImplTest {
         Dragon dragon2 = newDragon("Nice dragon", sdf.parse("16-04-1994 12:00:00"), "lung", 1, 100);
         managerDragon.createDragon(dragon2);
 
-        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-09-1995 12:00:00"),new BigDecimal(30000.00));
+        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-09-1995 12:00:00"),new BigDecimal("30000.00"));
         managerLease.createLease(lease2);
 
         List<Lease> sample= new ArrayList<Lease>();
@@ -441,7 +445,7 @@ public class LeaseManagerImplTest {
         Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
         managerDragon.createDragon(dragon1);
 
-        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal(50000.00));
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal("50000.00"));
         managerLease.createLease(lease1);
 
         Customer customer2 = newCustomer("Ondrej","Brezovec","Zilina 1020","SK56","+421 922 222 222");
@@ -449,7 +453,7 @@ public class LeaseManagerImplTest {
         Dragon dragon2 = newDragon("Nice dragon", sdf.parse("16-04-1994 12:00:00"), "lung", 1, 100);
         managerDragon.createDragon(dragon2);
 
-        Lease lease2 = newLease(customer2,dragon2,sdf.parse("21-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal(30000.00));
+        Lease lease2 = newLease(customer2,dragon2,sdf.parse("21-03-1995 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal("30000.00"));
         managerLease.createLease(lease2);
 
         Customer customer3 = newCustomer("Jan","Blazej","Piestany 1020","SK56","+421 922 222 222");
@@ -457,7 +461,7 @@ public class LeaseManagerImplTest {
         Dragon dragon3 = newDragon("Fat dragon", sdf.parse("16-05-1994 12:00:00"), "lung", 1, 100);
         managerDragon.createDragon(dragon3);
 
-        Lease lease3 = newLease(customer3,dragon3,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-09-1995 12:00:00"),new BigDecimal(40000.00));
+        Lease lease3 = newLease(customer3,dragon3,sdf.parse("16-03-1995 12:00:00"),sdf.parse("16-09-1995 12:00:00"),new BigDecimal("40000.00"));
         managerLease.createLease(lease3);
 
         List<Lease> sample= new ArrayList<Lease>();
@@ -521,8 +525,8 @@ public class LeaseManagerImplTest {
         Lease lease=new Lease();
         lease.setCustomer(customer);
         lease.setDragon(dragon);
-        lease.setStartLease(startLease);
-        lease.setEndLease(endLease);
+        lease.setStartDate(startLease);
+        lease.setEndDate(endLease);
         lease.setPrice(price);
         lease.setReturnDate(null);
         return lease;
@@ -563,8 +567,8 @@ public class LeaseManagerImplTest {
         assertDeepEquals(first.getCustomer(),second.getCustomer());
         assertEquals(first.getDragon(),second.getDragon());
         assertDeepEquals(first.getDragon(), second.getDragon());
-        assertEquals(first.getStartLease(),second.getStartLease());
-        assertEquals(first.getEndLease(),second.getEndLease());
+        assertEquals(first.getStartDate(),second.getStartDate());
+        assertEquals(first.getEndDate(),second.getEndDate());
         assertEquals(first.getPrice(),second.getPrice());
         assertEquals(first.getReturnDate(),second.getReturnDate());
 

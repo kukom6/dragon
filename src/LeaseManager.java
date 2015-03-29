@@ -1,9 +1,6 @@
 import java.util.Collection;
 import java.util.Date;
 
-/**
- * Created by Matej on 23. 2. 2015.
- */
 public interface LeaseManager {
 
     public void createLease(Lease lease);

@@ -183,13 +183,6 @@ public class DragonManagerImplTest {
     public void testGetDragonByID() throws Exception {
         assertNull(manager.getDragonById(1l));
 
-        try {
-            manager.getDragonById(null);
-            fail();
-        } catch (IllegalArgumentException ex) {
-            //OK
-        }
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Dragon dragon = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "trhac", 5, 150);
 
@@ -199,6 +192,23 @@ public class DragonManagerImplTest {
         Dragon result = manager.getDragonById(dragonId);
         assertEquals(dragon, result);
         assertDeepEquals(dragon, result);
+    }
+
+    @Test
+    public void testGetDragonByIDWithWrongArgument() throws Exception {
+        try {
+            manager.getDragonById(null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+
+        try {
+            manager.getDragonById(-1l);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
     }
 
     @Test

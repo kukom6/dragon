@@ -15,7 +15,7 @@ public class DragonManagerImpl implements DragonManager {
 
     private final DataSource dataSource;
 
-    private TimeService timeService;
+    private final TimeService timeService;
 
     public DragonManagerImpl(DataSource dataSource, TimeService timeService) {
         this.dataSource = dataSource;
@@ -30,22 +30,22 @@ public class DragonManagerImpl implements DragonManager {
         }
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement st = conn.prepareStatement("INSERT INTO DRAGONS (\"NAME\", BORN, RACE, HEADS, WEIGHT) VALUES (?,?,?,?,?)",
-                     Statement.RETURN_GENERATED_KEYS)) {
+            PreparedStatement st = conn.prepareStatement("INSERT INTO DRAGONS (\"NAME\", BORN, RACE, HEADS, WEIGHT) VALUES (?,?,?,?,?)",
+            Statement.RETURN_GENERATED_KEYS)) {
 
-                st.setString(1, dragon.getName());
-                st.setTimestamp(2, new Timestamp(dragon.getBorn().getTime()));
-                st.setString(3, dragon.getRace());
-                st.setInt(4, dragon.getNumberOfHeads());
-                st.setInt(5, dragon.getWeight());
+            st.setString(1, dragon.getName());
+            st.setTimestamp(2, new Timestamp(dragon.getBorn().getTime()));
+            st.setString(3, dragon.getRace());
+            st.setInt(4, dragon.getNumberOfHeads());
+            st.setInt(5, dragon.getWeight());
 
-                int addedRows = st.executeUpdate();
-                if (addedRows != 1) {
-                    throw new ServiceFailureException("Internal Error: More rows inserted when trying to insert dragon " + dragon);
-                }
+            int addedRows = st.executeUpdate();
+            if (addedRows != 1) {
+                throw new ServiceFailureException("Internal Error: More rows inserted when trying to insert dragon " + dragon);
+            }
 
-                ResultSet keyRS = st.getGeneratedKeys();
-                dragon.setId(getKey(keyRS, dragon));
+            ResultSet keyRS = st.getGeneratedKeys();
+            dragon.setId(getKey(keyRS, dragon));
         } catch (SQLException ex) {
             log.error("db connection problem in createDragon()", ex);
             throw new ServiceFailureException("Error when creating dragons", ex);
@@ -56,6 +56,7 @@ public class DragonManagerImpl implements DragonManager {
         if (dragon == null) {
             throw new IllegalArgumentException("dragon is null");
         }
+
         if (dragon.getName() == null || dragon.getName().isEmpty()) {
             throw new IllegalArgumentException("dragon name is emptystring or null");
         }
@@ -105,22 +106,26 @@ public class DragonManagerImpl implements DragonManager {
             throw new IllegalArgumentException("id is null");
         }
 
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE ID=?")){
-                st.setLong(1, id);
-                ResultSet rs = st.executeQuery();
-                if(rs.next()){
-                    Dragon dragon = resultSetToDragon(rs);
-                    if (rs.next()) {
-                        throw new ServiceFailureException(
-                                "Internal error: More entities with the same id found "
-                                        + "(source id: " + id + ", found " + dragon + " and " + resultSetToDragon(rs));
-                    }
-                    return dragon;
-                }else{
-                    return null;
+        if(id < 0){
+            throw new IllegalArgumentException("id is negative or zero");
+        }
+
+        try (Connection conn = dataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE ID=?")) {
+            st.setLong(1, id);
+            ResultSet rs = st.executeQuery();
+            if(rs.next()){
+                Dragon dragon = resultSetToDragon(rs);
+                if (rs.next()) {
+                    throw new ServiceFailureException(
+                            "Internal error: More entities with the same id found "
+                                    + "(source id: " + id + ", found " + dragon + " and " + resultSetToDragon(rs));
                 }
-        }catch(SQLException ex){
+                return dragon;
+            }else{
+                return null;
+            }
+        } catch (SQLException ex) {
             log.error("db connection problem while retrieving dragon by id.", ex);
             throw new ServiceFailureException("Error when retrieving dragon by id", ex);
         }
@@ -139,16 +144,15 @@ public class DragonManagerImpl implements DragonManager {
 
     @Override
     public Collection<Dragon> getAllDragons() throws ServiceFailureException {
-        try(Connection conn = dataSource.getConnection()){
-            try(PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS")){
+        try (Connection conn = dataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS")) {
                 ResultSet rs = st.executeQuery();
                 List<Dragon> dragons= new ArrayList<>();
                 while(rs.next()){
                     dragons.add(resultSetToDragon(rs));
                 }
                 return dragons;
-            }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             log.error("db connection problem when retrieving all dragons", ex);
             throw new ServiceFailureException("Error when retrieving all dragons", ex);
         }
@@ -160,17 +164,16 @@ public class DragonManagerImpl implements DragonManager {
             throw new IllegalArgumentException("name is null or empty string");
         }
 
-        try(Connection conn = dataSource.getConnection()){
-            try(PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE \"NAME\"=?")){
-                st.setString(1,name);
-                ResultSet rs = st.executeQuery();
-                List<Dragon> dragons= new ArrayList<>();
-                while(rs.next()){
-                    dragons.add(resultSetToDragon(rs));
-                }
-                return dragons;
+        try (Connection conn = dataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE \"NAME\"=?")) {
+            st.setString(1,name);
+            ResultSet rs = st.executeQuery();
+            List<Dragon> dragons= new ArrayList<>();
+            while(rs.next()){
+                dragons.add(resultSetToDragon(rs));
             }
-        }catch(SQLException ex){
+            return dragons;
+        } catch (SQLException ex) {
             log.error("db connection problem when retrieving dragon by name.", ex);
             throw new ServiceFailureException("Error when retrieving dragons by name", ex);
         }
@@ -182,17 +185,16 @@ public class DragonManagerImpl implements DragonManager {
             throw new IllegalArgumentException("race is null or empty string");
         }
 
-        try(Connection conn = dataSource.getConnection()){
-            try(PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE RACE=?")){
-                st.setString(1,race);
-                ResultSet rs = st.executeQuery();
-                List<Dragon> dragons= new ArrayList<>();
-                while(rs.next()){
-                    dragons.add(resultSetToDragon(rs));
-                }
-                return dragons;
+        try (Connection conn = dataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE RACE=?")) {
+            st.setString(1,race);
+            ResultSet rs = st.executeQuery();
+            List<Dragon> dragons= new ArrayList<>();
+            while(rs.next()){
+                dragons.add(resultSetToDragon(rs));
             }
-        }catch(SQLException ex){
+            return dragons;
+        } catch(SQLException ex) {
             log.error("db connection problem when retrieving dragons by race.", ex);
             throw new ServiceFailureException("Error when retrieving dragons by race", ex);
         }
@@ -203,17 +205,16 @@ public class DragonManagerImpl implements DragonManager {
         if(number <= 0){
             throw new IllegalArgumentException("Number of heads is negative or zero");
         }
-        try(Connection conn = dataSource.getConnection()){
-            try(PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE HEADS=?")){
-                st.setInt(1,number);
-                ResultSet rs = st.executeQuery();
-                List<Dragon> dragons= new ArrayList<>();
-                while(rs.next()){
-                    dragons.add(resultSetToDragon(rs));
-                }
-                return dragons;
+        try (Connection conn = dataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE HEADS=?")){
+            st.setInt(1,number);
+            ResultSet rs = st.executeQuery();
+            List<Dragon> dragons= new ArrayList<>();
+            while(rs.next()){
+                dragons.add(resultSetToDragon(rs));
             }
-        }catch(SQLException ex){
+            return dragons;
+        } catch(SQLException ex) {
             log.error("db connection problem when retrieving dragons by number of heads", ex);
             throw new ServiceFailureException("Error when retrieving dragons by number of heads", ex);
         }
@@ -226,19 +227,18 @@ public class DragonManagerImpl implements DragonManager {
            throw new IllegalArgumentException("dragon id is null");
        }
 
-       try(Connection conn = dataSource.getConnection()){
-           try(PreparedStatement st = conn.prepareStatement("UPDATE DRAGONS SET \"NAME\"=?, BORN=?, RACE=?, HEADS=?, WEIGHT=? WHERE id=?")) {
-               st.setString(1, dragon.getName());
-               st.setTimestamp(2, new Timestamp(dragon.getBorn().getTime()));
-               st.setString(3, dragon.getRace());
-               st.setInt(4, dragon.getNumberOfHeads());
-               st.setInt(5, dragon.getWeight());
-               st.setLong(6,dragon.getId());
-               if(st.executeUpdate() != 1) {
-                   throw new IllegalArgumentException("dragon with id=" + dragon.getId() + " do not exist");
-               }
+       try (Connection conn = dataSource.getConnection();
+           PreparedStatement st = conn.prepareStatement("UPDATE DRAGONS SET \"NAME\"=?, BORN=?, RACE=?, HEADS=?, WEIGHT=? WHERE id=?")) {
+           st.setString(1, dragon.getName());
+           st.setTimestamp(2, new Timestamp(dragon.getBorn().getTime()));
+           st.setString(3, dragon.getRace());
+           st.setInt(4, dragon.getNumberOfHeads());
+           st.setInt(5, dragon.getWeight());
+           st.setLong(6,dragon.getId());
+           if(st.executeUpdate() != 1) {
+               throw new IllegalArgumentException("dragon with id=" + dragon.getId() + " do not exist");
            }
-       }catch(SQLException ex){
+       } catch(SQLException ex) {
            log.error("db connection problem when updating dragon.", ex);
            throw new ServiceFailureException("Error when updating dragon", ex);
        }
@@ -253,14 +253,13 @@ public class DragonManagerImpl implements DragonManager {
             throw new IllegalArgumentException("dragon id is null");
         }
 
-        try(Connection conn = dataSource.getConnection()){
-            try(PreparedStatement st = conn.prepareStatement("DELETE FROM DRAGONS WHERE id=?")) {
-                st.setLong(1,dragon.getId());
-                if(st.executeUpdate() != 1) {
-                    throw new IllegalArgumentException("dragon with id=" + dragon.getId() + " do not exist");
-                }
+        try (Connection conn = dataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement("DELETE FROM DRAGONS WHERE id=?")) {
+            st.setLong(1,dragon.getId());
+            if(st.executeUpdate() != 1) {
+                throw new IllegalArgumentException("dragon with id=" + dragon.getId() + " do not exist");
             }
-        }catch(SQLException ex){
+        } catch(SQLException ex) {
             log.error("db connection problem", ex);
             throw new ServiceFailureException("Error when deleting dragon", ex);
         }

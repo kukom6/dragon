@@ -1,15 +1,12 @@
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * Created by Matej on 23. 2. 2015.
- */
 public class Lease {
 
     private Long id;
     private BigDecimal price;
-    private Date endLease;
-    private Date startLease;
+    private Date startDate;
+    private Date endDate;
     private Dragon dragon;
     private Customer customer;
     private Date returnDate;
@@ -31,20 +28,20 @@ public class Lease {
         this.price = price;
     }
 
-    public Date getEndLease() {
-        return endLease;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setEndLease(Date endLease) {
-        this.endLease = endLease;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getStartLease() {
-        return startLease;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setStartLease(Date startLease) {
-        this.startLease = startLease;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public Dragon getDragon() {

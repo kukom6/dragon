@@ -1,6 +1,3 @@
-/**
- * Created by Matej on 23. 2. 2015.
- */
 public class Customer {
     private Long id;
     private String name;
