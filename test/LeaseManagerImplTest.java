@@ -122,7 +122,11 @@ public class LeaseManagerImplTest {
     }
 
     @Test
-    public void testCreateLeaseWithWrongArguments() throws Exception {
+    public void testCreateLeaseWithWrongArguments() throws Exception
+
+
+
+    {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 
         Lease lease1 = newLease(null,null,null,null,null);
@@ -238,7 +242,6 @@ public class LeaseManagerImplTest {
         } catch (IllegalArgumentException ex) {
             //true
         }
-        //TODO priamy pristup do lease
         customer1.setId(12l);
         dragon1.setId(13l);
 
