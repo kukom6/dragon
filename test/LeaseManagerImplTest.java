@@ -223,7 +223,7 @@ public class LeaseManagerImplTest {
             //true
         }
 
-        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-2015 12:00:00"),sdf.parse("16-05-1995 12:00:00"),null);
+        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-2015 12:00:00"),sdf.parse("16-05-2015 12:00:00"),null);
         try { // price is null
             managerLease.createLease(lease1);
             fail();
@@ -231,7 +231,7 @@ public class LeaseManagerImplTest {
             //true
         }
 
-        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-2015 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal("50000.00"));
+        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-2015 12:00:00"),sdf.parse("16-05-2015 12:00:00"),new BigDecimal("50000.00"));
 
         managerCustomer.deleteCustomer(customer1);
         customer1.setId(null);
@@ -375,6 +375,10 @@ public class LeaseManagerImplTest {
         assertNull(getLease3);
         getLease3=managerLease.getLeaseByID(-41l);
         assertNull(getLease3);
+
+        Lease lease3 = newLease(customer2,dragon2,sdf.parse("16-03-2016 12:00:00"),sdf.parse("16-09-2016 12:00:00"),new BigDecimal("30000.1"));
+        getLease3 = managerLease.getLeaseByID(lease3.getId());
+        assertEquals(getLease3.getPrice(),new BigDecimal("30000.10"));
     }
 
     @Test
