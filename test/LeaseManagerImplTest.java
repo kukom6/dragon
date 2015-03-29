@@ -123,6 +123,7 @@ public class LeaseManagerImplTest {
 
         Lease lease3 = newLease(customer3,dragon2,sdf.parse("16-09-2015 12:00:01"),sdf.parse("16-11-2015 12:00:00"),new BigDecimal("30000.00"));
         managerLease.createLease(lease3); // dragon 2 is free this time
+
     }
 
     @Test
@@ -230,6 +231,8 @@ public class LeaseManagerImplTest {
             //true
         }
 
+        lease1 = newLease(customer1,dragon1,sdf.parse("16-03-2015 12:00:00"),sdf.parse("16-05-1995 12:00:00"),new BigDecimal("50000.00"));
+
         managerCustomer.deleteCustomer(customer1);
         customer1.setId(null);
 
@@ -312,7 +315,7 @@ public class LeaseManagerImplTest {
         try { //price is three numbers after dot
             managerLease.createLease(lease1);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (ServiceFailureException ex) {
             //true
         }
 
@@ -373,7 +376,6 @@ public class LeaseManagerImplTest {
         getLease3=managerLease.getLeaseByID(-41l);
         assertNull(getLease3);
     }
-
 
     @Test
     public void testGetLeaseByIDWithWrongArgument() throws Exception {
