@@ -24,7 +24,7 @@ public class DragonManagerImplTest {
         public Date getCurrentDate(){
             SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
             try {
-                return sdf.parse("15-03-1994 12:00:00");
+                return sdf.parse("15-03-2014 12:00:00");
             }catch(ParseException ex){
                 throw new NullPointerException("Can't parse date.");
             }

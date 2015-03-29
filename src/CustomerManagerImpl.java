@@ -76,7 +76,7 @@ public class CustomerManagerImpl implements CustomerManager {
     @Override
     public Customer getCustomerByIDCard(String idCard){
         log.debug("get customer by number idcard from DB");
-        if(idCard==null||idCard.equals("")){
+        if(idCard==null||idCard.isEmpty()){
             throw new IllegalArgumentException("idCard is null or empty string");
         }
         Customer customer;
@@ -125,7 +125,7 @@ public class CustomerManagerImpl implements CustomerManager {
     public Collection<Customer> getAllCustomersByName(String name,String surname){
         log.debug("get all customers from DB by name");
 
-        if(name==null||surname==null||name.equals("")||surname.equals("")){
+        if(name==null||surname==null||name.isEmpty()||surname.isEmpty()){
             throw new IllegalArgumentException("Name or surname or both are valid");
         }
 
@@ -215,17 +215,17 @@ public class CustomerManagerImpl implements CustomerManager {
 
     private void checkCustomerArgument(Customer customer) throws IllegalArgumentException{
 
-        if(customer.getName()==null||customer.getName().equals("")){
+        if(customer.getName()==null||customer.getName().isEmpty()){
             throw new IllegalArgumentException("Customer name is null or empty string");
         }
-        if(customer.getSurname()==null||customer.getSurname().equals("")){
+        if(customer.getSurname()==null||customer.getSurname().isEmpty()){
             throw new IllegalArgumentException("Customer surname is null or empty string");
         }
-        if(customer.getIdentityCard()==null||customer.getIdentityCard().equals("")){
+        if(customer.getIdentityCard()==null||customer.getIdentityCard().isEmpty()){
             throw new IllegalArgumentException("Customer Identity card is null or empty string");
         }
-        if(customer.getPhoneNumber()==null||customer.getPhoneNumber().equals("")){
-            if(customer.getAddress()==null||customer.getAddress().equals("")){
+        if(customer.getPhoneNumber()==null||customer.getPhoneNumber().isEmpty()){
+            if(customer.getAddress()==null||customer.getAddress().isEmpty()){
                 throw new IllegalArgumentException("Both customer contact (phone and address) is null or empty string");
             }
         }

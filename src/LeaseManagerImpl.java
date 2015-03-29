@@ -9,9 +9,12 @@ public class LeaseManagerImpl implements LeaseManager {
 
 
     private final DataSource dataSource;
+    private final TimeService timeService;
 
-    public LeaseManagerImpl(DataSource dataSource) {
+
+    public LeaseManagerImpl(DataSource dataSource, TimeService timeService) {
         this.dataSource = dataSource;
+        this.timeService = timeService;
     }
 
     @Override

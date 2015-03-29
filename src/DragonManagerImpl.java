@@ -31,7 +31,7 @@ public class DragonManagerImpl implements DragonManager {
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement st = conn.prepareStatement("INSERT INTO DRAGONS (\"NAME\", BORN, RACE, HEADS, WEIGHT) VALUES (?,?,?,?,?)",
-             Statement.RETURN_GENERATED_KEYS)) {
+                     Statement.RETURN_GENERATED_KEYS)) {
 
                 st.setString(1, dragon.getName());
                 st.setTimestamp(2, new Timestamp(dragon.getBorn().getTime()));
