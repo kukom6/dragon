@@ -122,11 +122,7 @@ public class LeaseManagerImplTest {
     }
 
     @Test
-    public void testCreateLeaseWithWrongArguments() throws Exception
-
-
-
-    {
+    public void testCreateLeaseWithWrongArguments() throws Exception{
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 
         Lease lease1 = newLease(null,null,null,null,null);
@@ -328,6 +324,14 @@ public class LeaseManagerImplTest {
             //true
         }
 
+        lease2 = newLease(customer2,dragon1,sdf.parse("16-04-1995 12:00:00"),sdf.parse("17-05-1996 12:00:00"),new BigDecimal(50000.01));
+        lease2.setReturnDate(sdf.parse("16-05-1995 12:00:00"));
+        try { // lease 2 have return date
+            managerLease.createLease(lease2);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
     }
 
     @Test
