@@ -37,10 +37,6 @@ public class LeaseManagerImpl implements LeaseManager {
         throw new UnsupportedOperationException("not implemented");
     }
 
-    @Override
-    public Collection<Lease> getAllLeasesByStartDate(Date startLease) {
-        throw new UnsupportedOperationException("not implemented");
-    }
 
     @Override
     public Collection<Lease> findLeasesForCustomer(Customer customer) {

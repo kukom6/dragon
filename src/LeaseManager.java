@@ -12,8 +12,6 @@ public interface LeaseManager {
 
     public Collection<Lease> getAllLeases();
 
-    public Collection<Lease> getAllLeasesByStartDate(Date endLease);
-
     public Collection<Lease> getAllLeasesByEndDate(Date startLease);
 
     public Collection<Lease> findLeasesForCustomer(Customer customer);

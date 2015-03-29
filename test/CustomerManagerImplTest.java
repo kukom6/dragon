@@ -300,7 +300,7 @@ public class CustomerManagerImplTest {
     }
 
     @Test
-    public void testGetAllCustomersByName() throws Exception {
+    public void testGetAllCustomersByName() throws Exception{
 
         Collection<Customer> allCustomersByName=manager.getAllCustomers();
 
