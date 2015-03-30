@@ -195,7 +195,7 @@ public class CustomerManagerImpl implements CustomerManager {
             try(PreparedStatement st = conn.prepareStatement("DELETE FROM CUSTOMERS WHERE ID=?")) {
                 st.setLong(1,customer.getId());
                 if(st.executeUpdate()!=1) {
-                    throw new ServiceFailureException("Customer with id "+customer.getId()+" doesn't deleted");
+                    throw new IllegalArgumentException("Customer with id "+customer.getId()+" doesn't deleted");
                 }
             }
         } catch (SQLException ex) {

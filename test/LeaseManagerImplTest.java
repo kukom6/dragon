@@ -745,12 +745,74 @@ public class LeaseManagerImplTest {
 
     @Test
     public void testDeleteLease() throws Exception {
-        throw new UnsupportedOperationException("not implemented");
+        Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
+        managerCustomer.createCustomer(customer1);
+        Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon1);
+
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-05-2015 12:00:00"),new BigDecimal("50000.00"));
+        managerLease.createLease(lease1);
+
+        Customer customer2 = newCustomer("Ondrej","Brezovec","Zilina 1020","SK56","+421 922 222 222");
+        managerCustomer.createCustomer(customer2);
+        Dragon dragon2 = newDragon("Nice dragon", sdf.parse("16-04-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon2);
+
+        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-05-2015 12:00:00"),new BigDecimal("30000.00"));
+        managerLease.createLease(lease2);
+
+        Lease getLease1=managerLease.getLeaseByID(lease1.getId());
+        getLease1.setReturnDate(sdf.parse("16-05-2016 12:00:00"));
+        managerLease.deleteLease(lease1);
+
+        assertNull(managerLease.getLeaseByID(lease1.getId()));
+        assertNotNull(managerLease.getLeaseByID(lease2.getId()));
+        assertDeepEquals(lease2, managerLease.getLeaseByID(lease2.getId())); //consistency
+
     }
 
     @Test
     public void testDeleteLeaseWithWrongArgument() throws Exception {
-        throw new UnsupportedOperationException("not implemented");
+        Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
+        managerCustomer.createCustomer(customer1);
+        Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon1);
+
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-05-2015 12:00:00"),new BigDecimal("50000.00"));
+        managerLease.createLease(lease1);
+
+        try {
+            managerLease.deleteLease(null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+
+        try {
+            managerLease.deleteLease(lease1);
+            fail();  // don't delete lease where haven't return date
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+
+        Lease modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setId(null);
+        try { //ID lease is null
+            managerLease.deleteLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+
+        modifyLease.setId(22l);
+        try { //ID lease isn't correct
+            managerLease.deleteLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+
+
     }
 
     private static Lease newLease(Customer customer,Dragon dragon,Date endDate,BigDecimal price){

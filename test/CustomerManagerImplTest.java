@@ -638,7 +638,6 @@ public class CustomerManagerImplTest {
             //OK
         }
 
-        //manager.createCustomer(customer1);
         Customer modifyCustomer;
         modifyCustomer=manager.getCustomerByID(customer1Id);  //delete where ID is null
         modifyCustomer.setId(null);
@@ -654,7 +653,7 @@ public class CustomerManagerImplTest {
         try {
             manager.deleteCustomer(modifyCustomer);
             fail();
-        } catch (ServiceFailureException ex) {
+        } catch (IllegalArgumentException ex) {
             //OK
         }
 
