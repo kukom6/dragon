@@ -171,7 +171,7 @@ public class CustomerManagerImpl implements CustomerManager {
                 st.setLong(6, customer.getId());
                 int numbUpdate = st.executeUpdate();
                 if (numbUpdate != 1) {
-                    throw new ServiceFailureException("UPDATE more update also one");
+                    throw new IllegalArgumentException("Customer with id=" + customer.getId() + " do not exist");
                 }
             }
         } catch (SQLException ex) {

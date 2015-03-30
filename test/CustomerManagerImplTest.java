@@ -498,7 +498,7 @@ public class CustomerManagerImplTest {
         try {
             manager.updateCustomer(modifyCustomer);
             fail();
-        } catch (ServiceFailureException ex) {
+        } catch (IllegalArgumentException ex) {
             //true
         }
 

@@ -100,7 +100,7 @@ public class LeaseManagerImplTest {
         assertNotNull(managerLease.getLeaseByID(lease2.getId()));
 
         Lease getLease1 = managerLease.getLeaseByID(lease1.getId());
-        assertEquals(getLease1.getStartDate(),timeService.getCurrentDate());
+        assertEquals(timeService.getCurrentDate(),getLease1.getStartDate());
         assertEquals(lease1,getLease1);
         assertDeepEquals(lease1,getLease1);
         assertNotSame(lease1,getLease1);
@@ -110,6 +110,11 @@ public class LeaseManagerImplTest {
 
         Customer customer3 = newCustomer("Ondrej","Zivic","Bytca 1020","SK561","+421 922 222 222");
         managerCustomer.createCustomer(customer3);
+
+        Lease getLease2=managerLease.getLeaseByID(lease2.getId()); //back dragon2
+        getLease2.setReturnDate(sdf.parse("16-09-2015 12:00:00"));
+        managerLease.updateLease(getLease2);
+
         timeService.setCurrentDate(sdf.parse("16-9-2015 12:00:01")); // dragon 2 is free this time
         Lease lease3 = newLease(customer3,dragon2,sdf.parse("16-11-2015 12:00:00"),new BigDecimal("30000.00"));
         managerLease.createLease(lease3);
@@ -315,6 +320,14 @@ public class LeaseManagerImplTest {
         } catch (IllegalArgumentException ex) {
             //true
         }
+
+        lease2 = newLease(customer2,dragon1,sdf.parse("17-05-1994 12:00:00"),new BigDecimal("50000.01"));
+        try { // end day is before start date.
+            managerLease.createLease(lease2);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
     }
 
     @Test
@@ -449,7 +462,7 @@ public class LeaseManagerImplTest {
         Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-05-2015 12:00:00"),new BigDecimal("30000.00"));
         managerLease.createLease(lease2);
 
-        Customer customer3 = newCustomer("Jan","Blazej","Piestany 1020","SK56","+421 922 222 222");
+        Customer customer3 = newCustomer("Jan","Blazej","Piestany 1020","SK565","+421 922 222 222");
         managerCustomer.createCustomer(customer3);
         Dragon dragon3 = newDragon("Fat dragon", sdf.parse("16-05-1994 12:00:00"), "lung", 1, 100);
         managerDragon.createDragon(dragon3);
@@ -493,17 +506,250 @@ public class LeaseManagerImplTest {
     }
 
     @Test
-    public void testFindLeasesForDragon() throws Exception {
+    public void testFindLeasesForCustomerWithWrongArgument() throws Exception {
+        throw new UnsupportedOperationException("not implemented");
+    }
+
+    @Test
+     public void testFindLeasesForDragon() throws Exception {
+        throw new UnsupportedOperationException("not implemented");
+    }
+
+    @Test
+    public void testFindLeasesForDragonWithWrongArgument() throws Exception {
         throw new UnsupportedOperationException("not implemented");
     }
 
     @Test
     public void testUpdateLease() throws Exception {
-        throw new UnsupportedOperationException("not implemented");
+        Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
+        managerCustomer.createCustomer(customer1);
+        Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon1);
+
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-05-2015 12:00:00"),new BigDecimal("50000.00"));
+        managerLease.createLease(lease1);
+
+        Customer customer2 = newCustomer("Ondrej","Brezovec","Zilina 1020","SK5668","+421 922 222 222");
+        managerCustomer.createCustomer(customer2);
+        Dragon dragon2 = newDragon("Nice dragon2", sdf.parse("16-04-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon2);
+
+        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-09-2015 12:00:00"),new BigDecimal("30000.00"));
+        managerLease.createLease(lease2);
+
+
+        Long lease1ID=lease1.getId();
+
+        //change customer
+        Lease getLeaseBeforeUpdate=managerLease.getLeaseByID(lease1ID);
+        Customer customer3 = newCustomer("Juraj","Bezuch","Brezno 03","SK3889","+421 944 222 222");
+        managerCustomer.createCustomer(customer3);
+        getLeaseBeforeUpdate.setCustomer(customer3);
+        managerLease.updateLease(getLeaseBeforeUpdate);
+        Lease getLeaseAfterUpdate=managerLease.getLeaseByID(lease1ID);
+
+        assertEquals(getLeaseBeforeUpdate,getLeaseAfterUpdate);
+        assertDeepEquals(getLeaseBeforeUpdate,getLeaseAfterUpdate);
+        assertNotSame(getLeaseBeforeUpdate,getLeaseAfterUpdate);
+
+        //change dragon
+        getLeaseBeforeUpdate=managerLease.getLeaseByID(lease1ID);
+        Dragon dragon3 = newDragon("Nice dragon", sdf.parse("16-03-1995 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon3);
+        getLeaseBeforeUpdate.setDragon(dragon3);
+        managerLease.updateLease(getLeaseBeforeUpdate);
+        getLeaseAfterUpdate=managerLease.getLeaseByID(lease1ID);
+
+        assertEquals(getLeaseBeforeUpdate,getLeaseAfterUpdate);
+        assertDeepEquals(getLeaseBeforeUpdate,getLeaseAfterUpdate);
+        assertNotSame(getLeaseBeforeUpdate,getLeaseAfterUpdate);
+
+        //set end date
+        getLeaseBeforeUpdate=managerLease.getLeaseByID(lease1ID);
+        getLeaseBeforeUpdate.setEndDate(sdf.parse("16-08-2019 12:00:00"));
+        managerLease.updateLease(getLeaseBeforeUpdate);
+        getLeaseAfterUpdate=managerLease.getLeaseByID(lease1ID);
+
+        assertEquals(getLeaseBeforeUpdate,getLeaseAfterUpdate);
+        assertDeepEquals(getLeaseBeforeUpdate,getLeaseAfterUpdate);
+        assertNotSame(getLeaseBeforeUpdate,getLeaseAfterUpdate);
+
+        //change price
+        getLeaseBeforeUpdate=managerLease.getLeaseByID(lease1ID);
+        getLeaseBeforeUpdate.setPrice(new BigDecimal("30000.00"));
+        managerLease.updateLease(getLeaseBeforeUpdate);
+        getLeaseAfterUpdate=managerLease.getLeaseByID(lease1ID);
+
+        assertEquals(getLeaseBeforeUpdate,getLeaseAfterUpdate);
+        assertDeepEquals(getLeaseBeforeUpdate,getLeaseAfterUpdate);
+        assertNotSame(getLeaseBeforeUpdate,getLeaseAfterUpdate);
+
+        assertDeepEquals(lease2,managerLease.getLeaseByID(lease2.getId())); //consistency
+
+    }
+
+    @Test
+    public void testUpdateLeaseWithWrongArgument() throws Exception {
+        Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
+        managerCustomer.createCustomer(customer1);
+        Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon1);
+
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-05-2015 12:00:00"),new BigDecimal("50000.00"));
+        managerLease.createLease(lease1);
+
+        Lease modifyLease;
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setId(5l);
+        try { //wrong ID, id isn't in DB
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setId(null);
+        try { // wrong ID, id is null
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setCustomer(null);
+        try { // wrong Customer; Customer is null
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        Customer customer = newCustomer("Tomas","Majernik","Zelezovce 125","SK345","+421 944 222 222");
+        modifyLease.setCustomer(customer);
+        try { // wrong Customer; Customer isn't in DB
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setDragon(null);
+        try { // wrong dragon; dragon is null
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        Dragon dragon = newDragon("Ugly dragon2", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
+        modifyLease.setDragon(dragon);
+        try { // wrong dragon; dragon isn't in DB
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        //dragon isn't free
+        Customer customer2 = newCustomer("Juraj","Fratrik","Lomnica 123","SK551","+421 944 222 222");
+        managerCustomer.createCustomer(customer2);
+        Dragon dragon2 = newDragon("Borow Dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon2);
+
+        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-05-2016 12:00:00"),new BigDecimal("50000.00"));
+        managerLease.createLease(lease2);
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setDragon(dragon2);
+        try { // dragon isn't free
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setStartDate(null);
+        try { // startDate is null
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setEndDate(null);
+        try { // EndDate is null
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setEndDate(sdf.parse("16-03-1994 12:00:00"));
+        try { // EndDate is before start date
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setReturnDate(sdf.parse("16-03-1994 12:00:00"));
+        try { // Return date is before start date
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setPrice(null);
+        try { // price is null
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setPrice(new BigDecimal("50000.001"));
+        try { // price isn't in correct form
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (ServiceFailureException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        modifyLease.setPrice(new BigDecimal("-50000.00"));
+        try { // price is negativ
+            managerLease.updateLease(modifyLease);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        modifyLease=managerLease.getLeaseByID(lease1.getId());
+        assertDeepEquals(lease1,modifyLease);
+        assertNotSame(lease1,modifyLease);
     }
 
     @Test
     public void testDeleteLease() throws Exception {
+        throw new UnsupportedOperationException("not implemented");
+    }
+
+    @Test
+    public void testDeleteLeaseWithWrongArgument() throws Exception {
         throw new UnsupportedOperationException("not implemented");
     }
 
