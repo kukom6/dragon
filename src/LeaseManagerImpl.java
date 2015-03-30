@@ -4,9 +4,8 @@ import org.slf4j.LoggerFactory;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.Collection;
+import java.util.*;
 import java.util.Date;
-import java.util.IllegalFormatException;
 
 public class LeaseManagerImpl implements LeaseManager {
 
@@ -211,7 +210,18 @@ public class LeaseManagerImpl implements LeaseManager {
 
     @Override
     public Collection<Lease> getAllLeases() {
-        throw new UnsupportedOperationException("not implemented");
+        try (Connection conn = dataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT ID, IDCUSTOMER, IDDRAGON, STARTDATE, ENDDATE, RETURNDATE, PRICE FROM LEASES")) {
+            ResultSet rs = st.executeQuery();
+            List<Lease> leases= new ArrayList<>();
+            while(rs.next()){
+                leases.add(resultSetToLease(rs));
+            }
+            return leases;
+        } catch (SQLException ex) {
+            log.error("db connection problem when retrieving all leases", ex);
+            throw new ServiceFailureException("Error when retrieving all leases", ex);
+        }
     }
 
     @Override
@@ -231,7 +241,42 @@ public class LeaseManagerImpl implements LeaseManager {
 
     @Override
     public void updateLease(Lease lease) {
-        throw new UnsupportedOperationException("not implemented");
+        checkLease(lease);
+        if (lease.getId() == null) {
+            throw new IllegalArgumentException("lease id is null");
+        }
+
+        if(lease.getStartDate() == null){
+            throw new IllegalArgumentException("startDate is null");
+        }
+
+        try (Connection conn = dataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement("UPDATE LEASES SET IDCUSTOMER=?, IDDRAGON=?, STARTDATE=?, ENDDATE=?, RETURNDATE=?, PRICE=? WHERE id=?")) {
+            st.setLong(1, lease.getCustomer().getId());
+            st.setLong(2, lease.getDragon().getId());
+            st.setTimestamp(3, new Timestamp(lease.getStartDate().getTime()));
+            st.setTimestamp(4, new Timestamp(lease.getEndDate().getTime()));
+
+            if(lease.getReturnDate() == null){
+                st.setNull(5,Types.TIMESTAMP);
+            }else{
+                st.setTimestamp(5, new Timestamp(lease.getReturnDate().getTime()));
+            }
+
+            try {
+                st.setBigDecimal(6, lease.getPrice().setScale(2));
+            } catch (ArithmeticException ex){
+                throw new ServiceFailureException("bad BigDecimal value");
+            }
+
+            st.setLong(7, lease.getId());
+            if(st.executeUpdate() != 1) {
+                throw new IllegalArgumentException("lease with id=" + lease.getId() + " do not exist");
+            }
+        } catch(SQLException ex) {
+            log.error("db connection problem when updating lease.", ex);
+            throw new ServiceFailureException("Error when updating lease", ex);
+        }
     }
     
     @Override
