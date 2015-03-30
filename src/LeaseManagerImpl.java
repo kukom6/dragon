@@ -225,18 +225,100 @@ public class LeaseManagerImpl implements LeaseManager {
     }
 
     @Override
-    public Collection<Lease> getAllLeasesByEndDate(Date endLease) {
-        throw new UnsupportedOperationException("not implemented");
+    public Collection<Lease> getAllLeasesByEndDate(Date endDate) {
+        if(endDate == null){
+            throw new IllegalArgumentException("cendlease is null");
+        }
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement st = conn.prepareStatement("SELECT ID, IDCUSTOMER, IDDRAGON, STARTDATE, ENDDATE, RETURNDATE, PRICE FROM LEASES WHERE ENDDATE=?")) {
+            st.setTimestamp(1, new Timestamp(endDate.getTime()));
+            ResultSet rs = st.executeQuery();
+            List<Lease> leases= new ArrayList<>();
+            while(rs.next()){
+                leases.add(resultSetToLease(rs));
+            }
+            return leases;
+        } catch (SQLException ex) {
+            log.error("db connection problem when retrieving lease for customer.", ex);
+            throw new ServiceFailureException("Error when retrieving lease for customer", ex);
+        }
     }
 
     @Override
     public Collection<Lease> findLeasesForCustomer(Customer customer) {
-        throw new UnsupportedOperationException("not implemented");
+        if(customer == null){
+            throw new IllegalArgumentException("customer is null");
+        }
+
+        if(customer.getId() == null){
+            throw new IllegalArgumentException("customer id is null");
+        }
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement st = conn.prepareStatement("SELECT ID, IDCUSTOMER, IDDRAGON, STARTDATE, ENDDATE, RETURNDATE, PRICE FROM LEASES WHERE IDCUSTOMER=?")) {
+            st.setLong(1, customer.getId());
+            ResultSet rs = st.executeQuery();
+            List<Lease> leases= new ArrayList<>();
+            while(rs.next()){
+                leases.add(resultSetToLease(rs));
+            }
+            return leases;
+        } catch (SQLException ex) {
+            log.error("db connection problem when retrieving lease for customer.", ex);
+            throw new ServiceFailureException("Error when retrieving lease for customer", ex);
+        }
     }
 
     @Override
     public Collection<Lease> findLeasesForDragon(Dragon dragon) {
-        throw new UnsupportedOperationException("not implemented");
+        if(dragon == null){
+            throw new IllegalArgumentException("dragon is null");
+        }
+
+        if(dragon.getId() == null){
+            throw new IllegalArgumentException("dragon id is null");
+        }
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement st = conn.prepareStatement("SELECT ID, IDCUSTOMER, IDDRAGON, STARTDATE, ENDDATE, RETURNDATE, PRICE FROM LEASES WHERE IDDRAGON=?")) {
+            st.setLong(1, dragon.getId());
+            ResultSet rs = st.executeQuery();
+            List<Lease> leases= new ArrayList<>();
+            while(rs.next()){
+                leases.add(resultSetToLease(rs));
+            }
+            return leases;
+        } catch (SQLException ex) {
+            log.error("db connection problem when retrieving lease for dragon.", ex);
+            throw new ServiceFailureException("Error when retrieving lease for dragon", ex);
+        }
+    }
+
+    private boolean checkDragonID(Long leaseID, Dragon dragon){
+        if(dragon == null){
+            throw new IllegalArgumentException("dragon is null");
+        }
+
+        if(dragon.getId() == null){
+            throw new IllegalArgumentException("dragon id is null");
+        }
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement st = conn.prepareStatement("SELECT ID, IDDRAGON, RETURNDATE FROM LEASES WHERE IDDRAGON=? AND RETURNDATE IS NULL")){
+            st.setLong(1, dragon.getId());
+            ResultSet rs = st.executeQuery();
+
+            if(rs.next()){
+                return leaseID != rs.getLong("ID");
+            }else{
+                return false;
+            }
+
+        } catch (SQLException ex){
+            log.error("db connection problem when retrieving lease for dragon", ex);
+            throw new ServiceFailureException("Error when lease for dragon", ex);
+        }
     }
 
     @Override
@@ -248,6 +330,20 @@ public class LeaseManagerImpl implements LeaseManager {
 
         if(lease.getStartDate() == null){
             throw new IllegalArgumentException("startDate is null");
+        }
+
+        if(lease.getReturnDate() != null && lease.getReturnDate().before(lease.getStartDate())){
+            throw new IllegalArgumentException("startDate is after return date.");
+        }
+
+        if(lease.getEndDate().before(lease.getStartDate())){
+            throw new IllegalArgumentException("end date is after return date.");
+        }
+
+        if(lease.getReturnDate() == null){
+            if(checkDragonID(lease.getId(), lease.getDragon())){
+                throw new IllegalArgumentException("Dragon is borrowed in another lease");
+            }
         }
 
         try (Connection conn = dataSource.getConnection();
@@ -281,6 +377,27 @@ public class LeaseManagerImpl implements LeaseManager {
     
     @Override
     public void deleteLease(Lease lease) {
-        throw new UnsupportedOperationException("not implemented");
+        if(lease == null){
+            throw new IllegalArgumentException("lease is null");
+        }
+
+        if(lease.getId() == null){
+            throw new IllegalArgumentException("lease id is null");
+        }
+
+        if(lease.getReturnDate() == null){
+            throw new IllegalArgumentException("dragon is not returned yet");
+        }
+
+        try (Connection conn = dataSource.getConnection();
+            PreparedStatement st = conn.prepareStatement("DELETE FROM LEASES WHERE id=?")) {
+            st.setLong(1, lease.getId());
+            if(st.executeUpdate() != 1) {
+                throw new IllegalArgumentException("lease with id=" + lease.getId() + " do not exist");
+            }
+        } catch(SQLException ex) {
+            log.error("db connection problem while deleting lease", ex);
+            throw new ServiceFailureException("Error when deleting lease", ex);
+        }
     }
 }

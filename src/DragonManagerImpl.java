@@ -255,7 +255,7 @@ public class DragonManagerImpl implements DragonManager {
 
         try (Connection conn = dataSource.getConnection();
             PreparedStatement st = conn.prepareStatement("DELETE FROM DRAGONS WHERE id=?")) {
-            st.setLong(1,dragon.getId());
+            st.setLong(1, dragon.getId());
             if(st.executeUpdate() != 1) {
                 throw new IllegalArgumentException("dragon with id=" + dragon.getId() + " do not exist");
             }

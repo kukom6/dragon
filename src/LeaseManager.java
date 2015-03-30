@@ -9,7 +9,7 @@ public interface LeaseManager {
 
     public Collection<Lease> getAllLeases();
 
-    public Collection<Lease> getAllLeasesByEndDate(Date startLease);
+    public Collection<Lease> getAllLeasesByEndDate(Date endDate);
 
     public Collection<Lease> findLeasesForCustomer(Customer customer);
 

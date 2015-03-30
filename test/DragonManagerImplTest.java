@@ -181,8 +181,6 @@ public class DragonManagerImplTest {
 
     @Test
     public void testGetDragonByID() throws Exception {
-        assertNull(manager.getDragonById(1l));
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Dragon dragon = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "trhac", 5, 150);
 
@@ -196,6 +194,8 @@ public class DragonManagerImplTest {
 
     @Test
     public void testGetDragonByIDWithWrongArgument() throws Exception {
+        assertNull(manager.getDragonById(1l));
+
         try {
             manager.getDragonById(null);
             fail();
@@ -236,20 +236,6 @@ public class DragonManagerImplTest {
     public void testGetDragonsByName() throws Exception {
         assertTrue(manager.getDragonsByName("Matej").isEmpty());
 
-        try {
-            manager.getDragonsByName(null);
-            fail();
-        } catch (IllegalArgumentException ex) {
-            //OK
-        }
-
-        try {
-            manager.getDragonsByName("");
-            fail();
-        } catch (IllegalArgumentException ex) {
-            //OK
-        }
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Dragon dragon1 = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "burster", 5, 150);
         Dragon dragon2 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "scratcher", 2, 100);
@@ -280,23 +266,24 @@ public class DragonManagerImplTest {
     }
 
     @Test
+    public void testGetDragonsByNameWithWrongArguments() throws Exception {
+        try {
+            manager.getDragonsByName(null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+
+        try {
+            manager.getDragonsByName("");
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+    }
+
+    @Test
     public void testGetDragonsByRace() throws Exception {
-        assertTrue(manager.getDragonsByRace("Matej").isEmpty());
-
-        try {
-            manager.getDragonsByRace(null);
-            fail();
-        } catch (IllegalArgumentException ex) {
-            //OK
-        }
-
-        try {
-            manager.getDragonsByRace("");
-            fail();
-        } catch (IllegalArgumentException ex) {
-            //OK
-        }
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Dragon dragon1 = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "burster", 5, 150);
         Dragon dragon2 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "scratcher", 2, 100);
@@ -327,15 +314,27 @@ public class DragonManagerImplTest {
     }
 
     @Test
-    public void testGetDragonsByNumberOfHeads() throws Exception {
-        assertTrue(manager.getDragonsByNumberOfHeads(2).isEmpty());
+    public void testGetDragonsByRaceWithWrongArguments() throws Exception {
+        assertTrue(manager.getDragonsByRace("Matej").isEmpty());
 
         try {
-            manager.getDragonsByNumberOfHeads(-1);
+            manager.getDragonsByRace(null);
             fail();
         } catch (IllegalArgumentException ex) {
             //OK
         }
+
+        try {
+            manager.getDragonsByRace("");
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+    }
+
+    @Test
+    public void testGetDragonsByNumberOfHeads() throws Exception {
+        assertTrue(manager.getDragonsByNumberOfHeads(2).isEmpty());
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Dragon dragon1 = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "burster", 5, 150);
@@ -364,6 +363,16 @@ public class DragonManagerImplTest {
 
         assertEquals(expectedList, actual);
         assertDeepEquals(expectedList, actual);
+    }
+
+    @Test
+    public void testGetDragonsByNumberOfHeadsWithWrongArguments() throws Exception {
+        try {
+            manager.getDragonsByNumberOfHeads(-1);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
     }
 
     @Test
