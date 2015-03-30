@@ -502,22 +502,150 @@ public class LeaseManagerImplTest {
 
     @Test
     public void testFindLeasesForCustomer() throws Exception {
-        throw new UnsupportedOperationException("not implemented");
+        Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
+        managerCustomer.createCustomer(customer1);
+        Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon1);
+
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-05-2015 12:00:00"),new BigDecimal("50000.00"));
+        managerLease.createLease(lease1);
+
+        Customer customer2 = newCustomer("Ondrej","Brezovec","Zilina 1020","SK56","+421 922 222 222");
+        managerCustomer.createCustomer(customer2);
+        Dragon dragon2 = newDragon("Nice dragon", sdf.parse("16-04-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon2);
+
+        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-09-2015 12:00:00"),new BigDecimal("30000.00"));
+        managerLease.createLease(lease2);
+
+        Dragon dragon3 = newDragon("Nice dragon", sdf.parse("16-04-1996 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon3);
+
+        Lease lease3 = newLease(customer1,dragon3,sdf.parse("16-09-2015 12:00:00"),new BigDecimal("30000.00"));
+        managerLease.createLease(lease3);
+
+        List<Lease> sample= new ArrayList<Lease>();
+        List<Lease> actual= new ArrayList<Lease>();
+
+        sample.add(lease1);
+        sample.add(lease3);
+
+        Collection<Lease> leasesForCustomer=managerLease.findLeasesForCustomer(customer1);
+        actual.addAll(leasesForCustomer);
+
+        Collections.sort(sample,idComparator);
+        Collections.sort(actual, idComparator);
+
+        assertEquals(sample,actual);
+        assertDeepEquals(sample,actual);
+
+        // test with customer who doesn't have dragon
+        Customer customer3 = newCustomer("Andrej","Pincik","Brezovec 10","SK695","+421 922 222 222");
+        managerCustomer.createCustomer(customer3);
+        leasesForCustomer=managerLease.findLeasesForCustomer(customer3);
+        assertTrue(leasesForCustomer.isEmpty());
+
+        //consistency
+        Lease getLease = managerLease.getLeaseByID(lease2.getId());
+        assertDeepEquals(lease2,getLease);
+
     }
 
     @Test
     public void testFindLeasesForCustomerWithWrongArgument() throws Exception {
-        throw new UnsupportedOperationException("not implemented");
+
+        Collection<Lease> leasesForCustomer=new ArrayList<>();
+
+        try{
+            leasesForCustomer=managerLease.findLeasesForCustomer(null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        Customer customer2 = newCustomer("Tomas","Mician","Cadca 123","SK685","+421 944 222 222");
+        try{
+            leasesForCustomer=managerLease.findLeasesForCustomer(customer2);
+            fail(); //customer isn't in DB
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
     }
 
     @Test
      public void testFindLeasesForDragon() throws Exception {
-        throw new UnsupportedOperationException("not implemented");
+        Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
+        managerCustomer.createCustomer(customer1);
+        Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon1);
+
+        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-05-2015 12:00:00"),new BigDecimal("50000.00"));
+        managerLease.createLease(lease1);
+
+        Customer customer2 = newCustomer("Ondrej","Brezovec","Zilina 1020","SK56","+421 922 222 222");
+        managerCustomer.createCustomer(customer2);
+        Dragon dragon2 = newDragon("Nice dragon", sdf.parse("16-04-1994 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon2);
+
+        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-09-2015 12:00:00"),new BigDecimal("30000.00"));
+        managerLease.createLease(lease2);
+
+        Customer customer3 = newCustomer("Mario", "Majernik", "Lucenec 183", "SK3666", "+421 944 222 222");
+        managerCustomer.createCustomer(customer3);
+
+        lease1=managerLease.getLeaseByID(lease1.getId());
+        lease1.setReturnDate(sdf.parse("16-05-2015 12:00:00"));
+        managerLease.updateLease(lease1);
+        timeService.setCurrentDate(sdf.parse("16-05-2015 12:05:00")); //end lease1
+
+        Lease lease3 = newLease(customer3,dragon1,sdf.parse("16-09-2018 12:00:00"),new BigDecimal("30000.00"));
+        managerLease.createLease(lease3);
+
+        List<Lease> sample= new ArrayList<Lease>();
+        List<Lease> actual= new ArrayList<Lease>();
+
+        sample.add(lease1);
+        sample.add(lease3);
+
+        Collection<Lease> leasesForDragon=managerLease.findLeasesForDragon(dragon1);
+        actual.addAll(leasesForDragon);
+
+        Collections.sort(sample,idComparator);
+        Collections.sort(actual, idComparator);
+
+        assertEquals(sample,actual);
+        assertDeepEquals(sample,actual);
+
+        // dragon don't have borrowed
+        Dragon dragon3 = newDragon("Lonely dragon", sdf.parse("16-04-1992 12:00:00"), "lung", 1, 100);
+        managerDragon.createDragon(dragon3);
+        leasesForDragon=managerLease.findLeasesForDragon(dragon3);
+        assertTrue(leasesForDragon.isEmpty());
+
+        //consistency
+        Lease getLease = managerLease.getLeaseByID(lease2.getId());
+        assertDeepEquals(lease2,getLease);
+
     }
 
     @Test
     public void testFindLeasesForDragonWithWrongArgument() throws Exception {
-        throw new UnsupportedOperationException("not implemented");
+        Collection<Lease> leasesForDragon=new ArrayList<>();
+
+        try{
+            leasesForDragon=managerLease.findLeasesForDragon(null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
+
+        Dragon dragon1 = newDragon("Nice dragon", sdf.parse("16-04-1994 12:00:00"), "lung", 1, 100);
+        try{
+            leasesForDragon=managerLease.findLeasesForDragon(dragon1);
+            fail(); //dragon isn't in DB
+        } catch (IllegalArgumentException ex) {
+            //true
+        }
     }
 
     @Test
@@ -763,7 +891,7 @@ public class LeaseManagerImplTest {
 
         Lease getLease1=managerLease.getLeaseByID(lease1.getId());
         getLease1.setReturnDate(sdf.parse("16-05-2016 12:00:00"));
-        managerLease.deleteLease(lease1);
+        managerLease.deleteLease(getLease1);
 
         assertNull(managerLease.getLeaseByID(lease1.getId()));
         assertNotNull(managerLease.getLeaseByID(lease2.getId()));
