@@ -167,7 +167,7 @@ public class LeaseManagerImpl implements LeaseManager {
         }
     }
 
-    private Lease resultSetToLease(ResultSet rs) throws SQLException{
+    private Lease resultSetToLease(ResultSet rs) throws SQLException {
         Lease lease=new Lease();
         lease.setId(rs.getLong("ID"));
         lease.setCustomer(customerManager.getCustomerByID(rs.getLong("IDCUSTOMER")));
@@ -198,9 +198,9 @@ public class LeaseManagerImpl implements LeaseManager {
             ResultSet rs = st.executeQuery();
 
             if(rs.next()){
-                return false;
-            }else{
                 return true;
+            }else{
+                return false;
             }
 
         } catch (SQLException ex){
