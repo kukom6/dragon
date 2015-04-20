@@ -1,0 +1,73 @@
+Index: src/DragonManagerImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/DragonManagerImpl.java	(revision 569663dcc52279018c962c2113b2dc6b9fae13f3)
++++ src/DragonManagerImpl.java	(revision )
+@@ -105,6 +105,10 @@
+             throw new IllegalArgumentException("id is null");
+         }
+ 
++        if(id < 0){
++            throw new IllegalArgumentException("id is negative or zero");
++        }
++
+         try(Connection conn = dataSource.getConnection();
+             PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE ID=?")){
+                 st.setLong(1, id);
+Index: test/DragonManagerImplTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test/DragonManagerImplTest.java	(revision 569663dcc52279018c962c2113b2dc6b9fae13f3)
++++ test/DragonManagerImplTest.java	(revision )
+@@ -24,7 +24,7 @@
+         public Date getCurrentDate(){
+             SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+             try {
+-                return sdf.parse("15-03-1994 12:00:00");
++                return sdf.parse("15-03-2014 12:00:00");
+             }catch(ParseException ex){
+                 throw new NullPointerException("Can't parse date.");
+             }
+@@ -183,13 +183,6 @@
+     public void testGetDragonByID() throws Exception {
+         assertNull(manager.getDragonById(1l));
+ 
+-        try {
+-            manager.getDragonById(null);
+-            fail();
+-        } catch (IllegalArgumentException ex) {
+-            //OK
+-        }
+-
+         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+         Dragon dragon = newDragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "trhac", 5, 150);
+ 
+@@ -199,6 +192,23 @@
+         Dragon result = manager.getDragonById(dragonId);
+         assertEquals(dragon, result);
+         assertDeepEquals(dragon, result);
++    }
++
++    @Test
++    public void testGetDragonByIDWithWrongArgument() throws Exception {
++        try {
++            manager.getDragonById(null);
++            fail();
++        } catch (IllegalArgumentException ex) {
++            //OK
++        }
++
++        try {
++            manager.getDragonById(-1l);
++            fail();
++        } catch (IllegalArgumentException ex) {
++            //OK
++        }
+     }
+ 
+     @Test
+\ No newline at end of file

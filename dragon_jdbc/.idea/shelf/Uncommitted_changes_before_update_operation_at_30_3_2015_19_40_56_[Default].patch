@@ -1,0 +1,146 @@
+Index: test/LeaseManagerImplTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test/LeaseManagerImplTest.java	(revision 43b3e3fa2f7c881787de1f74d3bd69e997e89890)
++++ test/LeaseManagerImplTest.java	(revision )
+@@ -77,6 +77,7 @@
+ 
+     @Test
+     public void testCreateLease() throws Exception {
++        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+ 
+         Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
+         managerCustomer.createCustomer(customer1);
+@@ -409,20 +410,20 @@
+ 
+         assertTrue(allCustomers.isEmpty());
+ 
+-        Customer customer1 = newCustomer("Tomas","Oravec","Brezno 123","SK321","+421 944 222 222");
++        Customer customer1 = newCustomer("Tomas", "Oravec", "Brezno 123","SK321","+421 944 222 222");
+         managerCustomer.createCustomer(customer1);
+         Dragon dragon1 = newDragon("Ugly dragon", sdf.parse("16-03-1994 12:00:00"), "lung", 1, 100);
+         managerDragon.createDragon(dragon1);
+ 
+-        Lease lease1 = newLease(customer1,dragon1,sdf.parse("16-05-2015 12:00:00"),new BigDecimal("50000.00"));
++        Lease lease1 = newLease(customer1, dragon1, sdf.parse("16-05-2015 12:00:00"),new BigDecimal("50000.00"));
+         managerLease.createLease(lease1);
+ 
+-        Customer customer2 = newCustomer("Ondrej","Brezovec","Zilina 1020","SK56","+421 922 222 222");
++        Customer customer2 = newCustomer("Ondrej", "Brezovec", "Zilina 1020","SK56","+421 922 222 222");
+         managerCustomer.createCustomer(customer2);
+         Dragon dragon2 = newDragon("Nice dragon", sdf.parse("16-04-1994 12:00:00"), "lung", 1, 100);
+         managerDragon.createDragon(dragon2);
+ 
+-        Lease lease2 = newLease(customer2,dragon2,sdf.parse("16-09-2015 12:00:00"),new BigDecimal("30000.00"));
++        Lease lease2 = newLease(customer2, dragon2, sdf.parse("16-09-2015 12:00:00"),new BigDecimal("30000.00"));
+         managerLease.createLease(lease2);
+ 
+         List<Lease> sample= new ArrayList<Lease>();
+Index: src/DragonManagerImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/DragonManagerImpl.java	(revision 43b3e3fa2f7c881787de1f74d3bd69e997e89890)
++++ src/DragonManagerImpl.java	(revision )
+@@ -255,7 +255,7 @@
+ 
+         try (Connection conn = dataSource.getConnection();
+             PreparedStatement st = conn.prepareStatement("DELETE FROM DRAGONS WHERE id=?")) {
+-            st.setLong(1,dragon.getId());
++            st.setLong(1, dragon.getId());
+             if(st.executeUpdate() != 1) {
+                 throw new IllegalArgumentException("dragon with id=" + dragon.getId() + " do not exist");
+             }
+Index: src/LeaseManagerImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/LeaseManagerImpl.java	(revision 43b3e3fa2f7c881787de1f74d3bd69e997e89890)
++++ src/LeaseManagerImpl.java	(revision )
+@@ -239,6 +239,32 @@
+         throw new UnsupportedOperationException("not implemented");
+     }
+ 
++    private boolean checkDragonID(Long leaseID, Dragon dragon){
++        if(dragon == null){
++            throw new IllegalArgumentException("dragon is null");
++        }
++
++        if(dragon.getId() == null){
++            throw new IllegalArgumentException("dragon id is null");
++        }
++
++        try (Connection conn = dataSource.getConnection();
++             PreparedStatement st = conn.prepareStatement("SELECT ID, IDDRAGON, RETURNDATE FROM LEASES WHERE IDDRAGON=? AND RETURNDATE IS NULL")){
++            st.setLong(1, dragon.getId());
++            ResultSet rs = st.executeQuery();
++
++            if(rs.next()){
++                return leaseID != rs.getLong("ID");
++            }else{
++                return false;
++            }
++
++        } catch (SQLException ex){
++            log.error("db connection problem when retrieving lease for dragon", ex);
++            throw new ServiceFailureException("Error when lease for dragon", ex);
++        }
++    }
++
+     @Override
+     public void updateLease(Lease lease) {
+         checkLease(lease);
+@@ -250,6 +276,20 @@
+             throw new IllegalArgumentException("startDate is null");
+         }
+ 
++        if(lease.getReturnDate() != null && lease.getReturnDate().before(lease.getStartDate())){
++            throw new IllegalArgumentException("startDate is after return date.");
++        }
++
++        if(lease.getEndDate().before(lease.getStartDate())){
++            throw new IllegalArgumentException("end date is after return date.");
++        }
++
++        if(lease.getReturnDate() == null){
++            if(checkDragonID(lease.getId(), lease.getDragon())){
++                throw new IllegalArgumentException("Dragon is borrowed in another lease");
++            }
++        }
++
+         try (Connection conn = dataSource.getConnection();
+             PreparedStatement st = conn.prepareStatement("UPDATE LEASES SET IDCUSTOMER=?, IDDRAGON=?, STARTDATE=?, ENDDATE=?, RETURNDATE=?, PRICE=? WHERE id=?")) {
+             st.setLong(1, lease.getCustomer().getId());
+@@ -281,6 +321,27 @@
+     
+     @Override
+     public void deleteLease(Lease lease) {
+-        throw new UnsupportedOperationException("not implemented");
++        if(lease == null){
++            throw new IllegalArgumentException("lease is null");
++        }
++
++        if(lease.getId() == null){
++            throw new IllegalArgumentException("lease id is null");
++        }
++
++        if(lease.getReturnDate() == null){
++            throw new IllegalArgumentException("dragon is not returned yet");
++        }
++
++        try (Connection conn = dataSource.getConnection();
++            PreparedStatement st = conn.prepareStatement("DELETE FROM LEASES WHERE id=?")) {
++            st.setLong(1, lease.getId());
++            if(st.executeUpdate() != 1) {
++                throw new IllegalArgumentException("lease with id=" + lease.getId() + " do not exist");
++            }
++        } catch(SQLException ex) {
++            log.error("db connection problem while deleting lease", ex);
++            throw new ServiceFailureException("Error when deleting lease", ex);
++        }
+     }
+ }

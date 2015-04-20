@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2165217120">
+    <data-source source="LOCAL" name="dragonDB" uuid="8b62620e-85eb-4783-9cc2-3fed250c7351">
+      <driver-ref>derby.remote</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.apache.derby.jdbc.ClientDriver</jdbc-driver>
+      <jdbc-url>jdbc:derby://localhost:1527/dragonDB</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Oracle - db10@db.fi.muni.cz" uuid="30f21b4b-bb51-44c0-892e-7888f03a5215">
+      <driver-ref>oracle</driver-ref>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@//db.fi.muni.cz:1521/db10</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>

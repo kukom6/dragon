@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="org.apache.derby:com.springsource.org.apache.derby.client:10.5.1000001.764942" type="repository">
+    <properties maven-id="org.apache.derby:com.springsource.org.apache.derby.client:10.5.1000001.764942" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/com.springsource.org.apache.derby.client-10.5.1000001.764942.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/com.springsource.javax.transaction-1.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

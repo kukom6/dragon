@@ -1,0 +1,173 @@
+Index: test/LeaseManagerImplTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test/LeaseManagerImplTest.java	(revision 78790c0c933a2f4236babca9e9c3cee811896281)
++++ test/LeaseManagerImplTest.java	(revision )
+@@ -373,8 +373,6 @@
+ 
+         Lease getLease3 = managerLease.getLeaseByID(11l);
+         assertNull(getLease3);
+-        getLease3=managerLease.getLeaseByID(-41l);
+-        assertNull(getLease3);
+     }
+ 
+     @Test
+@@ -391,6 +389,13 @@
+ 
+         try {
+             managerLease.getLeaseByID(null); // wrong argument
++            fail();
++        } catch (IllegalArgumentException ex) {
++            //true
++        }
++
++        try {
++            managerLease.getLeaseByID(-41l);
+             fail();
+         } catch (IllegalArgumentException ex) {
+             //true
+Index: src/Lease.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Lease.java	(revision 78790c0c933a2f4236babca9e9c3cee811896281)
++++ src/Lease.java	(revision )
+@@ -28,6 +28,47 @@
+         this.price = price;
+     }
+ 
++    @Override
++    public String toString() {
++        return "Lease{" +
++                "id=" + id +
++                ", price=" + price +
++                ", startDate=" + startDate +
++                ", endDate=" + endDate +
++                ", dragon=" + dragon +
++                ", customer=" + customer +
++                ", returnDate=" + returnDate +
++                '}';
++    }
++
++    @Override
++    public boolean equals(Object o) {
++        if (this == o) return true;
++        if (o == null || getClass() != o.getClass()) return false;
++
++        Lease lease = (Lease) o;
++
++        if (customer != null ? !customer.equals(lease.customer) : lease.customer != null) return false;
++        if (dragon != null ? !dragon.equals(lease.dragon) : lease.dragon != null) return false;
++        if (endDate != null ? !endDate.equals(lease.endDate) : lease.endDate != null) return false;
++        if (id != null ? !id.equals(lease.id) : lease.id != null) return false;
++        if (price != null ? !price.equals(lease.price) : lease.price != null) return false;
++        if (startDate != null ? !startDate.equals(lease.startDate) : lease.startDate != null) return false;
++
++        return true;
++    }
++
++    @Override
++    public int hashCode() {
++        int result = id != null ? id.hashCode() : 0;
++        result = 31 * result + (price != null ? price.hashCode() : 0);
++        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
++        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
++        result = 31 * result + (dragon != null ? dragon.hashCode() : 0);
++        result = 31 * result + (customer != null ? customer.hashCode() : 0);
++        return result;
++    }
++
+     public Date getStartDate() {
+         return startDate;
+     }
+Index: src/LeaseManagerImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/LeaseManagerImpl.java	(revision 78790c0c933a2f4236babca9e9c3cee811896281)
++++ src/LeaseManagerImpl.java	(revision )
+@@ -36,8 +36,8 @@
+ 
+         checkLease(lease);
+ 
+-        if(lease.getReturnDate().after(timeService.getCurrentDate())){
+-            throw new IllegalArgumentException("return date is in future.");
++        if(lease.getEndDate().before(timeService.getCurrentDate())){
++            throw new IllegalArgumentException("end lease is not in future.");
+         }
+ 
+         try (Connection conn = dataSource.getConnection();
+@@ -48,8 +48,11 @@
+             st.setLong(2, lease.getDragon().getId());
+             st.setTimestamp(3, new Timestamp(lease.getStartDate().getTime()));
+             st.setTimestamp(4, new Timestamp(lease.getEndDate().getTime()));
+-            st.setBigDecimal(5, lease.getPrice());
+-
++            try {
++                st.setBigDecimal(5, lease.getPrice().setScale(2));
++            } catch (ArithmeticException ex){
++                throw new ServiceFailureException("bad BigDecimal value");
++            }
+             int addedRows = st.executeUpdate();
+             if (addedRows != 1) {
+                 throw new ServiceFailureException("Internal Error: More rows inserted when trying to insert lease " + lease);
+@@ -101,10 +104,6 @@
+             throw new IllegalArgumentException("start date is null");
+         }
+ 
+-        if(lease.getEndDate().before(timeService.getCurrentDate())){
+-            throw new IllegalArgumentException("end lease is not in future.");
+-        }
+-
+         if(lease.getEndDate() == null){
+             throw new IllegalArgumentException("end date is null");
+         }
+@@ -113,10 +112,14 @@
+             throw new IllegalArgumentException("dragon is null");
+         }
+ 
+-        if(lease.getDragon().getId() == null || lease.getDragon().getId() < 0){
+-            throw new IllegalArgumentException("dragon id is null or negative");
++        if(lease.getDragon().getId() == null){
++            throw new IllegalArgumentException("dragon id is null");
+         }
+ 
++        if(lease.getDragon().getId() < 0){
++            throw new IllegalArgumentException("dragon id is negative");
++        }
++
+         if(lease.getCustomer() == null){
+             throw new IllegalArgumentException("customer is null");
+         }
+@@ -133,7 +136,7 @@
+         }
+ 
+         if(id < 0){
+-            throw new IllegalArgumentException("id is negative or zero");
++            throw new IllegalArgumentException("id is negative");
+         }
+ 
+         try (Connection conn = dataSource.getConnection();
+@@ -159,12 +162,17 @@
+ 
+     private Lease resultSetToLease(ResultSet rs) throws SQLException{
+         Lease lease=new Lease();
++        lease.setId(rs.getLong("ID"));
+         lease.setCustomer(customerManager.getCustomerByID(rs.getLong("IDCUSTOMER")));
+         lease.setDragon(dragonManager.getDragonById(rs.getLong("IDDRAGON")));
+         lease.setStartDate(rs.getTimestamp("STARTDATE"));
+         lease.setEndDate(rs.getTimestamp("ENDDATE"));
+         lease.setReturnDate(rs.getTimestamp("RETURNDATE"));
+-        lease.setPrice(rs.getBigDecimal("PRICE"));
++        try {
++            lease.setPrice(rs.getBigDecimal("PRICE").setScale(2));
++        } catch (ArithmeticException ex) {
++            throw new ServiceFailureException("bad BigDecimal value");
++        }
+         return lease;
+     }
+ 

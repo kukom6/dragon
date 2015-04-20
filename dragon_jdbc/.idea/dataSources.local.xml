@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="dragonDB" uuid="8b62620e-85eb-4783-9cc2-3fed250c7351" />
+    <data-source name="Oracle - db10@db.fi.muni.cz" uuid="30f21b4b-bb51-44c0-892e-7888f03a5215">
+      <secret-storage>memory</secret-storage>
+      <first-sync>true</first-sync>
+      <user-name>xhajas</user-name>
+    </data-source>
+  </component>
+</project>

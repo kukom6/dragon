@@ -1,0 +1,90 @@
+Index: test/LeaseManagerImplTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test/LeaseManagerImplTest.java	(revision 5d8ba46b167df2cc31497a21f5913fbbf595f2e3)
++++ test/LeaseManagerImplTest.java	(revision )
+@@ -263,7 +263,7 @@
+         try { //create lease when dragon isn't in DB
+             managerLease.createLease(lease1);
+             fail();
+-        } catch (ServiceFailureException ex) {
++        } catch (IllegalArgumentException ex) {
+             //true
+         }
+         dragon1.setId(13l);
+@@ -293,6 +293,7 @@
+             //true
+         }
+         customer1.setId(null);
++        managerCustomer.createCustomer(customer1);
+ 
+         lease1 = newLease(customer1,dragon1,sdf.parse("16-06-2015 12:00:00"),sdf.parse("16-05-2015 12:00:00"),new BigDecimal("50000.00"));
+         try { //end day is before start day
+@@ -506,6 +507,7 @@
+         }
+     }
+ 
++
+     @Test
+     public void testFindLeasesForCustomer() throws Exception {
+         fail();
+@@ -515,7 +517,6 @@
+     public void testFindLeasesForDragon() throws Exception {
+         fail();
+     }
+-
+     @Test
+     public void testUpdateLease() throws Exception {
+         fail();
+Index: src/LeaseManagerImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/LeaseManagerImpl.java	(revision 5d8ba46b167df2cc31497a21f5913fbbf595f2e3)
++++ src/LeaseManagerImpl.java	(revision )
+@@ -4,9 +4,8 @@
+ import javax.sql.DataSource;
+ import java.math.BigDecimal;
+ import java.sql.*;
+-import java.util.Collection;
++import java.util.*;
+ import java.util.Date;
+-import java.util.IllegalFormatException;
+ 
+ public class LeaseManagerImpl implements LeaseManager {
+ 
+@@ -198,9 +197,9 @@
+             ResultSet rs = st.executeQuery();
+ 
+             if(rs.next()){
+-                return false;
+-            }else{
+                 return true;
++            }else{
++                return false;
+             }
+ 
+         } catch (SQLException ex){
+@@ -211,7 +210,18 @@
+ 
+     @Override
+     public Collection<Lease> getAllLeases() {
+-        throw new UnsupportedOperationException("not implemented");
++        try (Connection conn = dataSource.getConnection();
++            PreparedStatement st = conn.prepareStatement("SELECT ID, IDCUSTOMER, IDDRAGON, STARTDATE, ENDDATE, RETURNDATE, PRICE FROM LEASES")) {
++            ResultSet rs = st.executeQuery();
++            List<Lease> leases= new ArrayList<>();
++            while(rs.next()){
++                leases.add(resultSetToLease(rs));
++            }
++            return leases;
++        } catch (SQLException ex) {
++            log.error("db connection problem when retrieving all leases", ex);
++            throw new ServiceFailureException("Error when retrieving all leases", ex);
++        }
+     }
+ 
+     @Override

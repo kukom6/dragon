@@ -1,0 +1,94 @@
+Index: src/com/Dragon.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/com/Dragon.java	(revision 15f81ad2bd1cfc0879fdc97d933c419b711af286)
++++ src/com/Dragon.java	(revision )
+@@ -10,6 +10,8 @@
+     private Long id;
+     private Date born;
+     private String race;
++    private int numberOfHeads;
++    private int weight;
+ 
+     public Dragon() {
+     }
+@@ -45,4 +47,21 @@
+     public void setRace(String race) {
+         this.race = race;
+     }
++
++    public int getNumberOfHeads() {
++        return numberOfHeads;
++    }
++
++    public void setNumberOfHeads(int numberOfHeads) {
++        this.numberOfHeads = numberOfHeads;
++    }
++
++    public int getWeight() {
++        return weight;
++    }
++
++    public void setWeight(int weight) {
++        this.weight = weight;
++    }
++
+ }
+Index: src/com/DragonManagerImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/com/DragonManagerImpl.java	(revision 15f81ad2bd1cfc0879fdc97d933c419b711af286)
++++ src/com/DragonManagerImpl.java	(revision )
+@@ -22,16 +22,21 @@
+     }
+ 
+     @Override
+-    public Collection<Dragon> getAllDragonByName(String name) {
++    public Collection<Dragon> getDragonsByName(String name) {
+         return null;
+     }
+ 
+     @Override
+-    public Collection<Dragon> getAllDragonByRace(String race) {
++    public Collection<Dragon> getDragonsByRace(String race) {
++        return null;
++    }
++
++    @Override
++    public Collection<Dragon> getDragonsByNumberOfHeads(int number) {
+         return null;
+     }
+ 
+-    @Override
++   @Override
+     public void updateDragon(Dragon dragon) {
+ 
+     }
+Index: src/com/DragonManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/com/DragonManager.java	(revision 15f81ad2bd1cfc0879fdc97d933c419b711af286)
++++ src/com/DragonManager.java	(revision )
+@@ -10,12 +10,13 @@
+ 
+     Dragon getDragonByID(Long ID);
+ 
+-
+     Collection<Dragon> getAllDragon();
+ 
+-    Collection<Dragon> getAllDragonByName(String name);
++    Collection<Dragon> getDragonsByName(String name);
+ 
+-    Collection<Dragon> getAllDragonByRace(String race);
++    Collection<Dragon> getDragonsByRace(String race);
++
++    Collection<Dragon> getDragonsByNumberOfHeads(int number);
+ 
+     void updateDragon(Dragon dragon);
+ 

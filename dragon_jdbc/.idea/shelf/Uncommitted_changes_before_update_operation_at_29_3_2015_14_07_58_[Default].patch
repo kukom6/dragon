@@ -1,0 +1,278 @@
+Index: src/TimeServiceImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/TimeServiceImpl.java	(revision )
++++ src/TimeServiceImpl.java	(revision )
+@@ -0,0 +1,7 @@
++import java.util.Date;
++
++public class TimeServiceImpl implements TimeService{
++    public Date getCurrentDate(){
++        return new Date();
++    }
++}
+Index: src/DragonManagerImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/DragonManagerImpl.java	(revision 94b741ed210d74f6169379632ea7232d5976eaf8)
++++ src/DragonManagerImpl.java	(revision )
+@@ -1,4 +1,3 @@
+-import javax.annotation.Resource;
+ import javax.sql.DataSource;
+ import java.sql.*;
+ import java.text.SimpleDateFormat;
+@@ -18,8 +17,9 @@
+ 
+     private TimeService timeService;
+ 
+-    public DragonManagerImpl(DataSource dataSource) {
++    public DragonManagerImpl(DataSource dataSource, TimeService timeService) {
+         this.dataSource = dataSource;
++        this.timeService = timeService;
+     }
+ 
+     @Override
+@@ -29,9 +29,10 @@
+             throw new IllegalArgumentException("dragon id is already created");
+         }
+ 
+-        try (Connection conn = dataSource.getConnection()) {
+-            try (PreparedStatement st = conn.prepareStatement("INSERT INTO DRAGONS (\"NAME\", BORN, RACE, HEADS, WEIGHT) VALUES (?,?,?,?,?)",
++        try (Connection conn = dataSource.getConnection();
++             PreparedStatement st = conn.prepareStatement("INSERT INTO DRAGONS (\"NAME\", BORN, RACE, HEADS, WEIGHT) VALUES (?,?,?,?,?)",
+-                    Statement.RETURN_GENERATED_KEYS)) {
++             Statement.RETURN_GENERATED_KEYS)) {
++
+                 st.setString(1, dragon.getName());
+                 st.setTimestamp(2, new Timestamp(dragon.getBorn().getTime()));
+                 st.setString(3, dragon.getRace());
+@@ -45,9 +46,8 @@
+ 
+                 ResultSet keyRS = st.getGeneratedKeys();
+                 dragon.setId(getKey(keyRS, dragon));
+-            }
+         } catch (SQLException ex) {
+-            log.error("db connection problem", ex);
++            log.error("db connection problem in createDragon()", ex);
+             throw new ServiceFailureException("Error when creating dragons", ex);
+         }
+     }
+@@ -60,12 +60,12 @@
+             throw new IllegalArgumentException("dragon name is emptystring or null");
+         }
+ 
+-        Date dateNow = new Date();
++        Date dateNow = timeService.getCurrentDate();
+         if(dragon.getBorn().after(dateNow)){
+             throw new IllegalArgumentException("born date is in future");
+         }
+ 
+-        if (dragon.getRace() == null || dragon.getRace().equals("")) {
++        if (dragon.getRace() == null || dragon.getRace().isEmpty()) {
+             throw new IllegalArgumentException("dragon race is emptystring or null");
+         }
+ 
+@@ -105,8 +105,8 @@
+             throw new IllegalArgumentException("id is null");
+         }
+ 
+-        try(Connection conn = dataSource.getConnection()){
+-            try(PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE ID=?")){
++        try(Connection conn = dataSource.getConnection();
++            PreparedStatement st = conn.prepareStatement("SELECT ID, \"NAME\", BORN, RACE, HEADS, WEIGHT FROM DRAGONS WHERE ID=?")){
+                 st.setLong(1, id);
+                 ResultSet rs = st.executeQuery();
+                 if(rs.next()){
+@@ -120,16 +120,14 @@
+                 }else{
+                     return null;
+                 }
+-            }
+         }catch(SQLException ex){
+-            log.error("db connection problem ", ex);
+-            throw new ServiceFailureException("Error when retrieving dragon", ex);
++            log.error("db connection problem while retrieving dragon by id.", ex);
++            throw new ServiceFailureException("Error when retrieving dragon by id", ex);
+         }
+     }
+ 
+     private Dragon resultSetToDragon(ResultSet rs) throws SQLException{
+         Dragon dragon = new Dragon();
+-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+         dragon.setId(rs.getLong("ID"));
+         dragon.setName(rs.getString("NAME"));
+         dragon.setBorn(rs.getTimestamp("BORN"));
+@@ -151,14 +149,14 @@
+                 return dragons;
+             }
+         }catch(SQLException ex){
+-            log.error("db connection problem", ex);
+-            throw new ServiceFailureException("Error when retrieving dragons", ex);
++            log.error("db connection problem when retrieving all dragons", ex);
++            throw new ServiceFailureException("Error when retrieving all dragons", ex);
+         }
+     }
+ 
+     @Override
+     public Collection<Dragon> getDragonsByName(String name) throws ServiceFailureException {
+-        if(name == null || name.equals("")){
++        if(name == null || name.isEmpty()){
+             throw new IllegalArgumentException("name is null or empty string");
+         }
+ 
+@@ -173,14 +171,14 @@
+                 return dragons;
+             }
+         }catch(SQLException ex){
+-            log.error("db connection problem", ex);
+-            throw new ServiceFailureException("Error when retrieving dragons", ex);
++            log.error("db connection problem when retrieving dragon by name.", ex);
++            throw new ServiceFailureException("Error when retrieving dragons by name", ex);
+         }
+     }
+ 
+     @Override
+     public Collection<Dragon> getDragonsByRace(String race) throws ServiceFailureException {
+-        if(race == null || race.equals("")){
++        if(race == null || race.isEmpty()){
+             throw new IllegalArgumentException("race is null or empty string");
+         }
+ 
+@@ -195,8 +193,8 @@
+                 return dragons;
+             }
+         }catch(SQLException ex){
+-            log.error("db connection problem", ex);
+-            throw new ServiceFailureException("Error when retrieving dragons", ex);
++            log.error("db connection problem when retrieving dragons by race.", ex);
++            throw new ServiceFailureException("Error when retrieving dragons by race", ex);
+         }
+     }
+ 
+@@ -216,8 +214,8 @@
+                 return dragons;
+             }
+         }catch(SQLException ex){
+-            log.error("db connection problem", ex);
+-            throw new ServiceFailureException("Error when retrieving dragons", ex);
++            log.error("db connection problem when retrieving dragons by number of heads", ex);
++            throw new ServiceFailureException("Error when retrieving dragons by number of heads", ex);
+         }
+     }
+ 
+@@ -241,7 +239,7 @@
+                }
+            }
+        }catch(SQLException ex){
+-           log.error("db connection problem", ex);
++           log.error("db connection problem when updating dragon.", ex);
+            throw new ServiceFailureException("Error when updating dragon", ex);
+        }
+     }
+Index: test/DragonManagerImplTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test/DragonManagerImplTest.java	(revision 94b741ed210d74f6169379632ea7232d5976eaf8)
++++ test/DragonManagerImplTest.java	(revision )
+@@ -6,17 +6,31 @@
+ import javax.annotation.Resource;
+ import javax.sql.DataSource;
+ import java.sql.Connection;
++import java.text.ParseException;
+ import java.text.SimpleDateFormat;
+ import java.util.*;
++import java.util.concurrent.TimeUnit;
++
+ import static org.junit.Assert.*;
+ 
+ public class DragonManagerImplTest {
+ 
+     private DragonManagerImpl manager;
+ 
+-    @Resource(name="jdbc/my")
+     private DataSource dataSource;
+ 
++    private TimeServiceImpl timeService = new TimeServiceImpl(){
++        @Override
++        public Date getCurrentDate(){
++            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
++            try {
++                return sdf.parse("15-03-1994 12:00:00");
++            }catch(ParseException ex){
++                throw new NullPointerException("Can't parse date.");
++            }
++        }
++    };
++
+     @Before
+     public void setUp() throws Exception{
+         BasicDataSource bds = new BasicDataSource();
+@@ -32,7 +46,7 @@
+                     + "HEADS INTEGER,"
+                     + "WEIGHT INTEGER)").executeUpdate();
+         }
+-        manager = new DragonManagerImpl(bds);
++        manager = new DragonManagerImpl(bds, timeService);
+     }
+ 
+     @After
+@@ -154,9 +168,7 @@
+             //OK
+         }
+ 
+-        Calendar cal = Calendar.getInstance();
+-        cal.add(Calendar.HOUR, 1);
+-        Date plusHour = cal.getTime();
++        Date plusHour = new Date(timeService.getCurrentDate().getTime() + TimeUnit.HOURS.toMillis(1));
+ 
+         dragon = newDragon("Ugly dragon", plusHour, "lung", 1, 100);
+         try {
+@@ -455,9 +467,7 @@
+ 
+         try{
+             dragon = manager.getDragonById(dragonId);
+-            Calendar cal = Calendar.getInstance();
+-            cal.add(Calendar.HOUR, 1);
+-            Date plusHour = cal.getTime();
++            Date plusHour = new Date(timeService.getCurrentDate().getTime() + TimeUnit.HOURS.toMillis(1));
+             dragon.setBorn(plusHour);
+             manager.updateDragon(dragon);
+             fail();
+\ No newline at end of file
+Index: src/CustomerManagerImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/CustomerManagerImpl.java	(revision 94b741ed210d74f6169379632ea7232d5976eaf8)
++++ src/CustomerManagerImpl.java	(revision )
+@@ -98,7 +98,7 @@
+                 }
+             }
+         }catch(SQLException ex){
+-            log.error("db connection problem or two customer have same IDCard", ex);
++            log.error("db connection problem", ex);
+             throw new ServiceFailureException("Error with DB", ex);
+         }
+     }
+Index: src/TimeService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/TimeService.java	(revision )
++++ src/TimeService.java	(revision )
+@@ -0,0 +1,7 @@
++import java.util.Date;
++
++public interface TimeService {
++
++    Date getCurrentDate();
++
++}
