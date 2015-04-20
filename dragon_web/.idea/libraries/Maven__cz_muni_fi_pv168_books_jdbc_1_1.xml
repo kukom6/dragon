@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: cz.muni.fi.pv168:books-jdbc:1.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/cz/muni/fi/pv168/books-jdbc/1.1/books-jdbc-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/cz/muni/fi/pv168/books-jdbc/1.1/books-jdbc-1.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/cz/muni/fi/pv168/books-jdbc/1.1/books-jdbc-1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

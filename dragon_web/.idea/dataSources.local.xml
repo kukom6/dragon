@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Derby - dragonDB@localhost" uuid="5f9a86a7-055a-4dd0-80c5-eccb6b300704">
+      <secret-storage>master_key</secret-storage>
+      <schema-pattern>*</schema-pattern>
+      <default-schemas>*.APP</default-schemas>
+    </data-source>
+    <data-source name="Derby - db" uuid="db56279a-1df3-455c-8ef0-28276661ba26">
+      <secret-storage>master_key</secret-storage>
+      <first-sync>true</first-sync>
+    </data-source>
+  </component>
+</project>
