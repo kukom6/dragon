@@ -22,22 +22,21 @@ public class CustomerManagerImpl implements CustomerManager {
 
         checkCustomerArgument(customer);
 
-        try(Connection conn = source.getConnection()){
-            try (PreparedStatement st = conn.prepareStatement("INSERT INTO CUSTOMERS " +
+        try(Connection conn = source.getConnection();PreparedStatement st = conn.prepareStatement("INSERT INTO CUSTOMERS " +
                             "(\"NAME\",SURNAME,ADDRESS,IDENTITYCARD,PHONENUMBER) VALUES (?,?,?,?,?)",
-                    Statement.RETURN_GENERATED_KEYS)){
-                st.setString(1,customer.getName());
-                st.setString(2,customer.getSurname());
-                st.setString(3,customer.getAddress());
-                st.setString(4,customer.getIdentityCard());
-                st.setString(5,customer.getPhoneNumber());
-                int numbUpdate = st.executeUpdate();
-                if(numbUpdate!=1){
-                    throw new ServiceFailureException("Create more update also one");
-                }
-                ResultSet keyRS = st.getGeneratedKeys();
-                customer.setId(getKey(keyRS, customer));
+                    Statement.RETURN_GENERATED_KEYS))
+        {
+            st.setString(1,customer.getName());
+            st.setString(2,customer.getSurname());
+            st.setString(3,customer.getAddress());
+            st.setString(4,customer.getIdentityCard());
+            st.setString(5,customer.getPhoneNumber());
+            int numbUpdate = st.executeUpdate();
+            if(numbUpdate!=1){
+                throw new ServiceFailureException("Create more update also one");
             }
+            ResultSet keyRS = st.getGeneratedKeys();
+            customer.setId(getKey(keyRS, customer));
         }catch (SQLException ex) {
             log.error("db connection problem or two customer have same IDCard", ex);
             throw new ServiceFailureException("Error with DB", ex);
@@ -54,21 +53,21 @@ public class CustomerManagerImpl implements CustomerManager {
             throw new IllegalArgumentException("id is negative or zero");
         }
         Customer customer;
-        try(Connection conn = source.getConnection()) {
-            try (PreparedStatement st = conn.prepareStatement("SELECT ID,\"NAME\",SURNAME,ADDRESS,IDENTITYCARD,PHONENUMBER " +
-                    "FROM CUSTOMERS WHERE ID=?")){
-                st.setLong(1,id);
-                ResultSet rs = st.executeQuery();
+        try(Connection conn = source.getConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT ID,\"NAME\",SURNAME,ADDRESS,IDENTITYCARD,PHONENUMBER " +
+                    "FROM CUSTOMERS WHERE ID=?"))
+        {
+            st.setLong(1,id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                customer=resultToCustomer(rs);
                 if (rs.next()) {
-                    customer=resultToCustomer(rs);
-                    if (rs.next()) {
-                        throw new ServiceFailureException("More customers have same ID, ID: "+ id + " have "
-                                + customer + " and " + resultToCustomer(rs) + " too.");
-                    }
-                    return customer;
-                } else {
-                    return null;
+                    throw new ServiceFailureException("More customers have same ID, ID: "+ id + " have "
+                            + customer + " and " + resultToCustomer(rs) + " too.");
                 }
+                return customer;
+            } else {
+                return null;
             }
         }catch(SQLException ex){
             log.error("db connection problem", ex);
@@ -83,22 +82,22 @@ public class CustomerManagerImpl implements CustomerManager {
             throw new IllegalArgumentException("idCard is null or empty string");
         }
         Customer customer;
-        try(Connection conn = source.getConnection()) {
-            try (PreparedStatement st = conn.prepareStatement("SELECT ID,\"NAME\",SURNAME,ADDRESS,IDENTITYCARD,PHONENUMBER " +
-                    "FROM CUSTOMERS WHERE IDENTITYCARD=?")){
-                st.setString(1,idCard);
-                ResultSet rs = st.executeQuery();
+        try(Connection conn = source.getConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT ID,\"NAME\",SURNAME,ADDRESS,IDENTITYCARD,PHONENUMBER " +
+                    "FROM CUSTOMERS WHERE IDENTITYCARD=?"))
+        {
+            st.setString(1,idCard);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                customer=resultToCustomer(rs);
                 if (rs.next()) {
-                    customer=resultToCustomer(rs);
-                    if (rs.next()) {
-                        throw new ServiceFailureException("More customers have same number ID card, ID card" +
-                                "number is : "+ idCard + " have "
-                                + customer + " and " + resultToCustomer(rs) + " too.");
-                    }
-                    return customer;
-                } else {
-                    return null;
+                    throw new ServiceFailureException("More customers have same number ID card, ID card" +
+                            "number is : "+ idCard + " have "
+                            + customer + " and " + resultToCustomer(rs) + " too.");
                 }
+                return customer;
+            } else {
+                return null;
             }
         }catch(SQLException ex){
             log.error("db connection problem", ex);
@@ -110,14 +109,14 @@ public class CustomerManagerImpl implements CustomerManager {
     public Collection<Customer> getAllCustomers() {
         log.debug("get all customers from DB");
         List<Customer> customers = new ArrayList<>();
-        try(Connection conn = source.getConnection()){
-            try (PreparedStatement st = conn.prepareStatement("SELECT * FROM CUSTOMERS")) {
-                ResultSet rs = st.executeQuery();
-                while (rs.next()) {
-                    customers.add(resultToCustomer(rs));
-                }
-                return Collections.unmodifiableCollection(customers);
+        try(Connection conn = source.getConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM CUSTOMERS"))
+        {
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                customers.add(resultToCustomer(rs));
             }
+            return Collections.unmodifiableCollection(customers);
         }catch (SQLException ex) {
             log.error("db connection problem", ex);
             throw new ServiceFailureException("Error with DB", ex);
@@ -133,16 +132,16 @@ public class CustomerManagerImpl implements CustomerManager {
         }
 
         List<Customer> customers = new ArrayList<>();
-        try(Connection conn = source.getConnection()){
-            try (PreparedStatement st = conn.prepareStatement("SELECT * FROM CUSTOMERS WHERE \"NAME\"=? AND SURNAME=?")) {
-                st.setString(1,name);
-                st.setString(2,surname);
-                ResultSet rs = st.executeQuery();
-                while (rs.next()) {
-                    customers.add(resultToCustomer(rs));
-                }
-                return Collections.unmodifiableCollection(customers);
+        try(Connection conn = source.getConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM CUSTOMERS WHERE \"NAME\"=? AND SURNAME=?"))
+        {
+            st.setString(1,name);
+            st.setString(2,surname);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                customers.add(resultToCustomer(rs));
             }
+            return Collections.unmodifiableCollection(customers);
         }catch (SQLException ex) {
             log.error("db connection problem", ex);
             throw new ServiceFailureException("Error with DB", ex);
@@ -161,19 +160,19 @@ public class CustomerManagerImpl implements CustomerManager {
 
         checkCustomerArgument(customer);
 
-        try (Connection conn = source.getConnection()) {
-            try (PreparedStatement st = conn.prepareStatement("UPDATE CUSTOMERS " +
-                    "SET \"NAME\"=?, SURNAME=?, ADDRESS=?, IDENTITYCARD=?, PHONENUMBER=? WHERE ID=?")) {
-                st.setString(1, customer.getName());
-                st.setString(2, customer.getSurname());
-                st.setString(3, customer.getAddress());
-                st.setString(4, customer.getIdentityCard());
-                st.setString(5, customer.getPhoneNumber());
-                st.setLong(6, customer.getId());
-                int numbUpdate = st.executeUpdate();
-                if (numbUpdate != 1) {
-                    throw new IllegalArgumentException("Customer with id=" + customer.getId() + " do not exist");
-                }
+        try (Connection conn = source.getConnection();
+         PreparedStatement st = conn.prepareStatement("UPDATE CUSTOMERS " +
+                "SET \"NAME\"=?, SURNAME=?, ADDRESS=?, IDENTITYCARD=?, PHONENUMBER=? WHERE ID=?"))
+        {
+            st.setString(1, customer.getName());
+            st.setString(2, customer.getSurname());
+            st.setString(3, customer.getAddress());
+            st.setString(4, customer.getIdentityCard());
+            st.setString(5, customer.getPhoneNumber());
+            st.setLong(6, customer.getId());
+            int numbUpdate = st.executeUpdate();
+            if (numbUpdate != 1) {
+                throw new IllegalArgumentException("Customer with id=" + customer.getId() + " do not exist");
             }
         } catch (SQLException ex) {
             log.error("db connection problem or two customer have same IDCard or invalid ID", ex);
@@ -192,14 +191,14 @@ public class CustomerManagerImpl implements CustomerManager {
         }
 
 
-        try (Connection conn = source.getConnection()) {
-            try(PreparedStatement st = conn.prepareStatement("DELETE FROM CUSTOMERS WHERE ID=?")) {
-                st.setLong(1,customer.getId());
-                if(st.executeUpdate()!=1) {
-                    throw new IllegalArgumentException("Customer with id "+customer.getId()+" doesn't deleted");
-                }
+        try (Connection conn = source.getConnection();
+             PreparedStatement st = conn.prepareStatement("DELETE FROM CUSTOMERS WHERE ID=?"))
+        {
+            st.setLong(1,customer.getId());
+            if(st.executeUpdate()!=1) {
+                throw new IllegalArgumentException("Customer with id "+customer.getId()+" doesn't deleted");
             }
-        } catch (SQLException ex) {
+        }catch (SQLException ex) {
             log.error("db connection problem or invalid ID", ex);
             throw new ServiceFailureException("Error with DB", ex);
         }

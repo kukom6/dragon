@@ -18,7 +18,7 @@
     </thead>
     <c:forEach items="${dragons}" var="dragon">
         <tr>
-            <form method="post action="${pageContext.request.contextPath}/dragons/update">
+            <form method="post" action="${pageContext.request.contextPath}/dragons/update">
                 <td><input name="name" type="text" value="${dragon.name}" /></td>
                 <fmt:formatDate value="${dragon.born}" type="BOTH" var="parsedBornDate" pattern="yyyy-MM-dd HH:mm:ss" />
                 <c:set var="string2" value="${fn:replace(parsedBornDate, ' ', 'T')}" />
@@ -35,7 +35,7 @@
     </c:forEach>
 </table>
 
-<h2>Zadejte draka</h2>
+<h2>Zade.jte draka</h2>
 <c:if test="${not empty chyba}">
     <div style="border: solid 1px red; background-color: yellow; padding: 10px">
         <c:out value="${chyba}"/>
