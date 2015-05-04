@@ -64,6 +64,8 @@ public class MainWindow extends JFrame{
         }
     }
 
+    DeleteLeaseSwingWorker deleteLeaseSwingWorker;
+
     private class DeleteLeaseSwingWorker extends SwingWorker<Integer,Void> {
 
         @Override
@@ -139,9 +141,9 @@ public class MainWindow extends JFrame{
         deleteLease.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                leaseManager.deleteLease(leaseTableModel.getLeaseAt(leaseTable.getSelectedRow()));
+                deleteLeaseSwingWorker = new DeleteLeaseSwingWorker();
                 deleteLease.setEnabled(false);
-                leaseTableModel.fireTableDataChanged();
+                deleteLeaseSwingWorker.execute();
             }
         });
 
