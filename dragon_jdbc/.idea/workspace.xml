@@ -58,12 +58,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Customer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Customer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/dragon/Customer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47113165" vertical-offset="0" max-vertical-offset="1326">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1360">
               <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
-              <folding />
+              <folding>
+                <element signature="e#254#255#0" expanded="false" />
+                <element signature="e#281#282#0" expanded="false" />
+                <element signature="e#387#388#0" expanded="false" />
+                <element signature="e#417#418#0" expanded="false" />
+                <element signature="e#463#464#0" expanded="false" />
+                <element signature="e#501#502#0" expanded="false" />
+                <element signature="e#528#529#0" expanded="false" />
+                <element signature="e#553#554#0" expanded="false" />
+                <element signature="e#635#636#0" expanded="false" />
+                <element signature="e#665#666#0" expanded="false" />
+                <element signature="e#711#712#0" expanded="false" />
+                <element signature="e#749#750#0" expanded="false" />
+                <element signature="e#787#788#0" expanded="false" />
+                <element signature="e#821#822#0" expanded="false" />
+                <element signature="e#875#876#0" expanded="false" />
+                <element signature="e#921#922#0" expanded="false" />
+                <element signature="e#960#961#0" expanded="false" />
+                <element signature="e#995#996#0" expanded="false" />
+                <element signature="e#1051#1052#0" expanded="false" />
+                <element signature="e#1099#1100#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,9 +92,15 @@
       <file leaf-file-name="CustomerManagerImplTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/cz/muni/fi/pv168/dragon/CustomerManagerImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="11934">
+            <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="11934">
               <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding>
+                <element signature="e#9520#9530#0" expanded="false" />
+                <element signature="e#9578#9588#0" expanded="false" />
+                <element signature="e#10745#10755#0" expanded="false" />
+                <element signature="e#10803#10813#0" expanded="false" />
+                <element signature="e#23662#23834#0" expanded="false" />
+                <element signature="e#23833#23834#0" expanded="false" />
                 <marker date="1429364073022" expanded="true" signature="760:1102" placeholder="CREATE TABLE..CUSTOMERS..." />
                 <marker date="1429364073022" expanded="true" signature="1346:1366" placeholder="DROP TABLE C..." />
               </folding>
@@ -81,13 +108,36 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.2977233" vertical-offset="0" max-vertical-offset="884">
+              <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomerManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/dragon/CustomerManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
+              <caret line="12" column="50" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="DragonManagerImplTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/cz/muni/fi/pv168/dragon/DragonManagerImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10965">
+            <state vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="10965">
               <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#531#901#0" expanded="false" />
+                <element signature="e#900#901#0" expanded="false" />
+                <element signature="e#19801#19966#0" expanded="false" />
+                <element signature="e#19965#19966#0" expanded="false" />
                 <marker date="1429364079845" expanded="true" signature="1242:1556" placeholder="CREATE TABLE..DRAGONS..." />
                 <marker date="1429364079845" expanded="true" signature="1805:1823" placeholder="DROP TABLE D..." />
               </folding>
@@ -98,10 +148,15 @@
       <file leaf-file-name="LeaseManagerImplTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/cz/muni/fi/pv168/dragon/LeaseManagerImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="17459">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1003" max-vertical-offset="17459">
               <caret line="59" column="23" selection-start-line="59" selection-start-column="23" selection-end-line="59" selection-end-column="23" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#20771#20778#0" expanded="false" />
+                <element signature="e#20823#20830#0" expanded="false" />
+                <element signature="e#23911#23918#0" expanded="false" />
+                <element signature="e#23963#23970#0" expanded="false" />
+                <element signature="e#38256#38419#0" expanded="false" />
+                <element signature="e#38418#38419#0" expanded="false" />
                 <marker date="1429364002318" expanded="true" signature="1108:1450" placeholder="CREATE TABLE..CUSTOMERS..." />
                 <marker date="1429364002318" expanded="true" signature="1506:1820" placeholder="CREATE TABLE..DRAGONS..." />
                 <marker date="1429364002318" expanded="true" signature="1876:2486" placeholder="CREATE TABLE..LEASES..." />
@@ -116,10 +171,13 @@
       <file leaf-file-name="TimeServiceImplTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/cz/muni/fi/pv168/dragon/TimeServiceImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
+            <state vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="391">
               <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#448#449#0" expanded="false" />
+                <element signature="e#480#481#0" expanded="false" />
+                <element signature="e#514#515#0" expanded="false" />
+                <element signature="e#548#549#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -138,7 +196,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/DragonManagerImplTest.java" />
         <option value="$PROJECT_DIR$/src/source/Lease.java" />
         <option value="$PROJECT_DIR$/src/source/LeaseManager.java" />
         <option value="$PROJECT_DIR$/src/source/Dragon.java" />
@@ -189,6 +246,7 @@
         <option value="$PROJECT_DIR$/src/test/java/cz/muni/fi/pv168/dragon/CustomerManagerImplTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/cz/muni/fi/pv168/dragon/DragonManagerImplTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/cz/muni/fi/pv168/dragon/TimeServiceImplTest.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -204,8 +262,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="-2" />
     <option name="width" value="1382" />
     <option name="height" value="744" />
   </component>
@@ -234,6 +291,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -252,10 +310,67 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dragon_jdbc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dragon_jdbc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dragon_jdbc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dragon_jdbc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dragon_jdbc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dragon_jdbc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dragon" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -272,7 +387,7 @@
     <property name="FullScreen" value="false" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.40394735" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="165" />
@@ -745,6 +860,7 @@
       <workItem from="1429361455224" duration="1640000" />
       <workItem from="1429363496684" duration="161000" />
       <workItem from="1429363711657" duration="613000" />
+      <workItem from="1430377530981" duration="1046000" />
     </task>
     <task id="LOCAL-00001" summary="new attributes">
       <created>1425143313170</created>
@@ -900,7 +1016,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="140093000" />
+    <option name="totallyTimeSpent" value="141139000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -923,13 +1039,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <frame x="-2" y="0" width="1382" height="744" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -937,24 +1052,25 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25669292" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25354332" sideWeight="0.64787704" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26281112" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2624811" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18008785" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18003026" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25354332" sideWeight="0.64787704" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1008,12 +1124,28 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/test/java/cz/muni/fi/pv168/dragon/TimeServiceImplTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="391">
+          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+          <folding>
+            <element signature="e#448#449#0" expanded="false" />
+            <element signature="e#480#481#0" expanded="false" />
+            <element signature="e#514#515#0" expanded="false" />
+            <element signature="e#548#549#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/cz/muni/fi/pv168/dragon/DragonManagerImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3" max-vertical-offset="11084">
           <caret line="2" column="48" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="48" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#531#901#0" expanded="false" />
+            <element signature="e#900#901#0" expanded="false" />
+            <element signature="e#19801#19966#0" expanded="false" />
+            <element signature="e#19965#19966#0" expanded="false" />
             <marker date="1429364079845" expanded="true" signature="1242:1556" placeholder="CREATE TABLE..DRAGONS..." />
             <marker date="1429364079845" expanded="true" signature="1805:1823" placeholder="DROP TABLE D..." />
           </folding>
@@ -1025,7 +1157,12 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="17510">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#20771#20778#0" expanded="false" />
+            <element signature="e#20823#20830#0" expanded="false" />
+            <element signature="e#23911#23918#0" expanded="false" />
+            <element signature="e#23963#23970#0" expanded="false" />
+            <element signature="e#38256#38419#0" expanded="false" />
+            <element signature="e#38418#38419#0" expanded="false" />
             <marker date="1429364002318" expanded="true" signature="1108:1450" placeholder="CREATE TABLE..CUSTOMERS..." />
             <marker date="1429364002318" expanded="true" signature="1506:1820" placeholder="CREATE TABLE..DRAGONS..." />
             <marker date="1429364002318" expanded="true" signature="1876:2486" placeholder="CREATE TABLE..LEASES..." />
@@ -1041,7 +1178,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="340">
           <caret line="9" column="51" selection-start-line="9" selection-start-column="51" selection-end-line="9" selection-end-column="51" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#448#449#0" expanded="false" />
+            <element signature="e#480#481#0" expanded="false" />
+            <element signature="e#514#515#0" expanded="false" />
+            <element signature="e#548#549#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1051,6 +1191,12 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="3264" max-vertical-offset="12019">
           <caret line="192" column="33" selection-start-line="192" selection-start-column="33" selection-end-line="192" selection-end-column="33" />
           <folding>
+            <element signature="e#9520#9530#0" expanded="false" />
+            <element signature="e#9578#9588#0" expanded="false" />
+            <element signature="e#10745#10755#0" expanded="false" />
+            <element signature="e#10803#10813#0" expanded="false" />
+            <element signature="e#23662#23834#0" expanded="false" />
+            <element signature="e#23833#23834#0" expanded="false" />
             <marker date="1429364073022" expanded="true" signature="760:1102" placeholder="CREATE TABLE..CUSTOMERS..." />
             <marker date="1429364073022" expanded="true" signature="1346:1366" placeholder="DROP TABLE C..." />
           </folding>
@@ -1090,7 +1236,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="175" max-vertical-offset="782">
           <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
-          <folding />
+          <folding>
+            <element signature="e#254#255#0" expanded="false" />
+            <element signature="e#281#282#0" expanded="false" />
+            <element signature="e#387#388#0" expanded="false" />
+            <element signature="e#417#418#0" expanded="false" />
+            <element signature="e#463#464#0" expanded="false" />
+            <element signature="e#501#502#0" expanded="false" />
+            <element signature="e#528#529#0" expanded="false" />
+            <element signature="e#553#554#0" expanded="false" />
+            <element signature="e#635#636#0" expanded="false" />
+            <element signature="e#665#666#0" expanded="false" />
+            <element signature="e#711#712#0" expanded="false" />
+            <element signature="e#749#750#0" expanded="false" />
+            <element signature="e#787#788#0" expanded="false" />
+            <element signature="e#821#822#0" expanded="false" />
+            <element signature="e#875#876#0" expanded="false" />
+            <element signature="e#921#922#0" expanded="false" />
+            <element signature="e#960#961#0" expanded="false" />
+            <element signature="e#995#996#0" expanded="false" />
+            <element signature="e#1051#1052#0" expanded="false" />
+            <element signature="e#1099#1100#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1105,16 +1272,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="714">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="UPDATE DRAGO..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1164,7 +1322,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#254#255#0" expanded="false" />
+            <element signature="e#281#282#0" expanded="false" />
+            <element signature="e#387#388#0" expanded="false" />
+            <element signature="e#417#418#0" expanded="false" />
+            <element signature="e#463#464#0" expanded="false" />
+            <element signature="e#501#502#0" expanded="false" />
+            <element signature="e#528#529#0" expanded="false" />
+            <element signature="e#553#554#0" expanded="false" />
+            <element signature="e#635#636#0" expanded="false" />
+            <element signature="e#665#666#0" expanded="false" />
+            <element signature="e#711#712#0" expanded="false" />
+            <element signature="e#749#750#0" expanded="false" />
+            <element signature="e#787#788#0" expanded="false" />
+            <element signature="e#821#822#0" expanded="false" />
+            <element signature="e#875#876#0" expanded="false" />
+            <element signature="e#921#922#0" expanded="false" />
+            <element signature="e#960#961#0" expanded="false" />
+            <element signature="e#995#996#0" expanded="false" />
+            <element signature="e#1051#1052#0" expanded="false" />
+            <element signature="e#1099#1100#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1179,16 +1358,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="714">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="UPDATE DRAGO..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1238,7 +1408,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#254#255#0" expanded="false" />
+            <element signature="e#281#282#0" expanded="false" />
+            <element signature="e#387#388#0" expanded="false" />
+            <element signature="e#417#418#0" expanded="false" />
+            <element signature="e#463#464#0" expanded="false" />
+            <element signature="e#501#502#0" expanded="false" />
+            <element signature="e#528#529#0" expanded="false" />
+            <element signature="e#553#554#0" expanded="false" />
+            <element signature="e#635#636#0" expanded="false" />
+            <element signature="e#665#666#0" expanded="false" />
+            <element signature="e#711#712#0" expanded="false" />
+            <element signature="e#749#750#0" expanded="false" />
+            <element signature="e#787#788#0" expanded="false" />
+            <element signature="e#821#822#0" expanded="false" />
+            <element signature="e#875#876#0" expanded="false" />
+            <element signature="e#921#922#0" expanded="false" />
+            <element signature="e#960#961#0" expanded="false" />
+            <element signature="e#995#996#0" expanded="false" />
+            <element signature="e#1051#1052#0" expanded="false" />
+            <element signature="e#1099#1100#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1394,29 +1585,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/dragon/CustomerManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/dragon/CustomerManagerImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22895622" vertical-offset="0" max-vertical-offset="4454">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#400#401#0" expanded="true" />
-            <element signature="e#440#441#0" expanded="true" />
-            <marker date="1429363841478" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1429363841478" expanded="true" signature="-1:-1" placeholder="SELECT ID,\&quot;..CUSTOMERS..." />
-            <marker date="1429363841478" expanded="true" signature="-1:-1" placeholder="SELECT ID,\&quot;..CUSTOMERS..." />
-            <marker date="1429363841478" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..CUSTOMERS..." />
-            <marker date="1429363841478" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..CUSTOMERS..." />
-            <marker date="1429363841478" expanded="true" signature="-1:-1" placeholder="UPDATE CUSTO..." />
-            <marker date="1429363841478" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+            <element signature="imports" expanded="false" />
+            <element signature="e#400#401#0" expanded="false" />
+            <element signature="e#440#441#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1425,16 +1601,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.028619528" vertical-offset="102" max-vertical-offset="4692">
           <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-          <folding>
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="UPDATE DRAGO..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1457,31 +1624,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.028619528" vertical-offset="0" max-vertical-offset="594">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/cz/muni/fi/pv168/dragon/CustomerManagerImplTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="11934">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding>
-            <marker date="1429364073022" expanded="true" signature="760:1102" placeholder="CREATE TABLE..CUSTOMERS..." />
-            <marker date="1429364073022" expanded="true" signature="1346:1366" placeholder="DROP TABLE C..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/cz/muni/fi/pv168/dragon/DragonManagerImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10965">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#531#901#0" expanded="false" />
+            <element signature="e#900#901#0" expanded="false" />
+            <element signature="e#19801#19966#0" expanded="false" />
+            <element signature="e#19965#19966#0" expanded="false" />
             <marker date="1429364079845" expanded="true" signature="1242:1556" placeholder="CREATE TABLE..DRAGONS..." />
             <marker date="1429364079845" expanded="true" signature="1805:1823" placeholder="DROP TABLE D..." />
           </folding>
@@ -1493,7 +1644,12 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1003" max-vertical-offset="17510">
           <caret line="59" column="23" selection-start-line="59" selection-start-column="23" selection-end-line="59" selection-end-column="23" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#20771#20778#0" expanded="false" />
+            <element signature="e#20823#20830#0" expanded="false" />
+            <element signature="e#23911#23918#0" expanded="false" />
+            <element signature="e#23963#23970#0" expanded="false" />
+            <element signature="e#38256#38419#0" expanded="false" />
+            <element signature="e#38418#38419#0" expanded="false" />
             <marker date="1429364002318" expanded="true" signature="1108:1450" placeholder="CREATE TABLE..CUSTOMERS..." />
             <marker date="1429364002318" expanded="true" signature="1506:1820" placeholder="CREATE TABLE..DRAGONS..." />
             <marker date="1429364002318" expanded="true" signature="1876:2486" placeholder="CREATE TABLE..LEASES..." />
@@ -1509,15 +1665,72 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
           <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#448#449#0" expanded="false" />
+            <element signature="e#480#481#0" expanded="false" />
+            <element signature="e#514#515#0" expanded="false" />
+            <element signature="e#548#549#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/dragon/Customer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47113165" vertical-offset="0" max-vertical-offset="1326">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1360">
           <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
+          <folding>
+            <element signature="e#254#255#0" expanded="false" />
+            <element signature="e#281#282#0" expanded="false" />
+            <element signature="e#387#388#0" expanded="false" />
+            <element signature="e#417#418#0" expanded="false" />
+            <element signature="e#463#464#0" expanded="false" />
+            <element signature="e#501#502#0" expanded="false" />
+            <element signature="e#528#529#0" expanded="false" />
+            <element signature="e#553#554#0" expanded="false" />
+            <element signature="e#635#636#0" expanded="false" />
+            <element signature="e#665#666#0" expanded="false" />
+            <element signature="e#711#712#0" expanded="false" />
+            <element signature="e#749#750#0" expanded="false" />
+            <element signature="e#787#788#0" expanded="false" />
+            <element signature="e#821#822#0" expanded="false" />
+            <element signature="e#875#876#0" expanded="false" />
+            <element signature="e#921#922#0" expanded="false" />
+            <element signature="e#960#961#0" expanded="false" />
+            <element signature="e#995#996#0" expanded="false" />
+            <element signature="e#1051#1052#0" expanded="false" />
+            <element signature="e#1099#1100#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/cz/muni/fi/pv168/dragon/CustomerManagerImplTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="11934">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding>
+            <element signature="e#9520#9530#0" expanded="false" />
+            <element signature="e#9578#9588#0" expanded="false" />
+            <element signature="e#10745#10755#0" expanded="false" />
+            <element signature="e#10803#10813#0" expanded="false" />
+            <element signature="e#23662#23834#0" expanded="false" />
+            <element signature="e#23833#23834#0" expanded="false" />
+            <marker date="1429364073022" expanded="true" signature="760:1102" placeholder="CREATE TABLE..CUSTOMERS..." />
+            <marker date="1429364073022" expanded="true" signature="1346:1366" placeholder="DROP TABLE C..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/dragon/CustomerManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
+          <caret line="12" column="50" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2977233" vertical-offset="0" max-vertical-offset="884">
+          <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -1579,7 +1792,6 @@
             <option name="proportions">
               <list>
                 <option value="0.40394735" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -1599,7 +1811,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>org.slf4j:slf4j-api:1.6.2</last-edited>
+          <last-edited>commons-logging:commons-logging:1.2</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

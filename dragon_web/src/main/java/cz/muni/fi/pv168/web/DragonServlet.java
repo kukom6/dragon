@@ -38,43 +38,36 @@ public class DragonServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         //akce podle přípony v URL
         String action = request.getPathInfo();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         switch (action) {
             case "/add":
                 //načtení POST parametrů z formuláře
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String name = request.getParameter("name");
-                Date born;
+
+                Dragon dragonForCreate;
                 try {
-                    born = sdf.parse(request.getParameter("born").replace("T", " "));
-                }catch(ParseException ex){
-                    throw new ServiceFailureException("Bad date form", ex);
+                    dragonForCreate = newDragon(
+                            request.getParameter("name")
+                            ,sdf.parse(request.getParameter("born").replace("T", " "))
+                            ,request.getParameter("race")
+                            ,Integer.parseInt(request.getParameter("heads"))
+                            ,Integer.parseInt(request.getParameter("weight"))
+                    );
+                }catch(ParseException | NumberFormatException ex){
+                    request.setAttribute("chyba", "Udaje su v zlom formate!");
+                    showDragonsList(request, response);
+                    return;
                 }
-                String race = request.getParameter("race");
-                int heads = Integer.parseInt(request.getParameter("heads"));
-                int weight = Integer.parseInt(request.getParameter("weight"));
 
                 //kontrola vyplnění hodnot
-                if (name == null
-                        || name.length() == 0
-                        || race == null
-                        || race.length() == 0
-                        || born == null
-                        || heads < 0
-                        || weight < 0) {
+                if (checkDragon(dragonForCreate)) {
                     request.setAttribute("chyba", "Je nutné vyplnit všechny hodnoty spravne!");
                     showDragonsList(request, response);
                     return;
                 }
                 //zpracování dat - vytvoření záznamu v databázi
                 try {
-                    Dragon dragon = new Dragon();
-                    dragon.setName(name);
-                    dragon.setBorn(born);
-                    dragon.setRace(race);
-                    dragon.setNumberOfHeads(heads);
-                    dragon.setWeight(weight);
-                    getDragonManager().createDragon(dragon);
-                    log.debug("created {}",dragon);
+                    getDragonManager().createDragon(dragonForCreate);
+                    log.debug("created {}",dragonForCreate);
                     //redirect-after-POST je ochrana před vícenásobným odesláním formuláře
                     response.sendRedirect(request.getContextPath()+URL_MAPPING);
                     return;
@@ -97,45 +90,33 @@ public class DragonServlet extends HttpServlet {
                 }
             case "/update":
                 //načtení POST parametrů z formuláře
-                SimpleDateFormat usdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String uname = request.getParameter("name");
-                Date uborn;
-
+                Dragon dragonForUpdate;
                 try {
-                    uborn = usdf.parse(request.getParameter("born").replace("T", " "));
-                }catch(ParseException ex){
-                    throw new ServiceFailureException("Bad date form", ex);
+                    dragonForUpdate = newDragon(
+                            request.getParameter("name")
+                            ,sdf.parse(request.getParameter("born").replace("T", " "))
+                            ,request.getParameter("race")
+                            ,Integer.parseInt(request.getParameter("heads"))
+                            ,Integer.parseInt(request.getParameter("weight"))
+                    );
+                }catch(ParseException | NumberFormatException ex){
+                    request.setAttribute("chyba", "Udaju su v zlom formate!");
+                    showDragonsList(request, response);
+                    return;
                 }
-                String urace = request.getParameter("race");
-                int uheads = Integer.parseInt(request.getParameter("heads"));
-                int uweight = Integer.parseInt(request.getParameter("weight"));
-                long id = Long.parseLong(request.getParameter("id"));
-
-
+                Long id = Long.parseLong(request.getParameter("id"));
                 //kontrola vyplnění hodnot
-                if (uname == null
-                        || uname.length() == 0
-                        || urace == null
-                        || urace.length() == 0
-                        || uborn == null
-                        || uheads < 0
-                        || uweight < 0
-                        || id <= 0) {
+                if (checkDragon(dragonForUpdate) || id <= 0) {
                     request.setAttribute("chyba", "Je nutné vyplnit všechny hodnoty spravne!");
                     showDragonsList(request, response);
                     return;
                 }
+
+                dragonForUpdate.setId(id);
                 //zpracování dat - vytvoření záznamu v databázi
                 try {
-                    Dragon dragon = new Dragon();
-                    dragon.setId(id);
-                    dragon.setName(uname);
-                    dragon.setBorn(uborn);
-                    dragon.setRace(urace);
-                    dragon.setNumberOfHeads(uheads);
-                    dragon.setWeight(uweight);
-                    getDragonManager().updateDragon(dragon);
-                    log.debug("created {}",dragon);
+                    getDragonManager().updateDragon(dragonForUpdate);
+                    log.debug("created {}",dragonForUpdate);
                     //redirect-after-POST je ochrana před vícenásobným odesláním formuláře
                     response.sendRedirect(request.getContextPath()+URL_MAPPING);
                     return;
@@ -148,6 +129,25 @@ public class DragonServlet extends HttpServlet {
                 log.error("Unknown action " + action);
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Unknown action " + action);
         }
+    }
+
+    private boolean checkDragon(Dragon dragon){
+        return dragon.getName() == null
+                || dragon.getName().length() == 0
+                || dragon.getRace() == null
+                || dragon.getRace().length() == 0
+                || dragon.getBorn() == null
+                || dragon.getNumberOfHeads() < 0
+                || dragon.getWeight() < 0;
+    }
+    private Dragon newDragon(String name, Date bornDate, String race, int numOfHeads, int weight){
+        Dragon dragon = new Dragon();
+        dragon.setName(name);
+        dragon.setBorn(bornDate);
+        dragon.setRace(race);
+        dragon.setNumberOfHeads(numOfHeads);
+        dragon.setWeight(weight);
+        return dragon;
     }
 
     /**

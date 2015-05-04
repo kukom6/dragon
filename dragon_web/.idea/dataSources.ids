@@ -683,7 +683,4 @@
       </prototype>
     </procedure>
   </data-source>
-  <data-source name="Derby - db" uuid="db56279a-1df3-455c-8ef0-28276661ba26">
-    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
-  </data-source>
 </component>

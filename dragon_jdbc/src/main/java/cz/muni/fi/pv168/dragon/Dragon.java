@@ -10,6 +10,17 @@ public class Dragon {
     private int numberOfHeads;
     private int weight;
 
+    public Dragon() {
+    }
+
+    public Dragon(String name, Date born, String race, int numberOfHeads, int weight) {
+        this.name = name;
+        this.born = born;
+        this.race = race;
+        this.numberOfHeads = numberOfHeads;
+        this.weight = weight;
+    }
+
     public String getName() {
         return name;
     }

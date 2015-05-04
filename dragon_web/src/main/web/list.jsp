@@ -18,7 +18,7 @@
     </thead>
     <c:forEach items="${dragons}" var="dragon">
         <tr>
-            <form method="post action="${pageContext.request.contextPath}/dragons/update">
+            <form method="post" action="${pageContext.request.contextPath}/dragons/update">
                 <td><input name="name" type="text" value="${dragon.name}" /></td>
                 <fmt:formatDate value="${dragon.born}" type="BOTH" var="parsedBornDate" pattern="yyyy-MM-dd HH:mm:ss" />
                 <c:set var="string2" value="${fn:replace(parsedBornDate, ' ', 'T')}" />

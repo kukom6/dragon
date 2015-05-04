@@ -6,9 +6,5 @@
       <schema-pattern>*</schema-pattern>
       <default-schemas>*.APP</default-schemas>
     </data-source>
-    <data-source name="Derby - db" uuid="db56279a-1df3-455c-8ef0-28276661ba26">
-      <secret-storage>master_key</secret-storage>
-      <first-sync>true</first-sync>
-    </data-source>
   </component>
 </project>
