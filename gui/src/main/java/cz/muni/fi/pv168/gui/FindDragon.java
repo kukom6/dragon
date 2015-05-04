@@ -1,7 +1,5 @@
 package cz.muni.fi.pv168.gui;
 
-import cz.muni.fi.pv168.dragon.DragonManager;
-
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.event.*;
@@ -11,12 +9,8 @@ public class FindDragon extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTable table1;
-    private int selectedRow;
     private NewLease parent;
 
-    public int getSelectedRow() {
-        return selectedRow;
-    }
 
     public FindDragon(AbstractTableModel tableModel, NewLease parent) {
         this.parent = parent;
@@ -54,8 +48,9 @@ public class FindDragon extends JDialog {
     }
 
     private void onOK() {
-        selectedRow = table1.getSelectedRow();
-        parent.setDragon(this);
+        if(table1.getSelectedRow() != -1) {
+            parent.setDragon(table1.getSelectedRow());
+        }
         dispose();
     }
 

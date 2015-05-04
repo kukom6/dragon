@@ -1,9 +1,6 @@
 package cz.muni.fi.pv168.gui;
 
-import cz.muni.fi.pv168.dragon.DragonManager;
-
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
@@ -14,24 +11,30 @@ import java.util.ResourceBundle;
  */
 public class NewLease extends JFrame{
     private JButton findDragon;
-    private JButton najstButton;
+    private JButton findCustomer;
     private JSpinner daySpinner;
     private JSpinner monthSpinner;
     private JSpinner yearSpinner;
     private JSpinner hourSpinner;
     private JSpinner minuteSpinner;
     private JSpinner secondSpinner;
-    private JTextField dragonField;
-    private JTextField textField4;
-    private JButton button1;
+    private JTextField dragonIdField;
+    private JTextField customerIdField;
+    private JButton createButton;
     private JPanel panel1;
+    private JTextField dragonNameField;
+    private JTextField customerNameField;
 
-    public NewLease(final AbstractTableModel tableModel) {
+    private DragonTableModel dragonTableModel;
+
+    public NewLease(final DragonTableModel dragonTableModel) {
         setDateLimits();
-
+        this.dragonTableModel = dragonTableModel;
         ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
         setTitle(lang.getString("newdragon_title"));
         setDateLimits();
+        customerIdField.setVisible(false);
+        dragonIdField.setVisible(false);
         setContentPane(panel1);
         pack();
 
@@ -40,14 +43,15 @@ public class NewLease extends JFrame{
         findDragon.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FindDragon dialog = new FindDragon(tableModel, NewLease.this);
+                FindDragon dialog = new FindDragon(dragonTableModel, NewLease.this);
                 dialog.setVisible(true);
             }
         });
     }
 
-    public void setDragon(FindDragon dialog){
-        dragonField.setText(String.valueOf(dialog.getSelectedRow()));
+    public void setDragon(int selectedRow){
+        dragonIdField.setText(dragonTableModel.getDragonAt(selectedRow).getId().toString());
+        dragonNameField.setText(dragonTableModel.getDragonAt(selectedRow).getName());
     }
 
     private void setDateLimits(){

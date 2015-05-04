@@ -1,33 +1,26 @@
 package cz.muni.fi.pv168.gui;
 
 import cz.muni.fi.pv168.dragon.*;
-import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.swing.table.AbstractTableModel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Created by Michal on 30.4.2015.
  */
-public class DragonsTableModel extends AbstractTableModel{
+public class DragonTableModel extends AbstractTableModel{
 
     DragonManager dragonManager;
     List<Dragon> allDragons;
 
 
-    public DragonsTableModel(DragonManager dragonManager){
+    public DragonTableModel(DragonManager dragonManager){
         this.dragonManager = dragonManager;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        Dragon dragon;
-        try {
-            dragon = new Dragon("Nice dragon", sdf.parse("15-03-1994 12:00:00"), "trhac", 5, 150);
-        } catch (ParseException ex){
-            throw new ServiceFailureException("asdsda",ex);
-        }
-        dragonManager.createDragon(dragon);
         allDragons = new ArrayList<>(dragonManager.getAllDragons());
     }
 
@@ -59,6 +52,27 @@ public class DragonsTableModel extends AbstractTableModel{
                 return dragon.getWeight();
             default:
                 throw new IllegalArgumentException("columnIndex");
+        }
+    }
+
+    @Override
+    public String getColumnName(int column) {
+        ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
+        switch (column) {
+            case 0:
+                return lang.getString("mainwindow_id");
+            case 1:
+                return lang.getString("mainwindow_name");
+            case 2:
+                return lang.getString("mainwindow_born");
+            case 3:
+                return lang.getString("mainwindow_race");
+            case 4:
+                return lang.getString("mainwindow_heads");
+            case 5:
+                return lang.getString("mainwindow_weight");
+            default:
+                throw new IllegalArgumentException("column");
         }
     }
 
@@ -103,10 +117,7 @@ public class DragonsTableModel extends AbstractTableModel{
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        if(columnIndex != 0){
-            return true;
-        }
-        return false;
+        return columnIndex != 0;
     }
 
     @Override

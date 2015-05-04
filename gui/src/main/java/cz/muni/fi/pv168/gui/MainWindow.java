@@ -1,8 +1,6 @@
 package cz.muni.fi.pv168.gui;
 
-import cz.muni.fi.pv168.dragon.CustomerManager;
-import cz.muni.fi.pv168.dragon.DragonManager;
-import cz.muni.fi.pv168.dragon.LeaseManager;
+import cz.muni.fi.pv168.dragon.*;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -19,27 +17,46 @@ public class MainWindow extends JFrame{
     private JTable customerTable;
     private JButton newLeaseWithCustomer;
     private JButton deleteCustomer;
-    private JTable dragonsTable;
+    private JTable dragonTable;
     private JButton newLeaseWithDragon;
     private JButton deleteDragon;
     private JTable leaseTable;
     private JButton deleteLease;
 
+    private DragonManager dragonManager;
+    private CustomerManager customerManager;
+    private LeaseManager leaseManager;
+    private NewLease newLeaseWindow;
+    private NewDragon newDragonWindow;
+    //TODO: private NewCustomer newCustomerWindow;
+    private DragonTableModel dragonTableModel;
+    //TODO: private CustomerTableModel customerTableModel;
+    private LeaseTableModel leaseTableModel;
 
-    public MainWindow(final DragonManager dragonManager, CustomerManager customerManager, LeaseManager leaseManager){
+
+    public MainWindow(final DragonManager dragonManager,final CustomerManager customerManager,final LeaseManager leaseManager){
         super("Dragon manager");
-        //setJMenuBar(createMenu());
+
+        this.dragonManager = dragonManager;
+        this.customerManager = customerManager;
+        this.leaseManager = leaseManager;
+
+        dragonTableModel = new DragonTableModel(dragonManager);
+        //TODO: customerTableModel = new CustomerTableModel(customerManager);
+        leaseTableModel = new LeaseTableModel(leaseManager);
+
+        dragonTable.setModel(dragonTableModel);
+        //
+        leaseTable.setModel(leaseTableModel);
+
         setContentPane(mainPanel);
-        final DragonsTableModel tableModel = new DragonsTableModel(dragonManager);
-        //TODO: create tableModel for customers and leases
-        dragonsTable.setModel(tableModel);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         newDragonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                NewDragon newDragon = new NewDragon(tableModel, dragonManager);
+                NewDragon newDragon = new NewDragon(dragonTableModel, dragonManager);
                 newDragon.setVisible(true);
             }
         });
@@ -47,9 +64,19 @@ public class MainWindow extends JFrame{
         deleteDragon.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(dragonsTable.getSelectedRow() != -1) {
-                    dragonManager.deleteDragon(tableModel.getDragonAt(dragonsTable.getSelectedRow()));
-                    tableModel.fireTableDataChanged();
+                if(dragonTable.getSelectedRow() != -1) {
+                    dragonManager.deleteDragon(dragonTableModel.getDragonAt(dragonTable.getSelectedRow()));
+                    dragonTableModel.fireTableDataChanged();
+                }
+            }
+        });
+
+        deleteLease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(leaseTable.getSelectedRow() != -1) {
+                    leaseManager.deleteLease(leaseTableModel.getLeaseAt(leaseTable.getSelectedRow()));
+                    leaseTableModel.fireTableDataChanged();
                 }
             }
         });
@@ -57,39 +84,24 @@ public class MainWindow extends JFrame{
         newLeaseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                NewLease newLease = new NewLease(tableModel);
-                newLease.setVisible(true);
+                if(newLeaseWindow == null) {
+                    newLeaseWindow = new NewLease(dragonTableModel);
+                }
+                newLeaseWindow = new NewLease(dragonTableModel);
+                newLeaseWindow.setVisible(true);
             }
         });
-    }
-
-
-    private JMenuBar createMenu() {
-        //hlavní úroveň menu
-        JMenuBar menubar = new JMenuBar();
-        JMenu fileMenu = new JMenu("File");
-        final JMenu helpMenu = new JMenu("Help");
-        menubar.add(fileMenu);
-        menubar.add(Box.createHorizontalGlue());
-        menubar.add(helpMenu);
-        //menu File
-        JMenuItem exitMenuItem = new JMenuItem("Exit");
-        fileMenu.add(exitMenuItem);
-        exitMenuItem.addActionListener(new ActionListener() {
+        newLeaseWithDragon.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(1);
+                if(newLeaseWindow == null) {
+                    newLeaseWindow = new NewLease(dragonTableModel);
+                }
+                if(dragonTable.getSelectedRow() != -1){
+                    newLeaseWindow.setDragon(dragonTable.getSelectedRow());
+                }
+                newLeaseWindow.setVisible(true);
             }
         });
-        //menu Help
-        JMenuItem aboutMenuItem = new JMenuItem("About");
-        helpMenu.add(aboutMenuItem);
-        aboutMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(helpMenu,"Skvělá aplikace (c) Já","About",JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
-        return menubar;
     }
 }
