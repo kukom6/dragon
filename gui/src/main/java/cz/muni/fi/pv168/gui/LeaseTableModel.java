@@ -4,6 +4,7 @@ import cz.muni.fi.pv168.dragon.Lease;
 import cz.muni.fi.pv168.dragon.LeaseManager;
 import cz.muni.fi.pv168.dragon.ServiceFailureException;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,18 +17,33 @@ import java.util.ResourceBundle;
  * Created by Michal on 4.5.2015.
  */
 public class LeaseTableModel extends AbstractTableModel{
-    LeaseManager leaseManager;
-    List<Lease> allLeases;
+    private LeaseManager leaseManager;
+    private List<Lease> allLeases;
+    private static final Object LOCK = new Object();
 
+    private RefreshLeasesSwingWorker refreshLeasesSwingWorker;
+
+    private class RefreshLeasesSwingWorker extends SwingWorker<Integer,Void> {
+
+        @Override
+        protected Integer doInBackground() throws Exception {
+            synchronized (LOCK){
+                allLeases = new ArrayList<>(leaseManager.getAllLeases());
+            }
+            return 1;
+        }
+    }
 
     public LeaseTableModel(LeaseManager leaseManager){
         this.leaseManager = leaseManager;
-        allLeases = new ArrayList<>(leaseManager.getAllLeases());
+        fireTableDataChanged();
     }
 
     @Override
     public int getRowCount() {
-        return allLeases.size();
+        synchronized (LOCK) {
+            return allLeases.size();
+        }
     }
 
     @Override
@@ -83,8 +99,9 @@ public class LeaseTableModel extends AbstractTableModel{
 
     @Override
     public void fireTableDataChanged() {
+        refreshLeasesSwingWorker = new RefreshLeasesSwingWorker();
+        refreshLeasesSwingWorker.execute();
         super.fireTableDataChanged();
-        allLeases = new ArrayList<>(leaseManager.getAllLeases());
     }
 
     public Lease getLeaseAt(int row){

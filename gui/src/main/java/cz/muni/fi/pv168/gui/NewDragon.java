@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Michal on 3.5.2015.
@@ -30,7 +31,45 @@ public class NewDragon extends JFrame{
     private JSpinner monthSpinner;
     private JSpinner yearSpinner;
 
-    public NewDragon(final AbstractTableModel tableModel,final DragonManager dragonManager){
+    private DragonManager dragonManager;
+    private DragonTableModel dragonTableModel;
+
+    private CreateDragonSwingWorker createDragonSwingWorker;
+
+    private class CreateDragonSwingWorker extends SwingWorker<Integer,Void> {
+
+        private Dragon dragonToCreate;
+        public CreateDragonSwingWorker(Dragon dragonToCreate) {
+            this.dragonToCreate = dragonToCreate;
+        }
+
+        @Override
+        protected Integer doInBackground() throws Exception {
+            for(long i = 0 ; i < 5_000_000_000l; i++){}
+            dragonManager.createDragon(dragonToCreate);
+            return 1;
+        }
+
+        @Override
+        protected void done() {
+            try {
+                if(get() == 1){
+                    sendButton.setEnabled(true);
+                    dragonTableModel.fireTableDataChanged();
+                    NewDragon.this.dispose();
+                }
+            } catch (ExecutionException ex) {
+                throw new ServiceFailureException("Exception thrown in doInBackground() while create dragon", ex.getCause());
+            } catch (InterruptedException ex) {
+                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                throw new RuntimeException("Operation interrupted (this should never happen)",ex);
+            }
+        }
+    }
+
+    public NewDragon(final DragonTableModel tableModel,final DragonManager dragonManager){
+        this.dragonManager = dragonManager;
+        this.dragonTableModel = tableModel;
         ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
         setTitle(lang.getString("newdragon_title"));
         setRaceBoxContent();
@@ -43,6 +82,7 @@ public class NewDragon extends JFrame{
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                sendButton.setEnabled(false);
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
                 String date = daySpinner.getValue()
                         + "-"
@@ -55,21 +95,20 @@ public class NewDragon extends JFrame{
                         + minuteSpinner.getValue()
                         + ":"
                         + secondSpinner.getValue();
+                Dragon dragon;
                 try {
-                    dragonManager.createDragon(
-                            new Dragon(nameField.getText(),
+                   dragon = new Dragon(nameField.getText(),
                                 sdf.parse(date),
                                 String.valueOf(raceBox.getSelectedItem()),
                                 Integer.parseInt(numberOfHeadsField.getText()),
                                 Integer.parseInt(weightBox.getText())
-                                )
-                            );
+                                );
 
                 } catch (ParseException | NumberFormatException ex){
                     throw new ServiceFailureException("Parse exception while getting new dragon",ex);
                 }
-                tableModel.fireTableDataChanged();
-                NewDragon.this.dispose();
+                createDragonSwingWorker = new CreateDragonSwingWorker(dragon);
+                createDragonSwingWorker.execute();
             }
         });
     }

@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.gui;
 
 import cz.muni.fi.pv168.dragon.*;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,24 +10,70 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Michal on 30.4.2015.
  */
 public class DragonTableModel extends AbstractTableModel{
 
-    DragonManager dragonManager;
-    List<Dragon> allDragons;
+    private DragonManager dragonManager;
+    private List<Dragon> allDragons;
+    private static final Object LOCK = new Object();
 
+    private UpdateDragonSwingWorker updateDragonSwingWorker;
+
+    private class UpdateDragonSwingWorker extends SwingWorker<Integer,Void> {
+
+        private Dragon dragonToUpdate;
+        public UpdateDragonSwingWorker(Dragon dragonToUpdate) {
+            this.dragonToUpdate = dragonToUpdate;
+        }
+
+        @Override
+        protected Integer doInBackground() throws Exception {
+            dragonManager.updateDragon(dragonToUpdate);
+            return 1;
+        }
+
+        @Override
+        protected void done() {
+            try {
+                if(get() == 1){
+                    fireTableDataChanged();
+                }
+            } catch (ExecutionException ex) {
+                throw new ServiceFailureException("Exception thrown in doInBackground() while delete dragon", ex.getCause());
+            } catch (InterruptedException ex) {
+                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                throw new RuntimeException("Operation interrupted (this should never happen)",ex);
+            }
+        }
+    }
+
+    private RefreshDragonsSwingWorker refreshDragonsSwingWorker;
+
+    private class RefreshDragonsSwingWorker extends SwingWorker<Integer,Void> {
+
+        @Override
+        protected Integer doInBackground() throws Exception {
+            synchronized (LOCK){
+                allDragons = new ArrayList<>(dragonManager.getAllDragons());
+            }
+            return 1;
+        }
+    }
 
     public DragonTableModel(DragonManager dragonManager){
         this.dragonManager = dragonManager;
-        allDragons = new ArrayList<>(dragonManager.getAllDragons());
+        fireTableDataChanged();
     }
 
     @Override
     public int getRowCount() {
-        return allDragons.size();
+        synchronized (LOCK) {
+            return allDragons.size();
+        }
     }
 
     @Override
@@ -111,8 +158,9 @@ public class DragonTableModel extends AbstractTableModel{
             default:
                 throw new IllegalArgumentException("columnIndex");
         }
-        dragonManager.updateDragon(getDragonAt(rowIndex));
-        fireTableDataChanged();
+
+        updateDragonSwingWorker = new UpdateDragonSwingWorker(getDragonAt(rowIndex));
+        updateDragonSwingWorker.execute();
     }
 
     @Override
@@ -122,8 +170,9 @@ public class DragonTableModel extends AbstractTableModel{
 
     @Override
     public void fireTableDataChanged() {
+        refreshDragonsSwingWorker = new RefreshDragonsSwingWorker();
+        refreshDragonsSwingWorker.execute();
         super.fireTableDataChanged();
-        allDragons = new ArrayList<>(dragonManager.getAllDragons());
     }
 
     public Dragon getDragonAt(int row){
