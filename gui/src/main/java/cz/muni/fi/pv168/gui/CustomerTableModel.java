@@ -123,7 +123,7 @@ public class CustomerTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Customer customer = getCustomer(rowIndex);
+        Customer customer = getCustomerAt(rowIndex);
         switch (columnIndex) {
             case 0:
                 customer.setId((Long) aValue);
@@ -146,7 +146,7 @@ public class CustomerTableModel extends AbstractTableModel {
             default:
                 throw new IllegalArgumentException("columnIndex");
         }
-        updateCustomerSwingWorker = new UpdateCustomerSwingWorker(getCustomer(rowIndex));
+        updateCustomerSwingWorker = new UpdateCustomerSwingWorker(getCustomerAt(rowIndex));
         updateCustomerSwingWorker.execute();
     }
 
@@ -171,7 +171,7 @@ public class CustomerTableModel extends AbstractTableModel {
         refreshCustomersSwingWorker.execute();
         super.fireTableDataChanged();
     }
-    public Customer getCustomer(int row){
+    public Customer getCustomerAt(int row){
         return allCustomers.get(row);
     }
 }

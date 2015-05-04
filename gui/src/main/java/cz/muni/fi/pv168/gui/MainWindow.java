@@ -151,9 +151,8 @@ public class MainWindow extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(newLeaseWindow == null) {
-                    newLeaseWindow = new NewLease(dragonTableModel);
+                    newLeaseWindow = new NewLease(dragonTableModel, customerTableModel);
                 }
-                newLeaseWindow = new NewLease(dragonTableModel);
                 newLeaseWindow.setVisible(true);
             }
         });
@@ -161,7 +160,7 @@ public class MainWindow extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(newLeaseWindow == null) {
-                    newLeaseWindow = new NewLease(dragonTableModel);
+                    newLeaseWindow = new NewLease(dragonTableModel, customerTableModel);
                 }
                 if(dragonTable.getSelectedRow() != -1){
                     newLeaseWindow.setDragon(dragonTable.getSelectedRow());

@@ -10,10 +10,12 @@ public class FindDragon extends JDialog {
     private JButton buttonCancel;
     private JTable table1;
     private NewLease parent;
+    private AbstractTableModel tableModel;
 
 
     public FindDragon(AbstractTableModel tableModel, NewLease parent) {
         this.parent = parent;
+        this.tableModel = tableModel;
         table1.setModel(tableModel);
         setContentPane(contentPane);
         setModal(true);
@@ -50,7 +52,11 @@ public class FindDragon extends JDialog {
 
     private void onOK() {
         if(table1.getSelectedRow() != -1) {
-            parent.setDragon(table1.getSelectedRow());
+            if(tableModel instanceof DragonTableModel) {
+                parent.setDragon(table1.getSelectedRow());
+            }else{
+                parent.setCustomer(table1.getSelectedRow());
+            }
         }
         dispose();
     }

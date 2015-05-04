@@ -26,10 +26,12 @@ public class NewLease extends JFrame{
     private JTextField customerNameField;
 
     private DragonTableModel dragonTableModel;
+    private CustomerTableModel customerTableModel;
 
-    public NewLease(final DragonTableModel dragonTableModel) {
+    public NewLease(final DragonTableModel dragonTableModel, final CustomerTableModel customerTableModel) {
         setDateLimits();
         this.dragonTableModel = dragonTableModel;
+        this.customerTableModel = customerTableModel;
         ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
         setTitle(lang.getString("newdragon_title"));
         setDateLimits();
@@ -47,11 +49,24 @@ public class NewLease extends JFrame{
                 dialog.setVisible(true);
             }
         });
+
+        findCustomer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FindDragon dialog = new FindDragon(customerTableModel, NewLease.this);
+                dialog.setVisible(true);
+            }
+        });
     }
 
     public void setDragon(int selectedRow){
         dragonIdField.setText(dragonTableModel.getDragonAt(selectedRow).getId().toString());
         dragonNameField.setText(dragonTableModel.getDragonAt(selectedRow).getName());
+    }
+
+    public void setCustomer(int selectedRow){
+        customerIdField.setText(customerTableModel.getCustomerAt(selectedRow).getId().toString());
+        customerNameField.setText(customerTableModel.getCustomerAt(selectedRow).getName());
     }
 
     private void setDateLimits(){
