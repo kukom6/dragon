@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.gui;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import cz.muni.fi.pv168.dragon.*;
 
 import javax.swing.*;
@@ -29,9 +30,9 @@ public class MainWindow extends JFrame{
     private LeaseManager leaseManager;
     private NewLease newLeaseWindow;
     private NewDragon newDragonWindow;
-    //TODO: private NewCustomer newCustomerWindow;
+    private NewCustomer newCustomerWindow;
     private DragonTableModel dragonTableModel;
-    //TODO: private CustomerTableModel customerTableModel;
+    private CustomerTableModel customerTableModel;
     private LeaseTableModel leaseTableModel;
 
     private DeleteDragonSwingWorker deleteDragonSwingWorker;
@@ -99,16 +100,24 @@ public class MainWindow extends JFrame{
         this.leaseManager = leaseManager;
 
         dragonTableModel = new DragonTableModel(dragonManager);
-        //TODO: customerTableModel = new CustomerTableModel(customerManager);
+        customerTableModel = new CustomerTableModel(customerManager);
         leaseTableModel = new LeaseTableModel(leaseManager);
 
         dragonTable.setModel(dragonTableModel);
-        //
+        customerTable.setModel(customerTableModel);
         leaseTable.setModel(leaseTableModel);
 
         setContentPane(mainPanel);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        newCustomerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                NewCustomer newCustomer = new NewCustomer(customerTableModel, customerManager);
+                newCustomer.setVisible(true);
+            }
+        });
 
         newDragonButton.addActionListener(new ActionListener() {
             @Override

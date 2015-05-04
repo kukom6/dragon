@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.dragon;
 
+import java.util.Date;
+
 public class Customer {
     private Long id;
     private String name;
@@ -7,6 +9,17 @@ public class Customer {
     private String address;
     private String identityCard;
     private String phoneNumber;
+
+    public Customer() {
+    }
+
+    public Customer(String name, String surname, String address, String identityCard,String phoneNumber) {
+        this.name = name;
+        this.surname=surname;
+        this.address=address;
+        this.identityCard=identityCard;
+        this.phoneNumber=phoneNumber;
+    }
 
     public String getName() {
         return name;

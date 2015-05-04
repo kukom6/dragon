@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="374f523a-939d-4f2a-b286-a68f8b81f244" name="Default" comment="">
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\dragon.iml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\src\Customer.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\src\CustomerManager.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\src\CustomerManagerImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\src\Dragon.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\src\DragonManager.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\src\DragonManagerImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\src\Lease.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\src\LeaseManager.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\src\LeaseManagerImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\src\ServiceFailureException.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\src\TimeService.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\src\TimeServiceImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\test\CustomerManagerImplTest.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\test\DragonManagerImplTest.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\test\LeaseManagerImplTest.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Java\intellij\PB168\dragons\dragon_jdbc\test\TimeServiceImplTest.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../dragon_jdbc/.idea/sqldialects.xml" afterPath="$PROJECT_DIR$/../dragon_jdbc/.idea/sqldialects.xml" />
-    </list>
+    <list default="true" id="374f523a-939d-4f2a-b286-a68f8b81f244" name="Default" comment="" />
     <ignored path="gui.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -50,8 +31,8 @@
       <file leaf-file-name="NewDragon.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewDragon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1859" max-vertical-offset="2346">
-              <caret line="71" column="43" selection-start-line="71" selection-start-column="43" selection-end-line="71" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="867" max-vertical-offset="2346">
+              <caret line="73" column="6" selection-start-line="73" selection-start-column="6" selection-end-line="73" selection-end-column="6" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -59,14 +40,105 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/MainWindow.java">
+      <file leaf-file-name="MainWindow.form" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/MainWindow.form">
+          <provider selected="true" editor-type-id="ui-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomerManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/CustomerManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.24935065" vertical-offset="1604" max-vertical-offset="2601">
-              <caret line="100" column="63" selection-start-line="100" selection-start-column="63" selection-end-line="100" selection-end-column="63" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="36" max-vertical-offset="442">
+              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewCustomer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewCustomer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="603" max-vertical-offset="1513">
+              <caret line="45" column="62" selection-start-line="45" selection-start-column="62" selection-end-line="45" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1350#1912#0" expanded="true" />
+                <element signature="e#1911#1912#0" expanded="true" />
+                <element signature="e#2114#2115#0" expanded="true" />
+                <element signature="e#2178#2179#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LanguageBundle_sk.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/LanguageBundle_sk.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.633333" vertical-offset="21" max-vertical-offset="442">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="ResourceBundle">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LanguageBundle.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/LanguageBundle.properties">
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="395" max-vertical-offset="816">
+              <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="ResourceBundle">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResourceBundle.java" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_40/src.zip!/java/util/ResourceBundle.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="5736" max-vertical-offset="49572">
+              <caret line="406" column="0" selection-start-line="406" selection-start-column="0" selection-end-line="406" selection-end-column="0" />
+              <folding>
+                <element signature="e#15443#15444#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewCustomer.form" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewCustomer.form">
+          <provider selected="true" editor-type-id="ui-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/MainWindow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="709" max-vertical-offset="1802">
+              <caret line="116" column="55" selection-start-line="116" selection-start-column="55" selection-end-line="116" selection-end-column="55" />
+              <folding>
+                <element signature="class#DeleteDragonSwingWorker#0;class#MainWindow#0" expanded="false" />
+                <element signature="class#DeleteLeaseSwingWorker#0;class#MainWindow#0" expanded="false" />
+                <element signature="e#4071#4338#0" expanded="true" />
+                <element signature="e#4337#4338#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Customer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/Customer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1547">
+              <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -74,7 +146,7 @@
     </leaf>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../dragon_jdbc" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -104,19 +176,23 @@
         <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewLease.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/DragonsTableModel.java" />
         <option value="$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/DragonManager.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/LanguageBundle_sk.properties" />
         <option value="$PROJECT_DIR$/../dragon_jdbc/src/main/resources/fill_table.sql" />
-        <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/MainWindow.form" />
         <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewDragon.form" />
-        <option value="$PROJECT_DIR$/src/main/resources/LanguageBundle.properties" />
         <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewLease.form" />
         <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/MainWindow.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/FindDragon.form" />
         <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/FindDragon.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewDragon.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/DragonTableModel.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/LeaseTableModel.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/LanguageBundle_sk.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/CustomerTableModel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewCustomer.form" />
+        <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/MainWindow.form" />
+        <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/MainWindow.java" />
+        <option value="$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/Customer.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/LanguageBundle.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewDragon.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewCustomer.java" />
       </list>
     </option>
   </component>
@@ -134,8 +210,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="width" value="1378" />
+    <option name="height" value="754" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -162,8 +238,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -192,7 +268,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="target" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -212,6 +288,14 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resource Bundle 'LanguageBundle'" />
+              <option name="myItemType" value="com.intellij.lang.properties.projectView.ResourceBundleNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -296,7 +380,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="MainWindow" />
+              <option name="myItemId" value="NewCustomer" />
               <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -326,8 +410,80 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="FindDragon" />
+              <option name="myItemId" value="MainWindow" />
               <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dragon_jdbc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dragon_jdbc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dragon_jdbc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dragon_jdbc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dragon" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -346,7 +502,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/jdatepicker-1.3.4.jar!/" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.157" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
@@ -355,7 +511,7 @@
     <property name="recentsLimit" value="5" />
     <property name="dynamic.classpath" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="224" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="188" />
     <property name="FullScreen" value="false" />
   </component>
   <component name="RecentsManager">
@@ -445,17 +601,10 @@
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
-      <method />
-    </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
       <option name="PROGRAM_PARAMETERS" />
-      <method />
-    </configuration>
-    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner />
       <method />
     </configuration>
     <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
@@ -627,9 +776,6 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
-    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
-      <method />
-    </configuration>
     <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="myFilePath" />
@@ -680,20 +826,22 @@
       <workItem from="1430647446904" duration="27067000" />
       <workItem from="1430735787844" duration="281000" />
       <workItem from="1430736677193" duration="16918000" />
+      <workItem from="1430759166592" duration="3831000" />
+      <workItem from="1430763548907" duration="6205000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48550000" />
+    <option name="totallyTimeSpent" value="58586000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1378" height="754" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32713178" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -701,13 +849,13 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3251634" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25736433" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24432677" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24375919" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32713178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -737,7 +885,15 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewDragon.java</url>
+          <line>118</line>
+          <properties />
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="22" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -746,61 +902,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewDragon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="1768">
-          <caret line="36" column="24" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/MainWindow.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/FindDragon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="629" max-vertical-offset="986">
-          <caret line="50" column="27" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/MainWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1683">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/FindDragon.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="391" max-vertical-offset="561">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewLease.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewLease.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="431" max-vertical-offset="1241">
@@ -841,7 +942,8 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="1683">
           <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="class#DeleteDragonSwingWorker#0;class#MainWindow#0" expanded="false" />
+            <element signature="class#DeleteLeaseSwingWorker#0;class#MainWindow#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -874,7 +976,8 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="1122">
           <caret line="29" column="39" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="class#DeleteDragonSwingWorker#0;class#MainWindow#0" expanded="false" />
+            <element signature="class#DeleteLeaseSwingWorker#0;class#MainWindow#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -883,21 +986,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="425">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/DragonTableModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#5780#5781#0" expanded="true" />
-            <element signature="e#5822#5823#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -929,27 +1018,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/DBUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2659" max-vertical-offset="3230">
-          <caret line="182" column="5" selection-start-line="182" selection-start-column="5" selection-end-line="182" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/resources/config.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="136">
           <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/SpringConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1071">
-          <caret line="20" column="46" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -989,50 +1061,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/DragonManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8233766" vertical-offset="6" max-vertical-offset="459">
-          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/Dragon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="1564">
-          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/DragonManagerImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1985" max-vertical-offset="4556">
-          <caret line="135" column="24" selection-start-line="135" selection-start-column="24" selection-end-line="135" selection-end-column="24" />
-          <folding>
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="UPDATE DRAGO..." />
-            <marker date="1429363841423" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/Lease.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1530">
           <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/DragonManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
+          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/DBUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="3043">
+          <caret line="182" column="5" selection-start-line="182" selection-start-column="5" selection-end-line="182" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_40/src.zip!/javax/swing/table/AbstractTableModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33204633" vertical-offset="1630" max-vertical-offset="5202">
+          <caret line="136" column="16" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/SpringConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="447" max-vertical-offset="1037">
+          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding>
+            <element signature="e#1762#1763#0" expanded="false" />
+            <element signature="e#1831#1832#0" expanded="false" />
+            <element signature="e#1934#1935#0" expanded="false" />
+            <element signature="e#1994#1995#0" expanded="false" />
+            <element signature="e#2218#2219#0" expanded="false" />
+            <element signature="e#2298#2299#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/resources/dragon_schema.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="612">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/resources/fill_table.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="204">
+          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewLease.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1241">
+        <state vertical-scroll-proportion="0.7669173" vertical-offset="357" max-vertical-offset="1241">
           <caret line="43" column="21" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
           <folding>
             <element signature="e#1600#1601#0" expanded="true" />
@@ -1040,43 +1133,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/resources/fill_table.sql">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34931508" vertical-offset="0" max-vertical-offset="292">
-          <caret line="6" column="92" selection-start-line="6" selection-start-column="92" selection-end-line="6" selection-end-column="92" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/resources/dragon_schema.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.23283581" vertical-offset="78" max-vertical-offset="612">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/LanguageBundle_sk.properties">
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.9333334" vertical-offset="0" max-vertical-offset="340">
-          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/LanguageBundle.properties">
-      <provider selected="true" editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
-          <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="459">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1086,24 +1146,11 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewDragon.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/MainWindow.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/Main.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_40/src.zip!/javax/swing/JTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="91" max-vertical-offset="493">
-          <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
-          <folding>
-            <element signature="e#489#1127#0" expanded="true" />
-            <element signature="e#1126#1127#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.21731749" vertical-offset="45194" max-vertical-offset="158644">
+          <caret line="2800" column="0" selection-start-line="2800" selection-start-column="0" selection-end-line="2800" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1114,59 +1161,205 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/FindDragon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7662338" vertical-offset="0" max-vertical-offset="918">
-          <caret line="54" column="18" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="316" max-vertical-offset="918">
+          <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://D:/Program Files/Java/jdk1.8.0_20/src.zip!/javax/swing/table/AbstractTableModel.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/DragonTableModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33246753" vertical-offset="2592" max-vertical-offset="5236">
-          <caret line="196" column="16" selection-start-line="196" selection-start-column="16" selection-end-line="196" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1165" max-vertical-offset="2193">
+          <caret line="40" column="17" selection-start-line="38" selection-start-column="8" selection-end-line="50" selection-end-column="9" />
           <folding>
-            <element signature="e#5610#5611#0" expanded="true" />
-            <element signature="e#5669#5670#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#835#836#0" expanded="true" />
+            <element signature="e#895#896#0" expanded="true" />
+            <element signature="class#RefreshDragonsSwingWorker#0;class#DragonTableModel#0" expanded="false" />
+            <element signature="method#DragonTableModel#0;class#DragonTableModel#0" expanded="false" />
+            <element signature="method#getRowCount#0;class#DragonTableModel#0" expanded="false" />
+            <element signature="method#getValueAt#0;class#DragonTableModel#0" expanded="false" />
+            <element signature="method#getColumnName#0;class#DragonTableModel#0" expanded="false" />
+            <element signature="e#5486#5487#0" expanded="true" />
+            <element signature="e#5525#5526#0" expanded="true" />
+            <element signature="method#fireTableDataChanged#0;class#DragonTableModel#0" expanded="false" />
+            <element signature="e#5780#5781#0" expanded="true" />
+            <element signature="e#5822#5823#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/CustomerTableModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1333" max-vertical-offset="2278">
+          <caret line="142" column="19" selection-start-line="142" selection-start-column="19" selection-end-line="142" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#CustomerTableModel#0;class#CustomerTableModel#0" expanded="false" />
+            <element signature="method#getRowCount#0;class#CustomerTableModel#0" expanded="false" />
+            <element signature="method#getValueAt#0;class#CustomerTableModel#0" expanded="false" />
+            <element signature="method#getColumnName#0;class#CustomerTableModel#0" expanded="false" />
+            <element signature="e#2997#2998#0" expanded="true" />
+            <element signature="e#3061#3062#0" expanded="true" />
+            <element signature="method#fireTableDataChanged#0;class#CustomerTableModel#0" expanded="false" />
+            <element signature="e#5646#5647#0" expanded="true" />
+            <element signature="e#5690#5691#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/LeaseTableModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.8831168" vertical-offset="754" max-vertical-offset="1717">
-          <caret line="100" column="40" selection-start-line="100" selection-start-column="40" selection-end-line="100" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/DragonTableModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5584416" vertical-offset="2471" max-vertical-offset="2873">
-          <caret line="174" column="37" selection-start-line="174" selection-start-column="37" selection-end-line="174" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewDragon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1859" max-vertical-offset="2346">
-          <caret line="71" column="43" selection-start-line="71" selection-start-column="43" selection-end-line="71" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1751">
+          <caret line="36" column="14" selection-start-line="36" selection-start-column="14" selection-end-line="36" selection-end-column="14" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#3184#3185#0" expanded="true" />
+            <element signature="e#3225#3226#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewDragon.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/CustomerManagerImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3282" max-vertical-offset="4369">
+          <caret line="208" column="26" selection-start-line="208" selection-start-column="26" selection-end-line="208" selection-end-column="26" />
+          <folding>
+            <marker date="1430759132886" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1430759132886" expanded="true" signature="-1:-1" placeholder="SELECT ID,\&quot;..CUSTOMERS..." />
+            <marker date="1430759132886" expanded="true" signature="-1:-1" placeholder="SELECT ID,\&quot;..CUSTOMERS..." />
+            <marker date="1430759132886" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..CUSTOMERS..." />
+            <marker date="1430759132886" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..CUSTOMERS..." />
+            <marker date="1430759132886" expanded="true" signature="-1:-1" placeholder="UPDATE CUSTO..." />
+            <marker date="1430759132886" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/DragonManagerImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2036" max-vertical-offset="4556">
+          <caret line="135" column="24" selection-start-line="135" selection-start-column="24" selection-end-line="135" selection-end-column="24" />
+          <folding>
+            <marker date="1430759132895" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1430759132895" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
+            <marker date="1430759132895" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
+            <marker date="1430759132895" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
+            <marker date="1430759132895" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
+            <marker date="1430759132895" expanded="true" signature="-1:-1" placeholder="SELECT ID, \..DRAGONS..." />
+            <marker date="1430759132895" expanded="true" signature="-1:-1" placeholder="UPDATE DRAGO..." />
+            <marker date="1430759132895" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/Dragon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1564">
+          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="13" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/CustomerManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dragon_jdbc/src/main/java/cz/muni/fi/pv168/dragon/Customer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1547">
+          <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/MainWindow.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/MainWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24935065" vertical-offset="1604" max-vertical-offset="2601">
-          <caret line="100" column="63" selection-start-line="100" selection-start-column="63" selection-end-line="100" selection-end-column="63" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="709" max-vertical-offset="1802">
+          <caret line="116" column="55" selection-start-line="116" selection-start-column="55" selection-end-line="116" selection-end-column="55" />
+          <folding>
+            <element signature="class#DeleteDragonSwingWorker#0;class#MainWindow#0" expanded="false" />
+            <element signature="class#DeleteLeaseSwingWorker#0;class#MainWindow#0" expanded="false" />
+            <element signature="e#4071#4338#0" expanded="true" />
+            <element signature="e#4337#4338#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_40/src.zip!/java/util/ResourceBundle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5736" max-vertical-offset="49572">
+          <caret line="406" column="0" selection-start-line="406" selection-start-column="0" selection-end-line="406" selection-end-column="0" />
+          <folding>
+            <element signature="e#15443#15444#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/LanguageBundle_sk.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.633333" vertical-offset="21" max-vertical-offset="442">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/LanguageBundle.properties">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
+          <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewDragon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="867" max-vertical-offset="2346">
+          <caret line="73" column="6" selection-start-line="73" selection-start-column="6" selection-end-line="73" selection-end-column="6" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewCustomer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="603" max-vertical-offset="1513">
+          <caret line="45" column="62" selection-start-line="45" selection-start-column="62" selection-end-line="45" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1350#1912#0" expanded="true" />
+            <element signature="e#1911#1912#0" expanded="true" />
+            <element signature="e#2114#2115#0" expanded="true" />
+            <element signature="e#2178#2179#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/fi/pv168/gui/NewCustomer.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
       </provider>
     </entry>
   </component>
@@ -1209,7 +1402,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.7</last-edited>
+          <last-edited>1.8</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1221,11 +1414,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>gui</last-edited>
+          <last-edited>dragon_jdbc</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
