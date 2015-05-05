@@ -36,6 +36,36 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
     private CustomerTableModel customerTableModel;
     private LeaseTableModel leaseTableModel;
 
+    private DeleteCustomerSwingWorker deleteCustomerSwingWorker;
+
+    private class DeleteCustomerSwingWorker extends SwingWorker<Integer,Void> {
+
+        @Override
+        protected Integer doInBackground() throws Exception {
+            if(customerTable.getSelectedRow() != -1) {
+                customerManager.deleteCustomer(customerTableModel.getCustomerAt(customerTable.getSelectedRow()));
+                return 1;
+            }else {
+                return 0;
+            }
+        }
+
+        @Override
+        protected void done() {
+            try {
+                if(get() == 1){
+                    deleteCustomer.setEnabled(true);
+                    customerTableModel.fireTableDataChanged();
+                }
+            } catch (ExecutionException ex) {
+                throw new ServiceFailureException("Exception thrown in doInBackground() while delete customer", ex.getCause());
+            } catch (InterruptedException ex) {
+                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                throw new RuntimeException("Operation interrupted (this should never happen)",ex);
+            }
+        }
+    }
+
     private DeleteDragonSwingWorker deleteDragonSwingWorker;
 
     private class DeleteDragonSwingWorker extends SwingWorker<Integer,Void> {
@@ -54,6 +84,7 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
         protected void done() {
             try {
                 if(get() == 1){
+                    deleteDragon.setEnabled(true);
                     dragonTableModel.fireTableDataChanged();
                 }
             } catch (ExecutionException ex) {
@@ -84,7 +115,7 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
             try {
                 if(get() == 1){
                     leaseTableModel.fireTableDataChanged();
-                    deleteDragon.setEnabled(true);
+                    deleteLease.setEnabled(true);
                 }
             } catch (ExecutionException ex) {
                 throw new ServiceFailureException("Exception thrown in doInBackground() while delete dragon", ex.getCause());
@@ -172,6 +203,15 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
                 deleteDragonSwingWorker = new DeleteDragonSwingWorker();
                 deleteDragon.setEnabled(false);
                 deleteDragonSwingWorker.execute();
+            }
+        });
+
+        deleteCustomer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteCustomerSwingWorker = new DeleteCustomerSwingWorker();
+                deleteCustomer.setEnabled(false);
+                deleteCustomerSwingWorker.execute();
             }
         });
 
