@@ -35,6 +35,36 @@ public class MainWindow extends JFrame{
     private CustomerTableModel customerTableModel;
     private LeaseTableModel leaseTableModel;
 
+    private DeleteCustomerSwingWorker deleteCustomerSwingWorker;
+
+    private class DeleteCustomerSwingWorker extends SwingWorker<Integer,Void> {
+
+        @Override
+        protected Integer doInBackground() throws Exception {
+            if(customerTable.getSelectedRow() != -1) {
+                customerManager.deleteCustomer(customerTableModel.getCustomerAt(customerTable.getSelectedRow()));
+                return 1;
+            }else {
+                return 0;
+            }
+        }
+
+        @Override
+        protected void done() {
+            try {
+                if(get() == 1){
+                    deleteCustomer.setEnabled(true);
+                    customerTableModel.fireTableDataChanged();
+                }
+            } catch (ExecutionException ex) {
+                throw new ServiceFailureException("Exception thrown in doInBackground() while delete customer", ex.getCause());
+            } catch (InterruptedException ex) {
+                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                throw new RuntimeException("Operation interrupted (this should never happen)",ex);
+            }
+        }
+    }
+
     private DeleteDragonSwingWorker deleteDragonSwingWorker;
 
     private class DeleteDragonSwingWorker extends SwingWorker<Integer,Void> {
@@ -53,6 +83,7 @@ public class MainWindow extends JFrame{
         protected void done() {
             try {
                 if(get() == 1){
+                    deleteDragon.setEnabled(true);
                     dragonTableModel.fireTableDataChanged();
                 }
             } catch (ExecutionException ex) {
@@ -83,7 +114,7 @@ public class MainWindow extends JFrame{
             try {
                 if(get() == 1){
                     leaseTableModel.fireTableDataChanged();
-                    deleteDragon.setEnabled(true);
+                    deleteLease.setEnabled(true);
                 }
             } catch (ExecutionException ex) {
                 throw new ServiceFailureException("Exception thrown in doInBackground() while delete dragon", ex.getCause());
@@ -138,6 +169,15 @@ public class MainWindow extends JFrame{
             }
         });
 
+        deleteCustomer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteCustomerSwingWorker = new DeleteCustomerSwingWorker();
+                deleteCustomer.setEnabled(false);
+                deleteCustomerSwingWorker.execute();
+            }
+        });
+
         deleteLease.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -164,6 +204,18 @@ public class MainWindow extends JFrame{
                 }
                 if(dragonTable.getSelectedRow() != -1){
                     newLeaseWindow.setDragon(dragonTable.getSelectedRow());
+                }
+                newLeaseWindow.setVisible(true);
+            }
+        });
+        newLeaseWithCustomer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(newLeaseWindow == null) {
+                    newLeaseWindow = new NewLease(dragonTableModel, customerTableModel);
+                }
+                if(dragonTable.getSelectedRow() != -1){
+                    newLeaseWindow.setCustomer(customerTable.getSelectedRow());
                 }
                 newLeaseWindow.setVisible(true);
             }
