@@ -45,7 +45,6 @@ public class NewDragon extends JFrame{
 
         @Override
         protected Integer doInBackground() throws Exception {
-            for(long i = 0 ; i < 5_000_000_000l; i++){}
             dragonManager.createDragon(dragonToCreate);
             return 1;
         }
@@ -128,9 +127,9 @@ public class NewDragon extends JFrame{
         yearSpinner.setModel(model);
         model = new SpinnerNumberModel(0, 0, 23, 1);
         hourSpinner.setModel(model);
-        model = new SpinnerNumberModel(0, 0, 60, 1);
+        model = new SpinnerNumberModel(0, 0, 59, 1);
         minuteSpinner.setModel(model);
-        model = new SpinnerNumberModel(0, 0, 60, 10);
+        model = new SpinnerNumberModel(0, 0, 59, 10);
         secondSpinner.setModel(model);
     }
 

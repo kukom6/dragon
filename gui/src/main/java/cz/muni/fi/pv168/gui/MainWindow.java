@@ -150,20 +150,28 @@ public class MainWindow extends JFrame{
         newLeaseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(newLeaseWindow == null) {
-                    newLeaseWindow = new NewLease(dragonTableModel, customerTableModel);
+                newLeaseWindow = new NewLease(leaseManager, dragonTableModel, customerTableModel, leaseTableModel);
+                newLeaseWindow.setVisible(true);
+            }
+        });
+
+        newLeaseWithDragon.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newLeaseWindow = new NewLease(leaseManager, dragonTableModel, customerTableModel, leaseTableModel);
+                if(dragonTable.getSelectedRow() != -1){
+                    newLeaseWindow.setDragon(dragonTable.getSelectedRow());
                 }
                 newLeaseWindow.setVisible(true);
             }
         });
-        newLeaseWithDragon.addActionListener(new ActionListener() {
+
+        newLeaseWithCustomer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(newLeaseWindow == null) {
-                    newLeaseWindow = new NewLease(dragonTableModel, customerTableModel);
-                }
-                if(dragonTable.getSelectedRow() != -1){
-                    newLeaseWindow.setDragon(dragonTable.getSelectedRow());
+                newLeaseWindow = new NewLease(leaseManager, dragonTableModel, customerTableModel, leaseTableModel);
+                if(customerTable.getSelectedRow() != -1){
+                    newLeaseWindow.setCustomer(customerTable.getSelectedRow());
                 }
                 newLeaseWindow.setVisible(true);
             }
