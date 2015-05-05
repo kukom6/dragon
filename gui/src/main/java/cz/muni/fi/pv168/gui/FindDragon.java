@@ -9,11 +9,11 @@ public class FindDragon extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTable table1;
-    private NewLease parent;
+    private DragonAndCustomerChangeable parent;
     private AbstractTableModel tableModel;
 
 
-    public FindDragon(AbstractTableModel tableModel, NewLease parent) {
+    public FindDragon(AbstractTableModel tableModel, DragonAndCustomerChangeable parent) {
         this.parent = parent;
         this.tableModel = tableModel;
         table1.setModel(tableModel);

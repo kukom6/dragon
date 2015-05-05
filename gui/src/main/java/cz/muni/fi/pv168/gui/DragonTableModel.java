@@ -82,6 +82,24 @@ public class DragonTableModel extends AbstractTableModel{
     }
 
     @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch (columnIndex) {
+            case 0:
+                return Long.class;
+            case 1:
+            case 2:
+                return String.class;
+            case 3:
+                return DragonRace.class;
+            case 4:
+            case 5:
+                return Integer.class;
+            default:
+                throw new IllegalArgumentException("columnIndex");
+        }
+    }
+
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Dragon dragon = allDragons.get(rowIndex);
         switch (columnIndex) {

@@ -6,12 +6,14 @@ import cz.muni.fi.pv168.dragon.ServiceFailureException;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Michal on 4.5.2015.
@@ -31,6 +33,36 @@ public class LeaseTableModel extends AbstractTableModel{
                 allLeases = new ArrayList<>(leaseManager.getAllLeases());
             }
             return 1;
+        }
+    }
+
+    private UpdateLeaseSwingWorker updateLeaseSwingWorker;
+
+    private class UpdateLeaseSwingWorker extends SwingWorker<Integer,Void> {
+
+        private Lease leaseToUpdate;
+        public UpdateLeaseSwingWorker(Lease leaseToUpdate) {
+            this.leaseToUpdate = leaseToUpdate;
+        }
+
+        @Override
+        protected Integer doInBackground() throws Exception {
+            leaseManager.updateLease(leaseToUpdate);
+            return 1;
+        }
+
+        @Override
+        protected void done() {
+            try {
+                if(get() == 1){
+                    fireTableDataChanged();
+                }
+            } catch (ExecutionException ex) {
+                throw new ServiceFailureException("Exception thrown in doInBackground() while delete dragon", ex.getCause());
+            } catch (InterruptedException ex) {
+                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                throw new RuntimeException("Operation interrupted (this should never happen)",ex);
+            }
         }
     }
 
@@ -106,5 +138,32 @@ public class LeaseTableModel extends AbstractTableModel{
 
     public Lease getLeaseAt(int row){
         return allLeases.get(row);
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Lease lease = getLeaseAt(rowIndex);
+        switch(columnIndex){
+            case 1:
+                lease.setPrice((BigDecimal) aValue);
+
+        }
+        updateLeaseSwingWorker = new UpdateLeaseSwingWorker(lease);
+        updateLeaseSwingWorker.execute();
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch(columnIndex){
+            case 1:
+                return BigDecimal.class;
+            default:
+                return String.class;
+        }
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return columnIndex == 1;
     }
 }

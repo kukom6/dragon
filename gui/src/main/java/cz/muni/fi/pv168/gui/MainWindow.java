@@ -1,6 +1,5 @@
 package cz.muni.fi.pv168.gui;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import cz.muni.fi.pv168.dragon.*;
 
 import javax.swing.*;
@@ -10,7 +9,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by Michal on 21.4.2015.
  */
-public class MainWindow extends JFrame{
+public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
     private JPanel mainPanel;
     private JTabbedPane tabbedPane;
     private JButton newDragonButton;
@@ -24,6 +23,8 @@ public class MainWindow extends JFrame{
     private JButton deleteDragon;
     private JTable leaseTable;
     private JButton deleteLease;
+    private JButton changeDragonButton;
+    private JButton changeCustomerButton;
 
     private DragonManager dragonManager;
     private CustomerManager customerManager;
@@ -94,6 +95,36 @@ public class MainWindow extends JFrame{
         }
     }
 
+    private UpdateLeaseSwingWorker updateLeaseSwingWorker;
+
+    private class UpdateLeaseSwingWorker extends SwingWorker<Integer,Void> {
+
+        private Lease leaseToUpdate;
+        public UpdateLeaseSwingWorker(Lease leaseToUpdate) {
+            this.leaseToUpdate = leaseToUpdate;
+        }
+
+        @Override
+        protected Integer doInBackground() throws Exception {
+            leaseManager.updateLease(leaseToUpdate);
+            return 1;
+        }
+
+        @Override
+        protected void done() {
+            try {
+                if(get() == 1){
+                    leaseTableModel.fireTableDataChanged();
+                }
+            } catch (ExecutionException ex) {
+                throw new ServiceFailureException("Exception thrown in doInBackground() while delete dragon", ex.getCause());
+            } catch (InterruptedException ex) {
+                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                throw new RuntimeException("Operation interrupted (this should never happen)",ex);
+            }
+        }
+    }
+
     public MainWindow(final DragonManager dragonManager,final CustomerManager customerManager,final LeaseManager leaseManager){
         super("Dragon manager");
 
@@ -108,6 +139,12 @@ public class MainWindow extends JFrame{
         dragonTable.setModel(dragonTableModel);
         customerTable.setModel(customerTableModel);
         leaseTable.setModel(leaseTableModel);
+
+        JComboBox raceComboBox = new JComboBox();
+        for (DragonRace f : DragonRace.values()) {
+            raceComboBox.addItem(f);
+        }
+        dragonTable.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(raceComboBox));
 
         setContentPane(mainPanel);
         pack();
@@ -176,5 +213,41 @@ public class MainWindow extends JFrame{
                 newLeaseWindow.setVisible(true);
             }
         });
+
+        changeDragonButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FindDragon dialog = new FindDragon(dragonTableModel, MainWindow.this);
+                dialog.setVisible(true);
+            }
+        });
+
+        changeCustomerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FindDragon dialog = new FindDragon(customerTableModel, MainWindow.this);
+                dialog.setVisible(true);
+            }
+        });
+    }
+
+    @Override
+    public void setCustomer(int selectedRow) {
+        Customer newCustomer = customerTableModel.getCustomerAt(selectedRow);
+        Lease leaseToUpdate = leaseTableModel.getLeaseAt(leaseTable.getSelectedRow());
+        leaseToUpdate.setCustomer(newCustomer);
+
+        updateLeaseSwingWorker = new UpdateLeaseSwingWorker(leaseToUpdate);
+        updateLeaseSwingWorker.execute();
+    }
+
+    @Override
+    public void setDragon(int selectedRow) {
+        Dragon newDragon = dragonTableModel.getDragonAt(selectedRow);
+        Lease leaseToUpdate = leaseTableModel.getLeaseAt(leaseTable.getSelectedRow());
+        leaseToUpdate.setDragon(newDragon);
+
+        updateLeaseSwingWorker = new UpdateLeaseSwingWorker(leaseToUpdate);
+        updateLeaseSwingWorker.execute();
     }
 }

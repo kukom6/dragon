@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.gui;
 import cz.muni.fi.pv168.dragon.*;
 
 import javax.swing.*;
-import javax.xml.ws.Service;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -16,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by Michal on 3.5.2015.
  */
-public class NewLease extends JFrame{
+public class NewLease extends JFrame implements DragonAndCustomerChangeable {
     private JButton findDragon;
     private JButton findCustomer;
     private JSpinner daySpinner;
@@ -121,7 +120,6 @@ public class NewLease extends JFrame{
                         + ":"
                         + secondSpinner.getValue();
                 Lease lease = new Lease();
-                System.out.println(date + "-" + yearSpinner.getValue());
                 try {
                     lease.setEndDate(sdf.parse(date));
                 } catch (ParseException | NumberFormatException ex){
