@@ -31,8 +31,8 @@ public class NewCustomer extends JFrame {
     public NewCustomer(final CustomerTableModel tableModel, final CustomerManager customerManager) {
         this.customerTableModel = tableModel;
         this.customerManager = customerManager;
-   //TODO     ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
-  //TODO   setTitle(lang.getString("newCustomer_title"));
+        ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
+        setTitle(lang.getString("newCustomer_title"));
 
         setContentPane(panel1);
         pack();

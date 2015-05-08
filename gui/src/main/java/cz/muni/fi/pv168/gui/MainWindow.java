@@ -4,6 +4,8 @@ import cz.muni.fi.pv168.dragon.*;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -35,6 +37,7 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
     private DragonTableModel dragonTableModel;
     private CustomerTableModel customerTableModel;
     private LeaseTableModel leaseTableModel;
+    ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
 
     private DeleteCustomerSwingWorker deleteCustomerSwingWorker;
 
@@ -56,6 +59,12 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
                 if(get() == 1){
                     deleteCustomer.setEnabled(true);
                     customerTableModel.fireTableDataChanged();
+                }
+                if(get()==0) {
+                    ErrorWindow error=new ErrorWindow(lang.getString("mainwindow_deleteCustomerError"));
+                    error.setVisible(true);
+                    deleteCustomer.setEnabled(true);
+                    dragonTableModel.fireTableDataChanged();
                 }
             } catch (ExecutionException ex) {
                 throw new ServiceFailureException("Exception thrown in doInBackground() while delete customer", ex.getCause());
@@ -87,6 +96,12 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
                     deleteDragon.setEnabled(true);
                     dragonTableModel.fireTableDataChanged();
                 }
+                if(get()==0){
+                    ErrorWindow error=new ErrorWindow(lang.getString("mainwindow_deleteDragonError"));
+                    error.setVisible(true);
+                    deleteDragon.setEnabled(true);
+                    dragonTableModel.fireTableDataChanged();
+                }
             } catch (ExecutionException ex) {
                 throw new ServiceFailureException("Exception thrown in doInBackground() while delete dragon", ex.getCause());
             } catch (InterruptedException ex) {
@@ -115,6 +130,11 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
             try {
                 if(get() == 1){
                     leaseTableModel.fireTableDataChanged();
+                    deleteLease.setEnabled(true);
+                }
+                if(get()==0){
+                    ErrorWindow error=new ErrorWindow(lang.getString("mainwindow_deleteLeaseError"));
+                    error.setVisible(true);
                     deleteLease.setEnabled(true);
                 }
             } catch (ExecutionException ex) {

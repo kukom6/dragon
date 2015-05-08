@@ -13,7 +13,7 @@
           <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="New Customer"/>
+          <text resource-bundle="LanguageBundle" key="newcustomer_head"/>
         </properties>
       </component>
       <component id="f528" class="javax.swing.JTextField" binding="nameField">
@@ -37,7 +37,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Name"/>
+          <text resource-bundle="LanguageBundle" key="newcustomer_name"/>
         </properties>
       </component>
       <component id="d754b" class="javax.swing.JLabel">
@@ -45,7 +45,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Surname"/>
+          <text resource-bundle="LanguageBundle" key="newcustomer_surname"/>
         </properties>
       </component>
       <component id="9bcb4" class="javax.swing.JLabel">
@@ -53,7 +53,7 @@
           <grid row="3" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Address"/>
+          <text resource-bundle="LanguageBundle" key="newcustomer_address"/>
         </properties>
       </component>
       <component id="4d103" class="javax.swing.JTextField" binding="addressField1">
@@ -79,7 +79,7 @@
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Identity card"/>
+          <text resource-bundle="LanguageBundle" key="newcustomer_IdentityCard"/>
         </properties>
       </component>
       <component id="6e063" class="javax.swing.JLabel">
@@ -87,7 +87,7 @@
           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Phone number"/>
+          <text resource-bundle="LanguageBundle" key="newcustomer_PhoneNumber"/>
         </properties>
       </component>
       <component id="f69f0" class="javax.swing.JTextField" binding="phone">
@@ -115,7 +115,7 @@
           <grid row="7" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Add"/>
+          <text resource-bundle="LanguageBundle" key="newcustomer_button"/>
         </properties>
       </component>
     </children>

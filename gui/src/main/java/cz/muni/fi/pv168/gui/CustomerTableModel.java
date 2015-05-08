@@ -80,6 +80,22 @@ public class CustomerTableModel extends AbstractTableModel {
         }
     }
 
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch (columnIndex) {
+            case 0:
+                return Long.class;
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                return String.class;
+            default:
+                throw new IllegalArgumentException("columnIndex");
+        }
+    }
+
     private class RefreshCustomersSwingWorker extends SwingWorker<Integer,Void> {
 
         @Override
