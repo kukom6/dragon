@@ -97,8 +97,9 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
                     dragonTableModel.fireTableDataChanged();
                 }
                 if(get()==0){
-                    ErrorWindow error=new ErrorWindow(lang.getString("mainwindow_deleteDragonError"));
-                    error.setVisible(true);
+                    /*ErrorWindow error=new ErrorWindow(lang.getString("mainwindow_deleteDragonError"));
+                    error.setVisible(true);*/
+                    JOptionPane.showMessageDialog(MainWindow.this, lang.getString("mainwindow_deleteDragonError"));
                     deleteDragon.setEnabled(true);
                     dragonTableModel.fireTableDataChanged();
                 }
@@ -133,8 +134,9 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
                     deleteLease.setEnabled(true);
                 }
                 if(get()==0){
-                    ErrorWindow error=new ErrorWindow(lang.getString("mainwindow_deleteLeaseError"));
-                    error.setVisible(true);
+                    //ErrorWindow error=new ErrorWindow(lang.getString("mainwindow_deleteLeaseError"));
+                    //error.setVisible(true);
+                    JOptionPane.showMessageDialog(MainWindow.this, lang.getString("mainwindow_deleteLeaseError"));
                     deleteLease.setEnabled(true);
                 }
             } catch (ExecutionException ex) {
