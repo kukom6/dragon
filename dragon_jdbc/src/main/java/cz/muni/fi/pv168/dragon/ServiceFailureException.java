@@ -1,10 +1,9 @@
 package cz.muni.fi.pv168.dragon;
 
-/**
- * This exception indicates service failure.
- *
- * @author Petr Adamek
- */
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class ServiceFailureException extends RuntimeException {
 
     public ServiceFailureException(String msg) {

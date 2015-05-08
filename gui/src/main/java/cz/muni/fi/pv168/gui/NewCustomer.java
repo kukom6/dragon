@@ -32,7 +32,7 @@ public class NewCustomer extends JFrame {
         this.customerTableModel = tableModel;
         this.customerManager = customerManager;
         ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
-        setTitle(lang.getString("newCustomer_title"));
+        setTitle(lang.getString("newcustomer_title"));
 
         setContentPane(panel1);
         pack();
