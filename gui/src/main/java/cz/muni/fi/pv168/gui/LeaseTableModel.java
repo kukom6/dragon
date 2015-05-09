@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.locks.Lock;
 
 /**
  * Created by Michal on 4.5.2015.
@@ -137,7 +138,9 @@ public class LeaseTableModel extends AbstractTableModel{
     }
 
     public Lease getLeaseAt(int row){
-        return allLeases.get(row);
+        synchronized (LOCK) {
+            return allLeases.get(row);
+        }
     }
 
     @Override

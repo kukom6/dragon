@@ -16,21 +16,7 @@ import java.util.logging.*;
 
 
 public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
-    private static final Logger log = Logger.getLogger(CustomerManagerImpl.class.getCanonicalName());
-
-    private void configureLogging() {
-        Handler fileHandler = null;
-        try {
-            fileHandler = new FileHandler("mainLog.log");
-            fileHandler.setFormatter(new SimpleFormatter());
-        } catch (IOException ex) {
-            log.log(Level.SEVERE, "Unable to initialize FileHandler", ex);
-        } catch (SecurityException ex) {
-            log.log(Level.SEVERE, "Unable to initialize FileHandler.", ex);
-        }
-
-        Logger.getLogger("").addHandler(fileHandler);
-    }
+    private static final Logger log = Logger.getLogger(MainWindow.class.getCanonicalName());
 
     private JPanel mainPanel;
     private JTabbedPane tabbedPane;
@@ -200,7 +186,6 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
 
     public MainWindow(final DragonManager dragonManager,final CustomerManager customerManager,final LeaseManager leaseManager){
         super("Dragon manager");
-        configureLogging();
         this.dragonManager = dragonManager;
         this.customerManager = customerManager;
         this.leaseManager = leaseManager;

@@ -194,6 +194,8 @@ public class DragonTableModel extends AbstractTableModel{
     }
 
     public Dragon getDragonAt(int row){
-        return allDragons.get(row);
+        synchronized (LOCK) {
+            return allDragons.get(row);
+        }
     }
 }

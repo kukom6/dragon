@@ -188,6 +188,8 @@ public class CustomerTableModel extends AbstractTableModel {
         super.fireTableDataChanged();
     }
     public Customer getCustomerAt(int row){
-        return allCustomers.get(row);
+        synchronized(LOCK) {
+            return allCustomers.get(row);
+        }
     }
 }
