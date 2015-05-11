@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Michal on 30.4.2015.
@@ -20,6 +22,7 @@ public class DragonTableModel extends AbstractTableModel{
     private DragonManager dragonManager;
     private List<Dragon> allDragons;
     private static final Object LOCK = new Object();
+    private static final Logger log = Logger.getLogger(LeaseManagerImpl.class.getCanonicalName());
 
     private UpdateDragonSwingWorker updateDragonSwingWorker;
 
@@ -43,9 +46,10 @@ public class DragonTableModel extends AbstractTableModel{
                     fireTableDataChanged();
                 }
             } catch (ExecutionException ex) {
+                log.log(Level.SEVERE, "Dragon table model, done(), ExecutionException: ex");
                 throw new ServiceFailureException("Exception thrown in doInBackground() while delete dragon", ex.getCause());
             } catch (InterruptedException ex) {
-                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                log.log(Level.SEVERE, "Dragon table model,done() ,InterruptedException:",ex);
                 throw new RuntimeException("Operation interrupted (this should never happen)",ex);
             }
         }
@@ -95,6 +99,7 @@ public class DragonTableModel extends AbstractTableModel{
             case 5:
                 return Integer.class;
             default:
+                log.log(Level.SEVERE, "Dragon table model, getColumnCount, illegal argument exception: columnIndex");
                 throw new IllegalArgumentException("columnIndex");
         }
     }
@@ -116,6 +121,7 @@ public class DragonTableModel extends AbstractTableModel{
             case 5:
                 return dragon.getWeight();
             default:
+                log.log(Level.SEVERE, "Dragon table model, getValueAt, illegal argument exception: columnIndex");
                 throw new IllegalArgumentException("columnIndex");
         }
     }
@@ -128,6 +134,7 @@ public class DragonTableModel extends AbstractTableModel{
                 return lang.getString("mainwindow_id");
             case 1:
                 return lang.getString("mainwindow_name");
+
             case 2:
                 return lang.getString("mainwindow_born");
             case 3:
@@ -137,6 +144,7 @@ public class DragonTableModel extends AbstractTableModel{
             case 5:
                 return lang.getString("mainwindow_weight");
             default:
+                log.log(Level.SEVERE, "Dragon table model, getColumnName, illegal argument exception: columnIndex");
                 throw new IllegalArgumentException("column");
         }
     }
@@ -153,6 +161,7 @@ public class DragonTableModel extends AbstractTableModel{
                 try {
                     dragon.setBorn(sdf.parse(aValue.toString()));
                 } catch (ParseException ex){
+                    log.log(Level.SEVERE, "Dragon table model, SeviceFailureException: ",ex);
                     throw new ServiceFailureException("Cannot parse date while updating dragon from JTable");
                 }
                 break;
@@ -163,6 +172,7 @@ public class DragonTableModel extends AbstractTableModel{
                 try {
                     dragon.setNumberOfHeads(Integer.parseInt(aValue.toString()));
                 } catch (NumberFormatException ex){
+                    log.log(Level.SEVERE, "Dragon table model, SeviceFailureException: ",ex);
                     throw new ServiceFailureException("Cannot parse number of heads while updating dragon from JTable");
                 }
                 break;
@@ -170,10 +180,12 @@ public class DragonTableModel extends AbstractTableModel{
                 try {
                     dragon.setWeight(Integer.parseInt(aValue.toString()));
                 } catch (NumberFormatException ex){
+                    log.log(Level.SEVERE, "Dragon table model, SeviceFailureException: ",ex);
                     throw new ServiceFailureException("Cannot parse weight while updating dragon from JTable");
                 }
                 break;
             default:
+                log.log(Level.SEVERE, "Dragon table model, setValueAt, illegal argument exception: columnIndex");
                 throw new IllegalArgumentException("columnIndex");
         }
 

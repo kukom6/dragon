@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.gui;
 
 import cz.muni.fi.pv168.dragon.Lease;
 import cz.muni.fi.pv168.dragon.LeaseManager;
+import cz.muni.fi.pv168.dragon.LeaseManagerImpl;
 import cz.muni.fi.pv168.dragon.ServiceFailureException;
 
 import javax.swing.*;
@@ -15,6 +16,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.locks.Lock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Michal on 4.5.2015.
@@ -23,6 +26,7 @@ public class LeaseTableModel extends AbstractTableModel{
     private LeaseManager leaseManager;
     private List<Lease> allLeases;
     private static final Object LOCK = new Object();
+    private static final Logger log = Logger.getLogger(LeaseManagerImpl.class.getCanonicalName());
 
     private RefreshLeasesSwingWorker refreshLeasesSwingWorker;
 
@@ -59,9 +63,10 @@ public class LeaseTableModel extends AbstractTableModel{
                     fireTableDataChanged();
                 }
             } catch (ExecutionException ex) {
+                log.log(Level.SEVERE, "Lease table model, done(), ExecutionException: ex");
                 throw new ServiceFailureException("Exception thrown in doInBackground() while delete dragon", ex.getCause());
             } catch (InterruptedException ex) {
-                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                log.log(Level.SEVERE, "Lease table model, done(), InterruptedException: ex");
                 throw new RuntimeException("Operation interrupted (this should never happen)",ex);
             }
         }
@@ -103,6 +108,7 @@ public class LeaseTableModel extends AbstractTableModel{
             case 6:
                 return lease.getReturnDate();
             default:
+                log.log(Level.SEVERE, "Lease table model, getValueAt, illegal argument exception: columnIndex");
                 throw new IllegalArgumentException("columnIndex");
         }
     }
@@ -126,6 +132,7 @@ public class LeaseTableModel extends AbstractTableModel{
             case 6:
                 return lang.getString("mainwindow_returnDate");
             default:
+                log.log(Level.SEVERE, "Lease table model, getColumnName, illegal argument exception: columnIndex");
                 throw new IllegalArgumentException("column");
         }
     }

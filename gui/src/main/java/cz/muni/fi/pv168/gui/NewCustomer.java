@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Matej on 4. 5. 2015.
@@ -27,6 +29,7 @@ public class NewCustomer extends JFrame {
     private CustomerTableModel customerTableModel;
 
     private CreateCustomerSwingWorker createCustomerSwingWorker;
+    private static final Logger log = Logger.getLogger(LeaseManagerImpl.class.getCanonicalName());
 
     public NewCustomer(final CustomerTableModel tableModel, final CustomerManager customerManager) {
         this.customerTableModel = tableModel;
@@ -73,9 +76,10 @@ public class NewCustomer extends JFrame {
                     NewCustomer.this.dispose();
                 }
             } catch (ExecutionException ex) {
+                log.log(Level.SEVERE, "NewDragon window,done(), ExecutionException: ",ex);
                 throw new ServiceFailureException("Exception thrown in doInBackground() while create dragon", ex.getCause());
             } catch (InterruptedException ex) {
-                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                log.log(Level.SEVERE, "NewDragon window,done(), InterruptedException: ",ex);
                 throw new RuntimeException("Operation interrupted (this should never happen)",ex);
             }
         }

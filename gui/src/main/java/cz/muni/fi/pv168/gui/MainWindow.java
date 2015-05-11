@@ -67,15 +67,16 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
                     customerTableModel.fireTableDataChanged();
                 }
                 if(get()==0) {
-                    ErrorWindow error=new ErrorWindow(lang.getString("mainwindow_deleteCustomerError"));
-                    error.setVisible(true);
+                    log.log(Level.SEVERE, "Main window,get(),DeleteCustomerSwingWorker: Don't check customer ");
+                    JOptionPane.showMessageDialog(MainWindow.this, lang.getString("mainwindow_deleteCustomerError"));
                     deleteCustomer.setEnabled(true);
                     dragonTableModel.fireTableDataChanged();
                 }
             } catch (ExecutionException ex) {
+                log.log(Level.SEVERE, "Main window,get(),DeleteCustomerSwingWorker ExecutionException: ",ex);
                 throw new ServiceFailureException("Exception thrown in doInBackground() while delete customer", ex.getCause());
             } catch (InterruptedException ex) {
-                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                log.log(Level.SEVERE, "Main window,get(),DeleteCustomerSwingWorker InterruptedException: ",ex);
                 throw new RuntimeException("Operation interrupted (this should never happen)",ex);
             }
         }
@@ -103,16 +104,16 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
                     dragonTableModel.fireTableDataChanged();
                 }
                 if(get()==0){
-                    /*ErrorWindow error=new ErrorWindow(lang.getString("mainwindow_deleteDragonError"));
-                    error.setVisible(true);*/
+                    log.log(Level.SEVERE, "Main window,DeleteDragonSwingWorker get(): Don't check dragon ");
                     JOptionPane.showMessageDialog(MainWindow.this, lang.getString("mainwindow_deleteDragonError"));
                     deleteDragon.setEnabled(true);
                     dragonTableModel.fireTableDataChanged();
                 }
             } catch (ExecutionException ex) {
+                log.log(Level.SEVERE, "Main window,DeleteDragonSwingWorker get(), ExecutionException: ",ex);
                 throw new ServiceFailureException("Exception thrown in doInBackground() while delete dragon", ex.getCause());
             } catch (InterruptedException ex) {
-                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                log.log(Level.SEVERE, "Main window,DeleteDragonSwingWorker get(), InterruptedException: ",ex);
                 throw new RuntimeException("Operation interrupted (this should never happen)",ex);
             }
         }
@@ -140,15 +141,15 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
                     deleteLease.setEnabled(true);
                 }
                 if(get()==0){
-                    //ErrorWindow error=new ErrorWindow(lang.getString("mainwindow_deleteLeaseError"));
-                    //error.setVisible(true);
+                    log.log(Level.SEVERE, "Main window,DeleteLeaseSwingWorker get(), Don't check lease ");
                     JOptionPane.showMessageDialog(MainWindow.this, lang.getString("mainwindow_deleteLeaseError"));
                     deleteLease.setEnabled(true);
                 }
             } catch (ExecutionException ex) {
+                log.log(Level.SEVERE, "Main window,DeleteLeaseSwingWorker get(), ExecutionException: ",ex);
                 throw new ServiceFailureException("Exception thrown in doInBackground() while delete dragon", ex.getCause());
             } catch (InterruptedException ex) {
-                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                log.log(Level.SEVERE, "Main window,DeleteLeaseSwingWorker get(), ExecutionException: ",ex);
                 throw new RuntimeException("Operation interrupted (this should never happen)",ex);
             }
         }
@@ -176,16 +177,17 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
                     leaseTableModel.fireTableDataChanged();
                 }
             } catch (ExecutionException ex) {
+                log.log(Level.SEVERE, "Main window,UpdateLeaseSwingWorker get(), ExecutionException: ",ex);
                 throw new ServiceFailureException("Exception thrown in doInBackground() while delete dragon", ex.getCause());
             } catch (InterruptedException ex) {
-                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                log.log(Level.SEVERE, "Main window,UpdateLeaseSwingWorker get(), InterruptedException: ",ex);
                 throw new RuntimeException("Operation interrupted (this should never happen)",ex);
             }
         }
     }
 
     public MainWindow(final DragonManager dragonManager,final CustomerManager customerManager,final LeaseManager leaseManager){
-        super("Dragon manager");
+        setTitle(lang.getString("mainwindow_title"));
         this.dragonManager = dragonManager;
         this.customerManager = customerManager;
         this.leaseManager = leaseManager;

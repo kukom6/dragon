@@ -1,8 +1,11 @@
 package cz.muni.fi.pv168.gui;
 
+import cz.muni.fi.pv168.dragon.LeaseManagerImpl;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.event.*;
+import java.util.logging.Logger;
 
 public class FindDragon extends JDialog {
     private JPanel contentPane;

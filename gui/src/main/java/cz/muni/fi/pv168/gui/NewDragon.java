@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.gui;
 
 import cz.muni.fi.pv168.dragon.Dragon;
 import cz.muni.fi.pv168.dragon.DragonManager;
+import cz.muni.fi.pv168.dragon.LeaseManagerImpl;
 import cz.muni.fi.pv168.dragon.ServiceFailureException;
 
 import javax.swing.*;
@@ -12,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Michal on 3.5.2015.
@@ -34,6 +37,7 @@ public class NewDragon extends JFrame{
     private DragonTableModel dragonTableModel;
 
     private CreateDragonSwingWorker createDragonSwingWorker;
+    private static final Logger log = Logger.getLogger(LeaseManagerImpl.class.getCanonicalName());
 
     private class CreateDragonSwingWorker extends SwingWorker<Integer,Void> {
 
@@ -57,9 +61,10 @@ public class NewDragon extends JFrame{
                     NewDragon.this.dispose();
                 }
             } catch (ExecutionException ex) {
+                log.log(Level.SEVERE, "NewDragon window, done(),ExecutionException: ",ex);
                 throw new ServiceFailureException("Exception thrown in doInBackground() while create dragon", ex.getCause());
             } catch (InterruptedException ex) {
-                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                log.log(Level.SEVERE, "NewDragon window, done(),InterruptedException: ",ex);
                 throw new RuntimeException("Operation interrupted (this should never happen)",ex);
             }
         }
@@ -103,6 +108,7 @@ public class NewDragon extends JFrame{
                                 );
 
                 } catch (ParseException | NumberFormatException ex){
+                    log.log(Level.SEVERE, "NewDragon window, ParseException | NumberFormatException: ",ex);
                     throw new ServiceFailureException("Parse exception while getting new dragon",ex);
                 }
                 createDragonSwingWorker = new CreateDragonSwingWorker(dragon);

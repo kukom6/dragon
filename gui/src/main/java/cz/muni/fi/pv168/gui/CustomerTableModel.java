@@ -10,11 +10,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Matej on 4. 5. 2015.
  */
 public class CustomerTableModel extends AbstractTableModel {
+
+    private static final Logger log = Logger.getLogger(LeaseManagerImpl.class.getCanonicalName());
 
     private CustomerManager customerManager;
     private List<Customer> allCustomers;
@@ -55,6 +59,7 @@ public class CustomerTableModel extends AbstractTableModel {
             case 5:
                 return customer.getPhoneNumber();
             default:
+                log.log(Level.SEVERE, "Customer table model, getValueAt, illegal argument exception: columnIndex");
                 throw new IllegalArgumentException("columnIndex");
         }
     }
@@ -76,6 +81,7 @@ public class CustomerTableModel extends AbstractTableModel {
             case 5:
                 return lang.getString("mainwindow_PhoneNumber");
             default:
+                log.log(Level.SEVERE, "Customer table model, getColumnName, illegal argument exception.");
                 throw new IllegalArgumentException("column");
         }
     }
@@ -92,6 +98,8 @@ public class CustomerTableModel extends AbstractTableModel {
             case 5:
                 return String.class;
             default:
+                log.log(Level.SEVERE, "Customer table model, getColumnClass, illegal argument exception: collumnIndex");
+
                 throw new IllegalArgumentException("columnIndex");
         }
     }
@@ -126,12 +134,14 @@ public class CustomerTableModel extends AbstractTableModel {
                     fireTableDataChanged();
                 }
                 if (isCancelled()) {
+                    log.log(Level.SEVERE, "Customer table model,done(), SeviceFailureException: Cancelled");
                     throw new ServiceFailureException("Cancelled");
                 }
             } catch (ExecutionException ex) {
+                log.log(Level.SEVERE, "Customer table model,done() ,ExecutionException:",ex);
                 throw new ServiceFailureException("Exception thrown in doInBackground() while delete dragon", ex.getCause());
             } catch (InterruptedException ex) {
-                // K tomuto by v tomto případě nemělo nikdy dojít (viz níže)
+                log.log(Level.SEVERE, "Customer table model,done() ,InterruptedException:",ex);
                 throw new RuntimeException("Operation interrupted (this should never happen)",ex);
             }
         }
@@ -160,6 +170,7 @@ public class CustomerTableModel extends AbstractTableModel {
                 customer.setPhoneNumber((String) aValue);
                 break;
             default:
+                log.log(Level.SEVERE, "Customer table model,setValueAt, illegal argument exception: columnIndex");
                 throw new IllegalArgumentException("columnIndex");
         }
         updateCustomerSwingWorker = new UpdateCustomerSwingWorker(getCustomerAt(rowIndex));
@@ -178,6 +189,7 @@ public class CustomerTableModel extends AbstractTableModel {
             case 0:
                 return false;
             default:
+                log.log(Level.SEVERE, "Customer table model,isCellEditable, illegal argument exception: columnIndex");
                 throw new IllegalArgumentException("columnIndex");
         }
     }
