@@ -7,8 +7,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import javax.sql.DataSource;
 import java.awt.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.*;
 
 /**
@@ -16,20 +18,6 @@ import java.util.logging.*;
  */
 public class Main {
     private static final Logger log = Logger.getLogger(Main.class.getName());
-
-    private static void configureLogging() {
-        Handler fileHandler = null;
-        try {
-            fileHandler = new FileHandler("mainLog.log");
-            fileHandler.setFormatter(new SimpleFormatter());
-        } catch (IOException ex) {
-            log.log(Level.SEVERE, "Unable to initialize FileHandler", ex);
-        } catch (SecurityException ex) {
-            log.log(Level.SEVERE, "Unable to initialize FileHandler.", ex);
-        }
-
-        Logger.getLogger("").addHandler(fileHandler);
-    }
 
     public static void main(String[] args) {
         configureLogging();
@@ -55,5 +43,35 @@ public class Main {
                 mainWindow.setVisible(true);
             }
         });
+    }
+
+    private static void configureLogging() {
+        Handler fileHandler = null;
+        Properties prop = new Properties();
+        String propFileName = "config.properties";
+
+        InputStream inputStream = DragonManager.class.getClassLoader().getResourceAsStream(propFileName);
+
+        if (inputStream != null) {
+            try {
+                prop.load(inputStream);
+            } catch (IOException ex){
+                log.log(Level.SEVERE, "Cannot load property from input stream.");
+                throw new ServiceFailureException("Cannot load property from input stream.");
+            }
+        } else {
+            log.log(Level.SEVERE, "property file '" + propFileName + "' not found in the classpath");
+            throw new ServiceFailureException("property file '" + propFileName + "' not found in the classpath");
+        }
+        try {
+            fileHandler = new FileHandler(prop.getProperty("logFile"));
+            fileHandler.setFormatter(new SimpleFormatter());
+        } catch (IOException ex) {
+            log.log(Level.SEVERE, "Unable to initialize FileHandler", ex);
+        } catch (SecurityException ex) {
+            log.log(Level.SEVERE, "Unable to initialize FileHandler.", ex);
+        }
+
+        Logger.getLogger("").addHandler(fileHandler);
     }
 }
