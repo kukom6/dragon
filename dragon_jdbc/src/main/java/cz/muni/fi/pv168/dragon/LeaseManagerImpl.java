@@ -484,10 +484,10 @@ public class LeaseManagerImpl implements LeaseManager {
             throw new IllegalArgumentException("lease id is null");
         }
 
-        if(lease.getReturnDate() == null){
+        /*if(lease.getReturnDate() == null){
             log.log(Level.SEVERE, "Delete lease illegal argument exception: dragon is not returned yet.");
             throw new IllegalArgumentException("dragon is not returned yet");
-        }
+        }*/
 
         try (Connection conn = dataSource.getConnection();
             PreparedStatement st = conn.prepareStatement("DELETE FROM LEASES WHERE id=?")) {

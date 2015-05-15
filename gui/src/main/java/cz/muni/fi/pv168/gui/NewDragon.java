@@ -35,6 +35,7 @@ public class NewDragon extends JFrame{
 
     private DragonManager dragonManager;
     private DragonTableModel dragonTableModel;
+    private final ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
 
     private CreateDragonSwingWorker createDragonSwingWorker;
     private static final Logger log = Logger.getLogger(LeaseManagerImpl.class.getCanonicalName());
@@ -73,7 +74,6 @@ public class NewDragon extends JFrame{
     public NewDragon(final DragonTableModel tableModel,final DragonManager dragonManager){
         this.dragonManager = dragonManager;
         this.dragonTableModel = tableModel;
-        ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
         setTitle(lang.getString("newdragon_title"));
         setRaceBoxContent();
         setDateLimits();
@@ -108,9 +108,12 @@ public class NewDragon extends JFrame{
                                 );
 
                 } catch (ParseException | NumberFormatException ex){
+                    JOptionPane.showMessageDialog(NewDragon.this, lang.getString("newdragon_parsingError"));
+                    sendButton.setEnabled(true);
                     log.log(Level.SEVERE, "NewDragon window, ParseException | NumberFormatException: ",ex);
-                    throw new ServiceFailureException("Parse exception while getting new dragon",ex);
+                    return;
                 }
+
                 createDragonSwingWorker = new CreateDragonSwingWorker(dragon);
                 createDragonSwingWorker.execute();
             }

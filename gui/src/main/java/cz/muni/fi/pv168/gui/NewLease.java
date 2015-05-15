@@ -40,6 +40,8 @@ public class NewLease extends JFrame implements DragonAndCustomerChangeable {
     private LeaseTableModel leaseTableModel;
     private LeaseManager leaseManager;
 
+    private final ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
+
     private CreateLeaseSwingWorker createLeaseSwingWorker;
     private static final Logger log = Logger.getLogger(LeaseManagerImpl.class.getCanonicalName());
 
@@ -52,7 +54,11 @@ public class NewLease extends JFrame implements DragonAndCustomerChangeable {
 
         @Override
         protected Integer doInBackground() throws Exception {
-            leaseManager.createLease(leaseToCreate);
+            try {
+                leaseManager.createLease(leaseToCreate);
+            } catch (IllegalArgumentException | ServiceFailureException ex){
+                return 0;
+            }
             return 1;
         }
 
@@ -63,6 +69,13 @@ public class NewLease extends JFrame implements DragonAndCustomerChangeable {
                     createButton.setEnabled(true);
                     leaseTableModel.fireTableDataChanged();
                     NewLease.this.dispose();
+                }
+
+                if(get() == 0){
+                    JOptionPane.showMessageDialog(NewLease.this, lang.getString("newdragon_parsingError"));
+                    createButton.setEnabled(true);
+                    log.log(Level.SEVERE, "NewLease window creating lease error!");
+                    return;
                 }
             } catch (ExecutionException ex) {
                 log.log(Level.SEVERE, "NewLease window, done(),ExecutionException: ",ex);
@@ -82,7 +95,6 @@ public class NewLease extends JFrame implements DragonAndCustomerChangeable {
         this.customerTableModel = customerTableModel;
         this.leaseTableModel = leaseTableModel;
 
-        ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
         setTitle(lang.getString("newlease_title"));
         setDateLimits();
         customerSelectedRowField.setVisible(false);
@@ -128,23 +140,44 @@ public class NewLease extends JFrame implements DragonAndCustomerChangeable {
                 try {
                     lease.setEndDate(sdf.parse(date));
                 } catch (ParseException | NumberFormatException ex){
+                    JOptionPane.showMessageDialog(NewLease.this, lang.getString("newdragon_parsingError"));
+                    createButton.setEnabled(true);
                     log.log(Level.SEVERE, "NewLease window, ParseException | NumberFormatException: ",ex);
-                    throw new ServiceFailureException("Parse exception while getting new dragon",ex);
+                    return;
                 }
 
                 try {
                     if (!dragonSelectedRowField.getText().isEmpty() && !dragonSelectedRowField.getText().equals("-1")) {
                         lease.setDragon(dragonTableModel.getDragonAt(Integer.parseInt(dragonSelectedRowField.getText())));
+                    }else{
+                        JOptionPane.showMessageDialog(NewLease.this, lang.getString("newdragon_parsingError"));
+                        createButton.setEnabled(true);
+                        log.log(Level.SEVERE, "NewLease window, ParseException | NumberFormatException: ");
+                        return;
                     }
                     if(!customerSelectedRowField.getText().isEmpty() && !customerSelectedRowField.getText().equals("-1")) {
                         lease.setCustomer(customerTableModel.getCustomerAt(Integer.parseInt(customerSelectedRowField.getText())));
+                    }else{
+                        JOptionPane.showMessageDialog(NewLease.this, lang.getString("newdragon_parsingError"));
+                        createButton.setEnabled(true);
+                        log.log(Level.SEVERE, "NewLease window, ParseException | NumberFormatException: ");
+                        return;
                     }
                 } catch (NumberFormatException ex){
-                    log.log(Level.SEVERE, "NewLease window, NumberFormatException: ",ex);
-                    throw new ServiceFailureException("cannot parse selected row",ex);
+                    JOptionPane.showMessageDialog(NewLease.this, lang.getString("newdragon_parsingError"));
+                    createButton.setEnabled(true);
+                    log.log(Level.SEVERE, "NewLease window, ParseException | NumberFormatException: ",ex);
+                    return;
                 }
 
-                lease.setPrice(new BigDecimal(priceField.getText()));
+                try {
+                    lease.setPrice(new BigDecimal(priceField.getText()));
+                } catch (NumberFormatException ex){
+                    JOptionPane.showMessageDialog(NewLease.this, lang.getString("newdragon_parsingError"));
+                    createButton.setEnabled(true);
+                    log.log(Level.SEVERE, "NewLease window, ParseException | NumberFormatException: ",ex);
+                    return;
+                }
                 createLeaseSwingWorker = new CreateLeaseSwingWorker(lease);
                 createLeaseSwingWorker.execute();
             }

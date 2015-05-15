@@ -43,7 +43,7 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
     private DragonTableModel dragonTableModel;
     private CustomerTableModel customerTableModel;
     private LeaseTableModel leaseTableModel;
-    ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
+    private ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle", Locale.getDefault());
 
     private DeleteCustomerSwingWorker deleteCustomerSwingWorker;
 
@@ -286,16 +286,20 @@ public class MainWindow extends JFrame implements DragonAndCustomerChangeable {
         changeDragonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FindDragon dialog = new FindDragon(dragonTableModel, MainWindow.this);
-                dialog.setVisible(true);
+                if(leaseTable.getSelectedRow() != -1) {
+                    FindDragon dialog = new FindDragon(dragonTableModel, MainWindow.this);
+                    dialog.setVisible(true);
+                }
             }
         });
 
         changeCustomerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FindDragon dialog = new FindDragon(customerTableModel, MainWindow.this);
-                dialog.setVisible(true);
+                if(leaseTable.getSelectedRow() != -1) {
+                    FindDragon dialog = new FindDragon(customerTableModel, MainWindow.this);
+                    dialog.setVisible(true);
+                }
             }
         });
     }
